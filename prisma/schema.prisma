@@ -57,6 +57,14 @@ model Company {
   ownerId     String       @unique
 }
 
+model owner_company_juction {
+  // NOTE 테이블 명은 임시입니다.
+  id String @id @default(uuid())
+  // company
+  // user
+  // coworker가 늘어갈때마다 같은 company id로 user id 로우를 늘려나간다.
+}
+
 model Investment {
   id       String @id @default(uuid())
   name     String
@@ -72,5 +80,5 @@ model Investment {
   company   Company @relation(fields: [companyId], references: [id])
   companyId String // NOTE 투자대상 기업
 
-  @@index([userId])
+  @@index([userId, createdAt(sort: Desc)])
 }
