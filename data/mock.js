@@ -1,4 +1,4 @@
-const user = [
+const USER = [
   {
     id: '53a10ad5-5c7a-4415-9683-a151b861b26d',
   },
@@ -15,7 +15,7 @@ const user = [
     id: 'efbea72e-0fd0-49b0-8ec5-bcf3eaf5e335',
   },
 ];
-const company = [
+const COMPANY = [
   {
     id: '0bb13554-5c67-48b6-89a0-1c4be8e2ff78',
     name: '테스트 컴퍼니1',
@@ -72,7 +72,7 @@ const company = [
     ownerId: 'efbea72e-0fd0-49b0-8ec5-bcf3eaf5e335',
   },
 ];
-const investment = [
+const INVESTMENT = [
   {
     id: '71841c8c-e8e7-446c-b55c-848bcc50b16e',
     name: '가상투자1',
@@ -121,7 +121,13 @@ const investment = [
 ];
 
 // model User {
-//   id String @id @default(uuid())
+//   id       String @id @default(uuid())
+//   name     String // 유저 성명
+//   nickname String // 서비스 내 표시할 별명
+//   email    String // 이메일
+
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
 
 //   investments Investment[]
 //   company     Company?
@@ -129,6 +135,10 @@ const investment = [
 
 // model Comparison {
 //   id String @id @default(uuid())
+
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+
 //   // TODO ownerCompany
 //   // TODO compareCompany * 5(최대)
 //   // TODO 1:N 관계
@@ -137,14 +147,17 @@ const investment = [
 
 // model Company {
 //   // TODO 가상 투자 금액 총계를 직접 저장할 것인가, 매번 계산할 것인가
-//   id                         String   @id @default(uuid())
-//   name                       String   @unique
-//   description                String
-//   category                   Category
-//   cumulativeInvestmentAmount Int // NOTE 이름 바꿀것, 누적 투자 금액(실제)
-//   revenue                    Int // NOTE 매출액
-//   employees                  Int // NOTE 고용 인원수
-//   selectedCount              Int // NOTE 선택된 횟수
+//   id            String @id @default(uuid())
+//   name          String @unique
+//   description   String
+//   category      String // 회사 카테고리. 입력단에서 검증해야함.
+//   AccumulInvest BigInt // NOTE 누적 투자 금액(실제)
+//   revenue       BigInt // NOTE 매출액
+//   employees     Int // NOTE 고용 인원수
+//   selectedCount Int // NOTE 선택된 횟수
+
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
 
 //   investments Investment[]
 //   owner       User         @relation(fields: [ownerId], references: [id])
@@ -158,8 +171,13 @@ const investment = [
 //   comment  String
 //   password String
 
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+
 //   user      User    @relation(fields: [userId], references: [id])
 //   userId    String // NOTE 투자자
 //   company   Company @relation(fields: [companyId], references: [id])
 //   companyId String // NOTE 투자대상 기업
+
+//   @@index([userId])
 // }
