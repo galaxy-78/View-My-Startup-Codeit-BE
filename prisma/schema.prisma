@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(uuid())
+  name     String // 유저 성명
+  nickname String // 서비스 내 표시할 별명
+  email    String // 이메일
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  investments Investment[]
+  company     Company?
+}
+
+model Comparison {
+  id String @id @default(uuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // TODO ownerCompany
+  // TODO compareCompany * 5(최대)
+  // TODO 1:N 관계
+  // TODO 1의 주체가 User인가 Company인가 정해야됨
+}
+
+model Company {
+  // TODO 가상 투자 금액 총계를 직접 저장할 것인가, 매번 계산할 것인가
+  id            String @id @default(uuid())
+  name          String @unique
+  description   String
+  category      String // 회사 카테고리. 입력단에서 검증해야함.
+  AccumulInvest BigInt // NOTE 누적 투자 금액(실제)
+  revenue       BigInt // NOTE 매출액
+  employees     Int // NOTE 고용 인원수
+  selectedCount Int // NOTE 선택된 횟수
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  investments Investment[]
+  owner       User         @relation(fields: [ownerId], references: [id])
+  ownerId     String       @unique
+}
+
+model owner_company_juction {
+  // NOTE 테이블 명은 임시입니다.
+  id String @id @default(uuid())
+  // company
+  // user
+  // coworker가 늘어갈때마다 같은 company id로 user id 로우를 늘려나간다.
+}
+
+model Investment {
+  id       String @id @default(uuid())
+  name     String
+  amount   Int
+  comment  String
+  password String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String // NOTE 투자자
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String // NOTE 투자대상 기업
+
+  @@index([userId, createdAt(sort: Desc)])
+}
