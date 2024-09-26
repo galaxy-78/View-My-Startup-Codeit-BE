@@ -1,4 +1,4 @@
-const USER = [
+export const USER = [
   {
     id: '53a10ad5-5c7a-4415-9683-a151b861b26d',
   },
@@ -15,7 +15,7 @@ const USER = [
     id: 'efbea72e-0fd0-49b0-8ec5-bcf3eaf5e335',
   },
 ];
-const COMPANY = [
+export const COMPANY = [
   {
     id: '0bb13554-5c67-48b6-89a0-1c4be8e2ff78',
     name: '테스트 컴퍼니1',
@@ -72,7 +72,7 @@ const COMPANY = [
     ownerId: 'efbea72e-0fd0-49b0-8ec5-bcf3eaf5e335',
   },
 ];
-const INVESTMENT = [
+export const INVESTMENT = [
   {
     id: '71841c8c-e8e7-446c-b55c-848bcc50b16e',
     name: '가상투자1',
