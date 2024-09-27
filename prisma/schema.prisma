@@ -24,6 +24,8 @@ model User {
 
   investments Investment[]
   company     Company?
+  comparisons Comparison[]
+  ownership   Ownership?
 }
 
 model Comparison {
@@ -32,10 +34,10 @@ model Comparison {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // TODO ownerCompany
-  // TODO compareCompany * 5(최대)
-  // TODO 1:N 관계
-  // TODO 1의 주체가 User인가 Company인가 정해야됨
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String
 }
 
 model Company {
@@ -44,7 +46,7 @@ model Company {
   name          String @unique
   description   String
   category      String // 회사 카테고리. 입력단에서 검증해야함.
-  AccumulInvest BigInt // NOTE 누적 투자 금액(실제)
+  accumulInvest BigInt // NOTE 누적 투자 금액(실제)
   revenue       BigInt // NOTE 매출액
   employees     Int // NOTE 고용 인원수
   selectedCount Int // NOTE 선택된 횟수
@@ -52,17 +54,21 @@ model Company {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  investments Investment[]
   owner       User         @relation(fields: [ownerId], references: [id])
   ownerId     String       @unique
+  investments Investment[]
+  comparisons Comparison[]
+  ownerships  Ownership[]
 }
 
-model owner_company_juction {
-  // NOTE 테이블 명은 임시입니다.
+model Ownership {
   id String @id @default(uuid())
-  // company
-  // user
+
   // coworker가 늘어갈때마다 같은 company id로 user id 로우를 늘려나간다.
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String
+  owner     User    @relation(fields: [ownerId], references: [id])
+  ownerId   String  @unique
 }
 
 model Investment {
