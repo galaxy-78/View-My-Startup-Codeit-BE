@@ -4,10 +4,23 @@
     "es6": true,
     "node": true,
   },
-  "extends": ["airbnb", "plugin:prettier/recommended"],
-  "plugins": ["prettier"],
+  "root": true,
+  "extends": [
+    "airbnb", 
+    "eslint:recommended",
+    "react-app", 
+    "plugin:react/recommended",
+    "plugin:import/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:react-hooks/recommended",
+    "prettier", 
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "prettier"
+  ],
   "rules": {
-    "prettier/prettier": ["warn", { "endOfLine": "auto" }],
+    "prettier/prettier": ["error", { "endOfLine": "auto" }],
     "no-restricted-globals": "off",
     "no-lone-blocks": "off",
     "no-unused-vars": "off",
