@@ -1,8 +1,43 @@
 export class InvestmentData {
-  constructor(client) {
-    this.data = client.Investment; // 이 부분에 각 모델(스키마)를 연결합니다.
-  }
+	constructor(client) {
+		this.data = client.Investment; // 이 부분에 각 모델(스키마)를 연결합니다.
+	}
 
-  // 이 아래로 직접 DB와 통신하는 코드를 작성합니다.
-  // 여기서 DB와 통신해 받아온 데이터를 위로(service로) 올려줍니다.
+	// 이 아래로 직접 DB와 통신하는 코드를 작성합니다.
+	// 여기서 DB와 통신해 받아온 데이터를 위로(service로) 올려줍니다.
+	count = async () => {
+		const count = await this.data.count();
+
+		return count;
+	};
+
+	findMany = async () => {
+		const investments = await this.data.findMany();
+
+		return investments;
+	};
+
+	findById = async () => {
+		const Investment = await this.data.findById();
+
+		return Investment;
+	};
+
+	create = async () => {
+		const Investment = await this.data.create();
+
+		return Investment;
+	};
+
+	update = async () => {
+		const Investment = await this.data.update();
+
+		return Investment;
+	};
+
+	delete = async () => {
+		const Investment = await this.data.delete();
+
+		return Investment;
+	};
 }
