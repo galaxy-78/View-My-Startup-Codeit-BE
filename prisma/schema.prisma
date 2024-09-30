@@ -62,6 +62,9 @@ model Ownership {
   id String @id @default(uuid())
 
   // coworker가 늘어갈때마다 같은 company id로 user id 로우를 늘려나간다.
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   company   Company @relation(fields: [companyId], references: [id])
   companyId String
   owner     User    @relation(fields: [ownerId], references: [id])
