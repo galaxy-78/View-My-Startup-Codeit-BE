@@ -7,3 +7,4 @@ import { ExampleController } from '../controllers/example.controller.js';
 const exampleData = new ExampleData(prismaClient);
 const exampleService = new ExampleService(exampleData);
 export const exampleController = new ExampleController(exampleService);
+
