@@ -6,6 +6,4 @@ import { ExampleController } from '../controllers/example.controller.js';
 // 여기서 Data, Service, Controller를 한번에 연결합니다. 그리고 컨트롤러를 export 해줍니다.
 const exampleData = new ExampleData(prismaClient);
 const exampleService = new ExampleService(exampleData);
-const exampleController = new ExampleController(exampleService);
-
-export { exampleController };
+export const exampleController = new ExampleController(exampleService);
