@@ -18,7 +18,7 @@ model User {
   name         String // 유저 성명
   nickname     String // 서비스 내 표시할 별명
   email        String // 이메일
-  iter         Int    // Hash iteration, 매 인증성공시마다 1 감소
+  iter         Int    @default(10000) // Hash iteration, 매 인증성공시마다 1 감소
   salt         String // Random string, length: 32
   pwdEncrypted String // Encrypted password, length: 104
 
