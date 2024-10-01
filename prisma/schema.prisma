@@ -14,10 +14,13 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid())
-  name     String // 유저 성명
-  nickname String // 서비스 내 표시할 별명
-  email    String // 이메일
+  id           String @id @default(uuid())
+  name         String // 유저 성명
+  nickname     String // 서비스 내 표시할 별명
+  email        String // 이메일
+  iter         Int
+  salt         String
+  pwdEncrypted String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
