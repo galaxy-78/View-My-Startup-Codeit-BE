@@ -51,10 +51,10 @@ model Watch {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user      User    @relation(fields: [userId], references: [id])
-  userId    String
-  company   Company @relation(fields: [companyId], references: [id])
-  companyId String
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId    String?
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  companyId String?
 }
 
 model Comparison {
@@ -63,10 +63,10 @@ model Comparison {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user      User    @relation(fields: [userId], references: [id])
-  userId    String
-  company   Company @relation(fields: [companyId], references: [id])
-  companyId String
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId    String?
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  companyId String?
 }
 
 model Investment {
@@ -79,10 +79,10 @@ model Investment {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user      User    @relation(fields: [userId], references: [id])
-  userId    String // NOTE 투자자
-  company   Company @relation(fields: [companyId], references: [id])
-  companyId String // NOTE 투자대상 기업
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId    String? // NOTE 투자자
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  companyId String? // NOTE 투자대상 기업
 
   @@index([userId, createdAt(sort: Desc)])
 }

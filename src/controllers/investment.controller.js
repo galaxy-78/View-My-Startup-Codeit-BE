@@ -1,5 +1,5 @@
 import { assert } from 'superstruct';
-import { Uuid } from '../../prisma/structs.js';
+import { patchInvestment, Uuid } from '../../prisma/structs.js';
 import c from '../utils/constants.js';
 
 export class InvestmentController {
@@ -23,6 +23,7 @@ export class InvestmentController {
 
 	patchInvestment = async (req, res) => {
 		const id = req.params.id;
+		console.log(id);
 		assert(id, Uuid, c.MESSAGES.IDFORMAT);
 		assert(req.body, patchInvestment);
 
