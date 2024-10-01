@@ -11,33 +11,33 @@ export class InvestmentData {
 		return count;
 	};
 
-	findMany = async () => {
-		const investments = await this.data.findMany();
+	findMany = async size => {
+		const investments = await this.data.findMany({ take: size });
 
 		return investments;
 	};
 
 	findById = async () => {
-		const Investment = await this.data.findById();
+		const investment = await this.data.findById();
 
-		return Investment;
+		return investment;
 	};
 
 	create = async () => {
-		const Investment = await this.data.create();
+		const investment = await this.data.create();
 
-		return Investment;
+		return investment;
 	};
 
-	update = async () => {
-		const Investment = await this.data.update();
+	update = async (id, data) => {
+		const investment = await this.data.update({ where: { id }, data });
 
-		return Investment;
+		return investment;
 	};
 
 	delete = async () => {
-		const Investment = await this.data.delete();
+		const investment = await this.data.delete();
 
-		return Investment;
+		return investment;
 	};
 }
