@@ -17,8 +17,8 @@ export class InvestmentData {
 		return investments;
 	};
 
-	findById = async () => {
-		const investment = await this.data.findById();
+	findById = async id => {
+		const investment = await this.data.findUnique({ where: { id } });
 
 		return investment;
 	};

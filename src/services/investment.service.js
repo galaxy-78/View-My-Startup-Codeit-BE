@@ -13,8 +13,8 @@ export class InvestmentService {
 		return { list, totalCount };
 	};
 
-	getInvestment = async ({ parameter }) => {
-		const investment = await this.data.findById();
+	getInvestment = async id => {
+		const investment = await this.data.findById(id);
 
 		return investment;
 	};
@@ -35,5 +35,15 @@ export class InvestmentService {
 		const investment = await this.data.delete();
 
 		return investment;
+	};
+
+	certify = async (id, input) => {
+		// input이 undefined, null 등일때 false를 반환
+		if (!input) return false;
+
+		const investment = await this.data.findById(id);
+		const password = investment?.password;
+
+		return input === password;
 	};
 }
