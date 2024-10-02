@@ -42,7 +42,7 @@ export class InvestmentService {
 		if (!input) return false;
 
 		const investment = await this.data.findById(id);
-		const password = investment?.password;
+		const password = investment.password;
 
 		return input === password;
 	};
