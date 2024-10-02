@@ -2,7 +2,7 @@ import express from 'express';
 import 'express-async-errors';
 import cors from 'cors';
 import { Prisma } from '@prisma/client';
-import { CastError, TypeError, ValidationError } from './error.js';
+import { CastError, TypeError, ValidationError } from './utils/error.js';
 import { StructError } from 'superstruct';
 import { exampleRouter } from './routes/example.route.js';
 import { companyRouter } from './routes/company.route.js';
