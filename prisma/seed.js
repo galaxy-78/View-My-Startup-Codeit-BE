@@ -1,5 +1,6 @@
 import { USER, COMPANY, INVESTMENT } from '../mock/mock.js';
 import { prismaClient as prisma } from '../src/connection/postgres.connection.js';
+import encrypt, { generateRandomHexString, ITER_FULL } from '../src/encrypt.js';
 
 function getRandomInteger(min, max) {
 	const minCeiled = Math.ceil(min);
@@ -11,18 +12,21 @@ function getRandomInteger(min, max) {
 }
 
 async function main() {
-	await prisma.$transaction([prisma.user.deleteMany(), prisma.company.deleteMany(), prisma.investment.deleteMany()]);
+  await prisma.$transaction([prisma.user.deleteMany(), prisma.company.deleteMany(), prisma.investment.deleteMany()]);
 
-	await prisma.$transaction([
-		prisma.user.createMany({
-			data: USER,
-			skipDuplicates: true,
-		}),
-		prisma.company.createMany({
-			data: COMPANY,
-			skipDuplicates: true,
-		}),
-	]);
+	await Promise.all(
+		USER.map(async user => {
+			user.salt = generateRandomHexString();
+			user.pwdEncrypted = encrypt(user.salt, user.password, ITER_FULL);
+			delete user.password;
+			user.iter = ITER_FULL - 1;
+			await prisma.user.create({ data: user });
+		})
+	);
+  prisma.company.createMany({
+    data: COMPANY,
+    skipDuplicates: true,
+  }),
 
 	// 관계형 데이터 처리
 	// investments
