@@ -28,6 +28,21 @@ model User {
   investments Investment[]
   comparisons Comparison[]
   watchList   Watch[]
+  UserSession UserSession[]
+}
+
+model UserSession {
+  user             User   @relation(fields: [userId], references: [id])
+  iter             Int    @default(1000)
+  userId           String
+  sessionSalt      String
+  sessionEncrypted String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([userId, createdAt])
+  @@index([userId, createdAt(sort: Desc)])
 }
 
 model Company {
@@ -37,7 +52,7 @@ model Company {
   description   String
   category      String // 회사 카테고리. 입력단에서 검증해야함.
   accumulInvest BigInt // NOTE 누적 투자 금액(실제)
-  revenue       Float // NOTE 매출액
+  revenue       BigInt // NOTE 매출액
   employees     Int // NOTE 고용 인원수
 
   createdAt DateTime @default(now())
