@@ -52,13 +52,14 @@ model UserSession {
 
 model Company {
   // TODO 가상 투자 금액 총계를 직접 저장할 것인가, 매번 계산할 것인가
-  id            String @id @default(uuid())
-  name          String @unique
+  id            String  @id @default(uuid())
+  name          String  @unique
   description   String
   category      String // 회사 카테고리. 입력단에서 검증해야함.
   accumulInvest BigInt // NOTE 누적 투자 금액(실제)
   revenue       BigInt // NOTE 매출액
   employees     Int // NOTE 고용 인원수
+  logo          String? // NOTE 로고 이미지
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -90,7 +91,6 @@ model Comparison {
   userId    String?
   company   Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
   companyId String?
-
 }
 
 model Investment {
