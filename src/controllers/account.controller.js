@@ -1,5 +1,6 @@
 import { assert } from "superstruct";
 import { postCheckBody } from "../../prisma/structs.js";
+import { encryptRest } from "../utils/encrypt.js";
 
 export class AccountController {
 	constructor(accountService) {
