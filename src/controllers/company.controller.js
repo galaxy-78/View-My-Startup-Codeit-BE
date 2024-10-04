@@ -12,7 +12,7 @@ export class CompanyController {
 
 	// 기업 리스트 가져오기
 	getCompanies = async (req, res) => {
-		const { keyword = '', page = 1, pageSize = 5, orderBy = 'recent' } = req.query;
+		const { keyword = '', page = 1, pageSize = 10, orderBy = 'recent' } = req.query;
 		try {
 			const companies = await this.service.getCompanies({
 				keyword,
@@ -27,37 +27,24 @@ export class CompanyController {
 	};
 
 	// 기업 수 가져오기
-	getCount = async (req, res) => {
+	getCompanyCount = async (req, res) => {
 		const keyword = req.query.keyword || '';
 		try {
-			const count = await this.service.getCount({ keyword });
+			const count = await this.service.getCompanyCount({ keyword });
 			res.status(200).json({ count });
 		} catch (error) {
 			res.status(500).json({ error: error.message });
 		}
 	};
 
-	// 내 기업 선택
-	selectMyCompany = async (req, res) => {
-		const { companyId } = req.body;
-		const userId = req.user.id; // 로그인된 사용자 정보 예시
+	// 기업 ID로 기업 정보 가져오기
+	getCompanyById = async (req, res) => {
+		const { id } = req.params;
 		try {
-			const myCompany = await this.service.selectMyCompany(companyId, userId);
-			res.status(200).json(myCompany);
+			const company = await this.service.getCompanyById(id);
+			res.json(company);
 		} catch (error) {
-			res.status(500).json({ error: error.message });
-		}
-	};
-
-	// 비교할 기업 선택
-	selectCompareCompanies = async (req, res) => {
-		const { selectedCompanyIds } = req.body;
-		const userId = req.user.id; // 로그인된 사용자 정보 예시
-		try {
-			const compareCompanies = await this.service.selectCompareCompanies(selectedCompanyIds, userId);
-			res.status(200).json(compareCompanies);
-		} catch (error) {
-			res.status(500).json({ error: error.message });
+			res.status(404).json({ error: error.message });
 		}
 	};
 }

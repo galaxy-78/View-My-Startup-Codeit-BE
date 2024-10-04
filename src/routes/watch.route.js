@@ -1,7 +1,7 @@
 import express from 'express';
-import { companyController } from '../containers/company.container.js';
+import { watchController } from '../containers/watch.container.js';
 
-export const companyRouter = express.Router();
+export const watchRouter = express.Router();
 
 // 입력값 유효성 검사 미들웨어
 function validation(req, res, next) {
@@ -11,9 +11,8 @@ function validation(req, res, next) {
 	next();
 }
 
-companyRouter.use(validation);
+watchRouter.use(validation);
 
 // API 엔드포인트 설정
-companyRouter.get('/', companyController.getCompanies); // 기업 리스트 API
-companyRouter.get('/count', companyController.getCompanyCount); // 기업 수 API
-companyRouter.get('/:id', companyController.getCompanyById);
+watchRouter.post('/', watchController.selectMyCompany);
+watchRouter.get('/', watchController.getMyCompany);
