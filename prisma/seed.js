@@ -26,7 +26,7 @@ async function main() {
   prisma.company.createMany({
     data: COMPANY,
     skipDuplicates: true,
-  }),
+  });
 
 	// 관계형 데이터 처리
 	// investments
