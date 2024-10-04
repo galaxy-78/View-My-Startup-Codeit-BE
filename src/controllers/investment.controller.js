@@ -14,22 +14,41 @@ export class InvestmentController {
 	// validation은 위쪽 router에서도 사용되고는 하는데, 이에 대해서는 그쪽에 주석 남기겠습니다.
 	// 응답의 status를 지정하고, body를 전달합니다.
 	getInvestments = async (req, res) => {
-		// TODO need validation
-		// TODO need pagination
-		const investments = await this.service.getInvestments({ size: 10 });
+		const orderBy = req.query.orderBy || 'bigger';
+		const page = Number(req.query.page) || 1;
+		const pageSize = Number(req.query.pageSize) || 5;
 
-		res.json(investments);
+		const resBody = await this.service.getInvestments({ orderBy, page, pageSize });
+
+		res.json(resBody);
+	};
+
+	// NOTE 전체 투자 금액 총계
+	getTotalAmount = async (req, res) => {
+		const total = await this.service.getTotalAmount();
+
+		res.json(total);
 	};
 
 	patchInvestment = async (req, res) => {
 		const id = req.params.id;
-		console.log(id);
+		// NOTE 인자 형식 유효성 검사
 		assert(id, Uuid, c.MESSAGES.IDFORMAT);
 		assert(req.body, patchInvestment);
 
+		// NOTE password 인증 실패시 401 에러
+		const isCertified = await this.service.certify(id, req.body.password);
+		if (!isCertified) {
+			res.status(401).json({ message: c.MESSAGES.UNAUTHORIZED });
+			return null;
+		}
+
 		const investment = await this.service.patch(id, req.body);
 
-		if (!investment) res.status(404).json({ message: c.MESSAGES.NOID });
+		if (!investment) {
+			res.status(404).json({ message: c.MESSAGES.NOID });
+			return null;
+		}
 
 		res.json(investment);
 	};

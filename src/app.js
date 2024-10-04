@@ -9,10 +9,16 @@ import { companyRouter } from './routes/company.route.js';
 import { investmentRouter } from './routes/investment.route.js';
 import { comparisonRouter } from './routes/comparison.route.js';
 import { watchRouter } from './routes/watch.route.js';
+import { accountRouter } from './routes/account.route.js';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// BigInt를 처리하는 커스텀 JSON 파서
+BigInt.prototype['toJSON'] = function () {
+	return this.toString();
+};
 
 /***************************    ROUTES    **************************************************/
 app.use('/example', exampleRouter); // /example로 이어지는 주소는 이 라우터로 갑니다.
@@ -20,6 +26,7 @@ app.use('/companies', companyRouter); // /companies로 이어지는 주소는 �
 app.use('/comparisons', comparisonRouter); // /comparisons로 이어지는 주소는 이 라우터로 갑니다.
 app.use('/watches', watchRouter); // /watches로 이어지는 주소는 이 라우터로 갑니다.
 app.use('/investments', investmentRouter); // /investments로 이어지는 주소는 이 라우터로 갑니다.
+app.use('/account', accountRouter);
 
 /***************************    HANDLER    **************************************************/
 function errorHandler(err, req, res, next) {
