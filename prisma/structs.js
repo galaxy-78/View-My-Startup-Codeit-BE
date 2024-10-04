@@ -1,17 +1,26 @@
 import * as s from 'superstruct';
+import isEmail from 'is-email';
 import isUuid from 'is-uuid';
 
 const CATEGORIES = ['유통', '물류', 'IT/테크', '제조', '교육', '헬스케어'];
 
 export const Uuid = s.define('Uuid', value => isUuid.v4(value));
+export const Email = s.define('Email', value => isEmail(value));
 
 export const createUser = s.object({
-	name: s.size(s.string(), 1, 10),
-	nickname: s.size(s.string(), 1, 10),
-	password: s.min(s.union([s.string(), s.number()]), 8),
+	email: Email,
+	nickname: s.min(s.string(), 1),
+	salt: s.size(s.string(), 32),
+	pwdEncrypted: s.size(s.string(), 104),
+	pwdCfm: s.string(),
 });
 
 export const patchUser = s.partial(createUser);
+
+export const postCheckBody = s.object({
+	email: Email,
+	nickname: s.size(s.string(), 1, 20),
+})
 
 export const createCompany = s.object({
 	name: s.size(s.string(), 1, 20),
