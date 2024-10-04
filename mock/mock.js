@@ -3,26 +3,31 @@ export const USER = [
 		name: '테스트1',
 		nickname: '테스트1닉네임',
 		email: 'test1@naver.com',
+		password: '123123',
 	},
 	{
 		name: '테스트2',
 		nickname: '테스트2닉네임',
 		email: 'test2@hanmail.com',
+		password: '123123',
 	},
 	{
 		name: '테스트3',
 		nickname: '테스트3닉네임',
 		email: 'test3@gmail.com',
+		password: '123123',
 	},
 	{
 		name: '테스트4',
 		nickname: '테스트4닉네임',
 		email: 'test4@naver.com',
+		password: '123123',
 	},
 	{
 		name: '테스트5',
 		nickname: '테스트5닉네임',
 		email: 'test5@naver.com',
+		password: '123123',
 	},
 ];
 
