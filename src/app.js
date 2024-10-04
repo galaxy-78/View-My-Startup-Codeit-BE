@@ -7,6 +7,7 @@ import { StructError } from 'superstruct';
 import { exampleRouter } from './routes/example.route.js';
 import { companyRouter } from './routes/company.route.js';
 import { investmentRouter } from './routes/investment.route.js';
+import { accountRouter } from './routes/account.route.js';
 
 const app = express();
 app.use(cors());
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use('/example', exampleRouter); // /example로 이어지는 주소는 이 라우터로 갑니다.
 app.use('/companies', companyRouter); // /companies로 이어지는 주소는 이 라우터로 갑니다.
 app.use('/investments', investmentRouter); // /investments로 이어지는 주소는 이 라우터로 갑니다.
+app.use('/account', accountRouter);
 
 /***************************    HANDLER    **************************************************/
 function errorHandler(err, req, res, next) {
