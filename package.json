@@ -10,6 +10,8 @@
     "superstruct": "^1.0.3"
   },
   "devDependencies": {
+    "@types/is-email": "^1.0.0",
+    "@types/is-uuid": "^1.0.2",
     "eslint": "8.57.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.1.0",
