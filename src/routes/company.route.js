@@ -5,9 +5,9 @@ export const companyRouter = express.Router();
 
 // 입력값 유효성 검사 미들웨어
 function validation(req, res, next) {
-	const { page, pageSize } = req.query;
-	if (page && isNaN(Number(page))) throw new TypeError('page should be an integer');
-	if (pageSize && isNaN(Number(pageSize))) throw new TypeError('pageSize should be an integer');
+	const { skip, take } = req.query;
+	if (skip && isNaN(Number(skip))) throw new TypeError('skip should be an integer');
+	if (take && isNaN(Number(take))) throw new TypeError('take should be an integer');
 	next();
 }
 
