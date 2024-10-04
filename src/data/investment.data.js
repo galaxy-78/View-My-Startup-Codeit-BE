@@ -11,14 +11,30 @@ export class InvestmentData {
 		return count;
 	};
 
-	findMany = async size => {
-		const investments = await this.data.findMany({ take: size });
+	findMany = async (orderBy, page, pageSize) => {
+		let sortOption;
+		switch (orderBy) {
+			case 'smaller':
+				sortOption = { orderBy: { amount: 'asc' } };
+				break;
+			case 'bigger':
+			default:
+				sortOption = { orderBy: { amount: 'desc' } };
+		}
+
+		const investments = await this.data.findMany({ ...sortOption, take: pageSize, skip: page });
 
 		return investments;
 	};
 
-	findById = async () => {
-		const investment = await this.data.findById();
+	findAmounts = async () => {
+		const amounts = await this.data.findMany({ select: { amount: true } });
+
+		return amounts;
+	};
+
+	findById = async id => {
+		const investment = await this.data.findUnique({ where: { id } });
 
 		return investment;
 	};

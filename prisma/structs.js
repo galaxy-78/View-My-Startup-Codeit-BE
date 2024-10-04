@@ -38,7 +38,8 @@ export const createInvestment = s.object({
 	name: s.size(s.string(), 1, 10),
 	amount: s.min(s.number(), 0), // 억 단위
 	comment: s.size(s.string(), 1, 20),
-	password: s.min(s.union([s.string(), s.number()]), 8),
+	// password: s.min(s.union([s.string(), s.number()]), 8),
+	password: s.string(),
 	userId: Uuid,
 	companyId: Uuid,
 });
