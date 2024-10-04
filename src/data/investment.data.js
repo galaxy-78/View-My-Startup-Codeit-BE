@@ -22,7 +22,7 @@ export class InvestmentData {
 				sortOption = { orderBy: { amount: 'desc' } };
 		}
 
-		const investments = await this.data.findMany({ ...sortOption, take: pageSize, skip: page });
+		const investments = await this.data.findMany({ ...sortOption, take: pageSize, skip: (page - 1) * pageSize });
 
 		return investments;
 	};
