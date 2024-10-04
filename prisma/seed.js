@@ -1,6 +1,6 @@
 import { USER, COMPANY, INVESTMENT } from '../mock/mock.js';
 import { prismaClient as prisma } from '../src/connection/postgres.connection.js';
-import encrypt, { generateRandomHexString, ITER_FULL } from '../src/encrypt.js';
+import encrypt, { generateRandomHexString, ITER_FULL } from '../src/utils/encrypt.js';
 
 function getRandomInteger(min, max) {
 	const minCeiled = Math.ceil(min);
