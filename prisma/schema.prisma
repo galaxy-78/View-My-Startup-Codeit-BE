@@ -90,7 +90,6 @@ model Comparison {
   userId    String?
   company   Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
   companyId String?
-
 }
 
 model Investment {
