@@ -12,15 +12,15 @@ export class CompanyController {
 
 	// 기업 리스트 가져오기
 	getCompanies = async (req, res) => {
-		const { keyword = '', page = 1, pageSize = 10, orderBy = 'recent' } = req.query;
+		const { keyword = '', skip = 0, take = 20, sort = 'recent' } = req.query;
 		try {
-			const companies = await this.service.getCompanies({
+			const companiesData = await this.service.getCompanies({
 				keyword,
-				page,
-				pageSize,
-				orderBy,
+				skip: Number(skip),
+				take: Number(take),
+				sort,
 			});
-			res.status(200).json(companies);
+			res.status(200).json(companiesData);
 		} catch (error) {
 			res.status(500).json({ error: error.message });
 		}
