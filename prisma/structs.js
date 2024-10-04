@@ -26,6 +26,7 @@ export const createCompany = s.object({
 export const patchCompany = s.partial(createCompany);
 
 export const createInvestment = s.object({
+	id: s.optional(Uuid),
 	name: s.size(s.string(), 1, 10),
 	amount: s.min(s.number(), 0), // 억 단위
 	comment: s.size(s.string(), 1, 20),
