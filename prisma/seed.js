@@ -12,7 +12,7 @@ function getRandomInteger(min, max) {
 }
 
 async function main() {
-  await prisma.$transaction([prisma.user.deleteMany(), prisma.company.deleteMany(), prisma.investment.deleteMany()]);
+	await prisma.$transaction([prisma.user.deleteMany(), prisma.company.deleteMany(), prisma.investment.deleteMany()]);
 
 	await Promise.all(
 		USER.map(async user => {
@@ -21,12 +21,12 @@ async function main() {
 			delete user.password;
 			user.iter = ITER_FULL - 1;
 			await prisma.user.create({ data: user });
-		})
+		}),
 	);
-  prisma.company.createMany({
-    data: COMPANY,
-    skipDuplicates: true,
-  });
+	await prisma.company.createMany({
+		data: COMPANY,
+		skipDuplicates: true,
+	});
 
 	// 관계형 데이터 처리
 	// investments
