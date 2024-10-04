@@ -12,6 +12,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// BigInt를 처리하는 커스텀 JSON 파서
+BigInt.prototype['toJSON'] = function () {
+	return this.toString();
+};
+
 /***************************    ROUTES    **************************************************/
 app.use('/example', exampleRouter); // /example로 이어지는 주소는 이 라우터로 갑니다.
 app.use('/companies', companyRouter); // /companies로 이어지는 주소는 이 라우터로 갑니다.
