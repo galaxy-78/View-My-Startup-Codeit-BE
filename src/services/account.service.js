@@ -43,13 +43,13 @@ export class AccountService {
 
 	checkAvailability = async ({ email, nickname }) => {
 		const result = { email: false, nickname: false };
-		const user0 = this.data.findUnique0({
+		const user0 = await this.data.findUnique0({
 			where: { email },
 		});
 		if (!user0) {
 			result.email = true;
 		}
-		const user1 = this.data.findUnique0({
+		const user1 = await this.data.findUnique0({
 			where: { nickname },
 		});
 		if (!user1) {
