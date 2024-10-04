@@ -5,10 +5,10 @@ import isUuid from 'is-uuid';
 const CATEGORIES = ['유통', '물류', 'IT/테크', '제조', '교육', '헬스케어'];
 
 export const Uuid = s.define('Uuid', value => isUuid.v4(value));
-const email = s.define('email', (value) => isEmail(value));
+export const Email = s.define('Email', value => isEmail(value));
 
 export const createUser = s.object({
-	email: email,
+	email: Email,
 	nickname: s.min(s.string(), 1),
 	salt: s.size(s.string(), 32),
 	pwdEncrypted: s.size(s.string(), 104),
@@ -17,9 +17,9 @@ export const createUser = s.object({
 
 export const patchUser = s.partial(createUser);
 
-export const postCheck = s.object({
-	email: email,
-	nickname: s.min(s.string(), 1),
+export const postCheckBody = s.object({
+	email: Email,
+	nickname: s.size(s.string(), 1, 20),
 })
 
 export const createCompany = s.object({
