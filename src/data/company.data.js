@@ -7,18 +7,49 @@ export class CompanyData {
 	// 여기서 DB와 통신해 받아온 데이터를 위로(service로) 올려줍니다.
 
 	// 모든 기업 리스트 검색
-	getCompanies = async ({ keyword, page, pageSize, orderBy }) => {
-		const skip = (page - 1) * pageSize;
-		const order = orderBy === 'recent' ? { createdAt: 'desc' } : { name: 'asc' };
+	getCompanies = async ({ keyword, skip, take, sort }) => {
+		let orderBy;
+		switch (sort) {
+			case 'accumulInvestDesc':
+				orderBy = { accumulInvest: 'desc' };
+				break;
+			case 'accumulInvestAsc':
+				orderBy = { accumulInvest: 'asc' };
+				break;
+			case 'earningDesc':
+				orderBy = { revenue: 'desc' };
+				break;
+			case 'earningAsc':
+				orderBy = { revenue: 'asc' };
+				break;
+			case 'employeeDesc':
+				orderBy = { employees: 'desc' };
+				break;
+			case 'employeeAsc':
+				orderBy = { employees: 'asc' };
+				break;
+			case 'recent':
+			default:
+				orderBy = { createdAt: 'desc' };
+				break;
+		}
 
-		return await this.data.findMany({
-			where: {
-				name: { contains: keyword, mode: 'insensitive' },
-			},
-			orderBy: order,
-			skip: skip,
-			take: pageSize,
+		const where = keyword ? {
+			name: { contains: keyword, mode: 'insensitive' },
+		} : undefined;
+
+		const totalCount = await this.data.count({
+			where,
 		});
+
+		const companies = await this.data.findMany({
+			where,
+			orderBy,
+			skip,
+			take,
+		});
+
+		return { list: companies, totalCount };
 	};
 
 	// 기업 수 계산
