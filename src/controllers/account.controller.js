@@ -1,4 +1,5 @@
 import { assert } from "superstruct";
+import { postCheckBody } from "../../prisma/structs.js";
 
 export class AccountController {
 	constructor(accountService) {
@@ -22,7 +23,7 @@ export class AccountController {
 	};
 
 	postCheck = async (req, res) => {
-		assert(postCheck, req.body);
+		assert(req.body, postCheckBody);
 		const { email, nickname } = req.body;
 		const available = await this.service.checkAvailability({ email, nickname });
 		res.json(available);
