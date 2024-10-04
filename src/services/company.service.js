@@ -6,34 +6,20 @@ export class CompanyService {
 	// 이 아래로 데이터를 가공하는 코드를 작성합니다.
 	// 비즈니스 로직, DB에서 가져온 데이터를 가공하는 코드가 주로 작성됩니다.
 	// 여기서 가공된 데이터를 controller로 올려줍니다.
-	getCompanies = async ({ parameter }) => {
-		const totalCount = await this.data.count();
-		const list = await this.data.findMany();
 
-		return { list, totalCount };
+	// 기업 리스트 가져오기
+	getCompanies = async ({ keyword, page, pageSize, orderBy }) => {
+		const companies = await this.data.findAll({ keyword, page, pageSize, orderBy });
+		return companies;
 	};
 
-	getCompany = async ({ parameter }) => {
-		const company = await this.data.findById();
-
-		return company;
+	// 기업 수 가져오기
+	getCompanyCount = async ({ keyword }) => {
+		return await this.data.count({ keyword });
 	};
 
-	postCompany = async ({ parameter }) => {
-		const company = await this.data.create();
-
-		return company;
-	};
-
-	updateCompany = async ({ parameter }) => {
-		const company = await this.data.update();
-
-		return company;
-	};
-
-	deleteCompany = async ({ parameter }) => {
-		const company = await this.data.delete();
-
-		return company;
+	// 기업 ID로 기업 정보 가져오기
+	getCompanyById = async id => {
+		return await this.data.findById(id);
 	};
 }

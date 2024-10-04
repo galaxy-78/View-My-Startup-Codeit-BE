@@ -9,9 +9,42 @@ export class CompanyController {
 	// 따라서 superstruct나 validation 관련 코드는 여기에 많이 작성됩니다.
 	// validation은 위쪽 router에서도 사용되고는 하는데, 이에 대해서는 그쪽에 주석 남기겠습니다.
 	// 응답의 status를 지정하고, body를 전달합니다.
-	getCompanies = async (req, res) => {
-		const companies = await this.service.getCompanies({ parameters });
 
-		res.json(companies);
+	// 기업 리스트 가져오기
+	getCompanies = async (req, res) => {
+		const { keyword = '', page = 1, pageSize = 10, orderBy = 'recent' } = req.query;
+		try {
+			const companies = await this.service.getCompanies({
+				keyword,
+				page,
+				pageSize,
+				orderBy,
+			});
+			res.status(200).json(companies);
+		} catch (error) {
+			res.status(500).json({ error: error.message });
+		}
+	};
+
+	// 기업 수 가져오기
+	getCompanyCount = async (req, res) => {
+		const keyword = req.query.keyword || '';
+		try {
+			const count = await this.service.getCompanyCount({ keyword });
+			res.status(200).json({ count });
+		} catch (error) {
+			res.status(500).json({ error: error.message });
+		}
+	};
+
+	// 기업 ID로 기업 정보 가져오기
+	getCompanyById = async (req, res) => {
+		const { id } = req.params;
+		try {
+			const company = await this.service.getCompanyById(id);
+			res.json(company);
+		} catch (error) {
+			res.status(404).json({ error: error.message });
+		}
 	};
 }
