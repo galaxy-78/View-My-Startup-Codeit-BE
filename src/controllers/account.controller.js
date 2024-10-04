@@ -18,7 +18,7 @@ export class AccountController {
 		const user = await this.service.getUser({ email });
 
 		if (encryptRest(user.salt, pwdEncrypted, user.iter) === user.pwdEncrypted) {
-			const session = this.service.updateUserIterAndCreateSession(user);
+			const session = await this.service.updateUserIterAndCreateSession(user);
 			res.json(session);
 		}
 	};
@@ -31,8 +31,9 @@ export class AccountController {
 	};
 
 	postSignup = async (req, res) => {
-		const { email, nickname, salt, pwdEncrypted, pwdCfm } = req.body;
-		const session = this.service.createUserAndCreateSession({ email, nickname, salt, pwdEncrypted, pwdCfm });
+		const { email, name, nickname, salt, pwdEncrypted } = req.body;
+		console.log('req.body', req.body); // TODO: Del
+		const session = await this.service.createUserAndCreateSession({ email, name, nickname, salt, pwdEncrypted });
 		res.json(session);
 	};
 
