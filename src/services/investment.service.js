@@ -19,7 +19,7 @@ export class InvestmentService {
 		const amounts = await this.data.findAmounts();
 
 		const total = amounts.reduce((acc, cur) => {
-			return cur.amount + acc;
+			return BigInt(cur.amount) + BigInt(acc);
 		}, 0);
 
 		return total;

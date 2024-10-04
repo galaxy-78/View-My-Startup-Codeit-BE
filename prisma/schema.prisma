@@ -96,7 +96,7 @@ model Comparison {
 model Investment {
   id       String @id @default(uuid())
   name     String
-  amount   Int
+  amount   BigInt
   comment  String
   password String
 
