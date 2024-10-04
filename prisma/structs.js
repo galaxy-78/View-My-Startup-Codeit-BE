@@ -12,7 +12,6 @@ export const createUser = s.object({
 	nickname: s.min(s.string(), 1),
 	salt: s.size(s.string(), 32),
 	pwdEncrypted: s.size(s.string(), 104),
-	pwdCfm: s.string(),
 });
 
 export const patchUser = s.partial(createUser);
