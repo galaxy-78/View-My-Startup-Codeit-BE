@@ -18,25 +18,23 @@ export class AccountService {
 	};
 
 	updateUserIterAndCreateSession = async ({ email, id, nickname }) => {
-		salt = generateRandomHexString();
-		sessionPwd = generateRandomHexString();
-		const [user, userSession] = prisma.$transaction([
-			await this.data.update0({
+		const salt = generateRandomHexString();
+		const sessionPwd = generateRandomHexString();
+		const user = await this.data.update0({
 				where: { email },
 				data: {
 					iter: {
 						decrement: 1,
-					}
-				}
-			}),
-			await this.data.create({
+					},
+				},
+			});
+		const userSession = await this.data.create({
 				data: {
 					userId: id,
 					sessionSalt: salt,
 					sessionEncrypted: encrypt(salt, sessionPwd, ITER_SSN_FULL),
-				}
-			})
-		]);
+				},
+			});
 
 		return { userUuid: id, nickname, sessionPwd, createdAt: userSession.createdAt };
 	};
@@ -59,15 +57,11 @@ export class AccountService {
 	};
 
 	createUserAndCreateSession = async (data) => {
-		if (data.pwdCfm !== 'confirmed') {
-			throw new Error('Password is not confirmed.');
-		}
-		delete data.pwdCfm;
 		const user = await this.data.create0({
 				data,
 			});
-		salt = generateRandomHexString();
-		sessionPwd = generateRandomHexString();
+		const salt = generateRandomHexString();
+		const sessionPwd = generateRandomHexString();
 		const userSession = await this.data.create({
 				data: {
 					userId: user.id,
