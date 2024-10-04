@@ -18,8 +18,8 @@ export class AccountService {
 	};
 
 	updateUserIterAndCreateSession = async ({ email, id, nickname }) => {
-		salt = generateRandomHexString();
-		sessionPwd = generateRandomHexString();
+		const salt = generateRandomHexString();
+		const sessionPwd = generateRandomHexString();
 		const [user, userSession] = prisma.$transaction([
 			await this.data.update0({
 				where: { email },
