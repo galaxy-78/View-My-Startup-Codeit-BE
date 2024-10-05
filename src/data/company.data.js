@@ -7,7 +7,7 @@ export class CompanyData {
 	// 여기서 DB와 통신해 받아온 데이터를 위로(service로) 올려줍니다.
 
 	// 모든 기업 리스트 검색
-	getCompanies = async ({ keyword, skip, take, sort }) => {
+	getCompanies = async ({ keyword, skip, take, sort, include }) => {
 		let orderBy;
 		switch (sort) {
 			case 'accumulInvestDesc':
@@ -33,6 +33,24 @@ export class CompanyData {
 				orderBy = { createdAt: 'desc' };
 				break;
 		}
+		let includes;
+		switch (include) {
+			case 'watcherAndComparison':
+				includes = {
+					_count: {
+						select: {
+							watcherList: true,
+							comparisons: true,
+						}
+					}
+				}
+				break;
+			case 'investments':
+				includes = { [include]: true };
+				break;
+			default:
+				includes = undefined;
+		}
 
 		const where = keyword ? {
 			name: { contains: keyword, mode: 'insensitive' },
@@ -47,6 +65,7 @@ export class CompanyData {
 			orderBy,
 			skip,
 			take,
+			include: includes
 		});
 
 		return { list: companies, totalCount };
