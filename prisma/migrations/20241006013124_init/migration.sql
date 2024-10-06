@@ -67,7 +67,7 @@ CREATE TABLE "Comparison" (
 CREATE TABLE "Investment" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "amount" INTEGER NOT NULL,
+    "amount" BIGINT NOT NULL,
     "comment" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

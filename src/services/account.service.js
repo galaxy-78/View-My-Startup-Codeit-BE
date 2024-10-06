@@ -1,4 +1,4 @@
-import encrypt, { generateRandomHexString, ITER_SSN_FULL } from "../utils/encrypt.js";
+import encrypt, { encryptSSNRest, generateRandomHexString, ITER_SSN_FULL } from "../utils/encrypt.js";
 import { prismaClient as prisma } from '../connection/postgres.connection.js';
 
 export class AccountService {
@@ -32,12 +32,36 @@ export class AccountService {
 				data: {
 					userId: id,
 					sessionSalt: salt,
+					iter: ITER_SSN_FULL - 1,
 					sessionEncrypted: encrypt(salt, sessionPwd, ITER_SSN_FULL),
 				},
 			});
 
 		return { userUuid: id, nickname, sessionPwd, createdAt: userSession.createdAt };
 	};
+
+	postLogoutAndDeleteSession = async ({ userId, createdAt, sessionEncrypted }) => {
+		const session = await this.data.findUniqueOrThrow({
+			where: {
+				userId_createdAt: {
+					userId,
+					createdAt,
+				},
+			},
+		});
+		if (session.sessionEncrypted === encryptSSNRest(session.sessionSalt, sessionEncrypted, session.iter)) {
+			await this.data.delete({
+				where: {
+					userId_createdAt: {
+						userId,
+						createdAt,
+					},
+				},
+			});
+			return { message: 'Session 이 안전하게 지워졌습니다.' };
+		}
+		return { message: 'Session 이 유효하지 않아 server 상의 session 은 지워지지 않았습니다.' };
+	}
 
 	checkAvailability = async ({ email, nickname }) => {
 		const result = { email: false, nickname: false };
@@ -66,6 +90,7 @@ export class AccountService {
 				data: {
 					userId: user.id,
 					sessionSalt: salt,
+					iter: ITER_SSN_FULL - 1,
 					sessionEncrypted: encrypt(salt, sessionPwd, ITER_SSN_FULL),
 				}
 			});
@@ -91,14 +116,21 @@ export class AccountService {
 		return account;
 	};
 
-	postSsnIter = async ({ id, createdAt }) => {
-		const account = await this.data.findUniqueOrThrow({
-			where: { id, createdAt },
+	postSsnIter = async ({ userId, createdAt }) => {
+		const session = await this.data.findUniqueOrThrow({
+			where: {
+				userId_createdAt: {
+					userId,
+					createdAt,
+				},
+			},
 			select: {
 				iter: true,
-				salt: true,
-			}
-		})
+				sessionSalt: true,
+			},
+		});
+
+		return session;
 	}
 
 	postAccount = async ({ parameter }) => {
