@@ -16,6 +16,11 @@ export class AccountData {
 		return user;
 	};
 
+	delete = async (...args) => {
+		const session = await this.data.delete(...args);
+		return session;
+	}
+
 	update0 = async (...args) => {
 		const user = await this.data0.update(...args);
 		return user;
@@ -37,7 +42,7 @@ export class AccountData {
 	};
 
 	findUniqueOrThrow = async (...args) => {
-		const account = await this.data.findUniqueOrThrow(...args);
-		return account;
+		const session = await this.data.findUniqueOrThrow(...args);
+		return session;
 	};
 }

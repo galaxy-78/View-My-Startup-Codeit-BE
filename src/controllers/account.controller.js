@@ -1,5 +1,5 @@
 import { assert } from "superstruct";
-import { postCheckBody } from "../../prisma/structs.js";
+import { postCheckBody, postSsnIterBody } from "../../prisma/structs.js";
 import { encryptRest } from "../utils/encrypt.js";
 
 export class AccountController {
@@ -23,6 +23,12 @@ export class AccountController {
 		}
 	};
 
+	postLogout = async (req, res) => {
+		const { userId, createdAt, sessionEncrypted } = req.body;
+		const result = await this.service.postLogoutAndDeleteSession({ userId, createdAt, sessionEncrypted });
+		res.json(result);
+	}
+
 	postCheck = async (req, res) => {
 		assert(req.body, postCheckBody);
 		const { email, nickname } = req.body;
@@ -32,7 +38,6 @@ export class AccountController {
 
 	postSignup = async (req, res) => {
 		const { email, name, nickname, salt, pwdEncrypted } = req.body;
-		console.log('req.body', req.body); // TODO: Del
 		const session = await this.service.createUserAndCreateSession({ email, name, nickname, salt, pwdEncrypted });
 		res.json(session);
 	};
@@ -51,9 +56,9 @@ export class AccountController {
 	};
 
 	postSsnIter = async (req, res) => {
-		const { id, createdAt } = req.body;
-		const account = await this.service.postSsnIter({ id, createdAt });
-
+		assert(req.body, postSsnIterBody);
+		const { userId, createdAt } = req.body;
+		const account = await this.service.postSsnIter({ userId, createdAt });
 		res.json(account);
 	};
 }

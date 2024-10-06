@@ -51,7 +51,8 @@ model UserSession {
 }
 
 model Company {
-  // TODO 가상 투자 금액 총계를 직접 저장할 것인가, 매번 계산할 것인가
+  // TODO 가상 투자 금액 총계를 직접 저장할 것인가, 매번 계산할 것인가?
+  // 당장은 FE 단에서 계산하고 있음.
   id            String  @id @default(uuid())
   name          String  @unique
   description   String

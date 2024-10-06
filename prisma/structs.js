@@ -6,6 +6,7 @@ const CATEGORIES = ['유통', '물류', 'IT/테크', '제조', '교육', '헬스
 
 export const Uuid = s.define('Uuid', value => isUuid.v4(value));
 export const Email = s.define('Email', value => isEmail(value));
+export const DateTime = s.define('DateTime', value => /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/.test(value));
 
 export const createUser = s.object({
 	email: Email,
@@ -19,7 +20,12 @@ export const patchUser = s.partial(createUser);
 export const postCheckBody = s.object({
 	email: Email,
 	nickname: s.size(s.string(), 1, 20),
-})
+});
+
+export const postSsnIterBody = s.object({
+	userId: Uuid,
+	createdAt: DateTime,
+});
 
 export const createCompany = s.object({
 	name: s.size(s.string(), 1, 20),
