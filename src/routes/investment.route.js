@@ -22,3 +22,5 @@ investmentRouter.get('/', investmentController.getInvestments);
 investmentRouter.get('/total', investmentController.getTotalAmount);
 
 investmentRouter.patch('/:id', investmentController.patchInvestment);
+
+investmentRouter.delete('/:id', investmentController.deleteInvestment);

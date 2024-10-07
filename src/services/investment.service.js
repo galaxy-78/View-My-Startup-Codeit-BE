@@ -43,8 +43,8 @@ export class InvestmentService {
 		return investment;
 	};
 
-	deleteInvestment = async ({ parameter }) => {
-		const investment = await this.data.delete();
+	delete = async id => {
+		const investment = await this.data.delete(id);
 
 		return investment;
 	};

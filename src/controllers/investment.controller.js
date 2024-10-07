@@ -52,4 +52,27 @@ export class InvestmentController {
 
 		res.json(investment);
 	};
+
+	deleteInvestment = async (req, res) => {
+		const id = req.params.id;
+		// NOTE 인자 형식 유효성 검사
+		assert(id, Uuid, c.MESSAGES.IDFORMAT);
+		assert(req.body, patchInvestment);
+
+		// NOTE password 인증 실패시 401 에러
+		const isCertified = await this.service.certify(id, req.body.password);
+		if (!isCertified) {
+			res.status(401).json({ message: c.MESSAGES.UNAUTHORIZED });
+			return null;
+		}
+
+		const investment = await this.service.delete(id);
+
+		if (!investment) {
+			res.status(404).json({ message: c.MESSAGES.NOID });
+			return null;
+		}
+
+		res.json(investment);
+	};
 }
