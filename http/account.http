@@ -1,0 +1,30 @@
+GET http://localhost:3000/account/users
+
+###
+
+POST http://localhost:3000/account/iter
+Content-Type: application/json
+
+{
+	"email": "test1@naver.com"
+}
+
+###
+
+POST http://localhost:3000/account/session-iter
+Content-Type: application/json
+
+{
+	"id": "53a10ad5-5c7a-4415-9683-a151b861b26d",
+	"createdAt": 0
+}
+
+###
+
+POST http://localhost:3000/account/check
+Content-Type: application/json
+
+{
+	"email": "test1@naver.com",
+	"nickname": "닉네임"
+}
