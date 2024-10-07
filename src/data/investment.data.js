@@ -51,8 +51,8 @@ export class InvestmentData {
 		return investment;
 	};
 
-	delete = async () => {
-		const investment = await this.data.delete();
+	delete = async id => {
+		const investment = await this.data.delete({ where: { id } });
 
 		return investment;
 	};
