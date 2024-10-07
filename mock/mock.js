@@ -40,6 +40,7 @@ export const COMPANY = [
 		accumulInvest: 5000000000,
 		revenue: 25700000000,
 		employees: 38,
+		logo: 'https://i.imgur.com/36DDu72.png',
 	},
 	{
 		name: '빵빵물류',
@@ -49,6 +50,7 @@ export const COMPANY = [
 		accumulInvest: 3000000000,
 		revenue: 15200000000,
 		employees: 62,
+		logo: 'https://i.imgur.com/yhj9dQT.png',
 	},
 	{
 		name: '클라우드웍스',
@@ -58,6 +60,7 @@ export const COMPANY = [
 		accumulInvest: 7500000000,
 		revenue: 45800000000,
 		employees: 120,
+		logo: 'https://i.imgur.com/1vd5Gns.png',
 	},
 	{
 		name: '스마트팩토리',
@@ -67,6 +70,7 @@ export const COMPANY = [
 		accumulInvest: 9500000000,
 		revenue: 63100000000,
 		employees: 150,
+		logo: 'https://i.imgur.com/n6VT6yV.png',
 	},
 	{
 		name: '헬스핏',
@@ -76,6 +80,7 @@ export const COMPANY = [
 		accumulInvest: 6000000000,
 		revenue: 32500000000,
 		employees: 55,
+		logo: 'https://i.imgur.com/Xeba4ol.png',
 	},
 	{
 		name: '아이러닝',
@@ -85,6 +90,7 @@ export const COMPANY = [
 		accumulInvest: 4000000000,
 		revenue: 22900000000,
 		employees: 45,
+		logo: 'https://i.imgur.com/fQtDVHy.png',
 	},
 	{
 		name: '에코마켓',
@@ -94,6 +100,7 @@ export const COMPANY = [
 		accumulInvest: 2500000000,
 		revenue: 10200000000,
 		employees: 30,
+		logo: 'https://i.imgur.com/atS3wtK.png',
 	},
 	{
 		name: '딜리버코',
@@ -103,6 +110,7 @@ export const COMPANY = [
 		accumulInvest: 3500000000,
 		revenue: 17400000000,
 		employees: 45,
+		logo: 'https://i.imgur.com/OX5d29z.png',
 	},
 	{
 		name: '테크빗',
@@ -112,6 +120,7 @@ export const COMPANY = [
 		accumulInvest: 8000000000,
 		revenue: 56100000000,
 		employees: 135,
+		logo: 'https://i.imgur.com/4crYp7Q.png',
 	},
 	{
 		name: '메카팩토리',
@@ -121,6 +130,7 @@ export const COMPANY = [
 		accumulInvest: 7000000000,
 		revenue: 42500000000,
 		employees: 95,
+		logo: 'https://i.imgur.com/XkKyAsk.png',
 	},
 	{
 		name: '에듀펀',
@@ -130,6 +140,7 @@ export const COMPANY = [
 		accumulInvest: 5500000000,
 		revenue: 27300000000,
 		employees: 70,
+		logo: 'https://i.imgur.com/0t3svKD.png',
 	},
 	{
 		name: '헬스온',
@@ -139,6 +150,7 @@ export const COMPANY = [
 		accumulInvest: 4500000000,
 		revenue: 32000000000,
 		employees: 60,
+		logo: 'https://i.imgur.com/pxQaDBJ.png',
 	},
 	{
 		name: '그린푸드',
@@ -148,6 +160,7 @@ export const COMPANY = [
 		accumulInvest: 3000000000,
 		revenue: 18300000000,
 		employees: 50,
+		logo: 'https://i.imgur.com/ivaePjV.png',
 	},
 	{
 		name: '퀵스피드',
@@ -157,6 +170,7 @@ export const COMPANY = [
 		accumulInvest: 4000000000,
 		revenue: 22700000000,
 		employees: 65,
+		logo: 'https://i.imgur.com/VlXdncM.png',
 	},
 	{
 		name: '드림테크',
@@ -166,6 +180,7 @@ export const COMPANY = [
 		accumulInvest: 8500000000,
 		revenue: 64200000000,
 		employees: 150,
+		logo: 'https://i.imgur.com/bflu4sP.png',
 	},
 	{
 		name: '코드바다',
@@ -175,6 +190,7 @@ export const COMPANY = [
 		accumulInvest: 7500000000,
 		revenue: 25500000000,
 		employees: 30,
+		logo: 'https://i.imgur.com/RuaCd6i.png',
 	},
 	{
 		name: '행복한 요리사',
@@ -184,6 +200,7 @@ export const COMPANY = [
 		accumulInvest: 3000000000,
 		revenue: 10000000000,
 		employees: 15,
+		logo: 'https://i.imgur.com/aEbSVHa.png',
 	},
 	{
 		name: '바다의 맛',
@@ -193,6 +210,7 @@ export const COMPANY = [
 		accumulInvest: 4500000000,
 		revenue: 18000000000,
 		employees: 25,
+		logo: 'https://i.imgur.com/DeQP5HA.png',
 	},
 	{
 		name: '헬스마스터',
@@ -202,6 +220,7 @@ export const COMPANY = [
 		accumulInvest: 6000000000,
 		revenue: 20000000000,
 		employees: 50,
+		logo: 'https://i.imgur.com/BVzumUt.png',
 	},
 	{
 		name: '지식의 숲',
@@ -211,6 +230,7 @@ export const COMPANY = [
 		accumulInvest: 9000000000,
 		revenue: 30000000000,
 		employees: 40,
+		logo: 'https://i.imgur.com/meLn6iX.png',
 	},
 	{
 		name: '농부의 정원',
@@ -220,6 +240,7 @@ export const COMPANY = [
 		accumulInvest: 3500000000,
 		revenue: 12500000000,
 		employees: 20,
+		logo: 'https://i.imgur.com/PhdruVY.png',
 	},
 	{
 		name: '사랑의 편지',
@@ -229,6 +250,7 @@ export const COMPANY = [
 		accumulInvest: 2500000000,
 		revenue: 8000000000,
 		employees: 10,
+		logo: 'https://i.imgur.com/6Y6x8I6.png',
 	},
 	{
 		name: '꿈의 교실',
@@ -238,6 +260,7 @@ export const COMPANY = [
 		accumulInvest: 5500000000,
 		revenue: 22000000000,
 		employees: 35,
+		logo: 'https://i.imgur.com/vydesyA.png',
 	},
 	{
 		name: '신비로운 세상',
@@ -247,6 +270,7 @@ export const COMPANY = [
 		accumulInvest: 7000000000,
 		revenue: 28000000000,
 		employees: 28,
+		logo: 'https://i.imgur.com/BcPK5AO.png',
 	},
 	{
 		name: '지구를 지켜라',
@@ -256,6 +280,7 @@ export const COMPANY = [
 		accumulInvest: 5000000000,
 		revenue: 15000000000,
 		employees: 22,
+		logo: 'https://i.imgur.com/ZAC1p8a.png',
 	},
 	{
 		name: '스마트 빌리지',
@@ -265,6 +290,7 @@ export const COMPANY = [
 		accumulInvest: 4000000000,
 		revenue: 14000000000,
 		employees: 18,
+		logo: 'https://i.imgur.com/JaqNLNp.png',
 	},
 	{
 		name: '우주 탐험대',
@@ -274,6 +300,7 @@ export const COMPANY = [
 		accumulInvest: 3000000000,
 		revenue: 9000000000,
 		employees: 12,
+		logo: 'https://i.imgur.com/XFahQ7V.png',
 	},
 	{
 		name: '미래의 농업',
@@ -283,6 +310,7 @@ export const COMPANY = [
 		accumulInvest: 8000000000,
 		revenue: 27500000000,
 		employees: 35,
+		logo: 'https://i.imgur.com/XEeQc9f.png',
 	},
 	{
 		name: '디지털 마케팅 허브',
@@ -292,6 +320,7 @@ export const COMPANY = [
 		accumulInvest: 5500000000,
 		revenue: 16000000000,
 		employees: 20,
+		logo: 'https://i.imgur.com/e1nt8Ij.png',
 	},
 	{
 		name: '녹색 에너지',
@@ -301,6 +330,7 @@ export const COMPANY = [
 		accumulInvest: 4500000000,
 		revenue: 15000000000,
 		employees: 30,
+		logo: 'https://i.imgur.com/CqKDiGz.png',
 	},
 	{
 		name: '다함께 공유',
@@ -310,6 +340,7 @@ export const COMPANY = [
 		accumulInvest: 3500000000,
 		revenue: 12000000000,
 		employees: 15,
+		logo: 'https://i.imgur.com/lVRpcl4.png',
 	},
 	{
 		name: '비욘드 시리얼',
@@ -319,6 +350,7 @@ export const COMPANY = [
 		accumulInvest: 4000000000,
 		revenue: 14000000000,
 		employees: 25,
+		logo: 'https://i.imgur.com/R2UmTnW.png',
 	},
 	{
 		name: '인공지능 음악가',
@@ -328,6 +360,7 @@ export const COMPANY = [
 		accumulInvest: 6000000000,
 		revenue: 20000000000,
 		employees: 22,
+		logo: 'https://i.imgur.com/RVUJ5X0.png',
 	},
 	{
 		name: '스마트 패션',
@@ -337,6 +370,7 @@ export const COMPANY = [
 		accumulInvest: 7500000000,
 		revenue: 30000000000,
 		employees: 45,
+		logo: 'https://i.imgur.com/QGMYXJ2.png',
 	},
 	{
 		name: '지식의 나무',
@@ -346,6 +380,7 @@ export const COMPANY = [
 		accumulInvest: 5000000000,
 		revenue: 18000000000,
 		employees: 27,
+		logo: 'https://i.imgur.com/6ns5742.png',
 	},
 	{
 		name: '모두의 가게',
@@ -355,6 +390,7 @@ export const COMPANY = [
 		accumulInvest: 6000000000,
 		revenue: 20000000000,
 		employees: 25,
+		logo: 'https://i.imgur.com/M91gqjK.png',
 	},
 	{
 		name: '영화의 꿈',
@@ -364,6 +400,7 @@ export const COMPANY = [
 		accumulInvest: 5500000000,
 		revenue: 22000000000,
 		employees: 19,
+		logo: 'https://i.imgur.com/awK1NJV.png',
 	},
 	{
 		name: '책의 비밀',
@@ -373,6 +410,7 @@ export const COMPANY = [
 		accumulInvest: 4500000000,
 		revenue: 17000000000,
 		employees: 15,
+		logo: 'https://i.imgur.com/iIoQVx3.png',
 	},
 	{
 		name: '친환경 미소',
@@ -382,6 +420,7 @@ export const COMPANY = [
 		accumulInvest: 7000000000,
 		revenue: 25000000000,
 		employees: 20,
+		logo: 'https://i.imgur.com/Soc463l.png',
 	},
 	{
 		name: '행복한 빵집',
@@ -391,6 +430,7 @@ export const COMPANY = [
 		accumulInvest: 6500000000,
 		revenue: 28000000000,
 		employees: 23,
+		logo: 'https://i.imgur.com/E4XhAIX.png',
 	},
 	{
 		name: '소셜 네트워킹 팩토리',
@@ -400,6 +440,7 @@ export const COMPANY = [
 		accumulInvest: 5000000000,
 		revenue: 19000000000,
 		employees: 29,
+		logo: 'https://i.imgur.com/ifhKvDu.png',
 	},
 	{
 		name: '창의력 공장',
@@ -409,6 +450,7 @@ export const COMPANY = [
 		accumulInvest: 5500000000,
 		revenue: 21000000000,
 		employees: 16,
+		logo: 'https://i.imgur.com/Qocgi0J.png',
 	},
 	{
 		name: '바삭한 소세지 마켓',
@@ -418,6 +460,7 @@ export const COMPANY = [
 		accumulInvest: 3000000000,
 		revenue: 12500000000,
 		employees: 25,
+		logo: 'https://i.imgur.com/yfCRxNC.png',
 	},
 	{
 		name: '지구 지킴이 물류',
@@ -427,6 +470,7 @@ export const COMPANY = [
 		accumulInvest: 5000000000,
 		revenue: 20000000000,
 		employees: 40,
+		logo: 'https://i.imgur.com/PwsJI2B.png',
 	},
 	{
 		name: '코딩 뱃지 클럽',
@@ -436,6 +480,7 @@ export const COMPANY = [
 		accumulInvest: 4500000000,
 		revenue: 18000000000,
 		employees: 20,
+		logo: 'https://i.imgur.com/fCsteF9.png',
 	},
 	{
 		name: '헬스 요가 시티',
@@ -445,6 +490,7 @@ export const COMPANY = [
 		accumulInvest: 3500000000,
 		revenue: 14500000000,
 		employees: 15,
+		logo: 'https://i.imgur.com/6dHG9xa.png',
 	},
 	{
 		name: '스마트 홈 매니저',
@@ -454,6 +500,7 @@ export const COMPANY = [
 		accumulInvest: 6000000000,
 		revenue: 22300000000,
 		employees: 10,
+		logo: 'https://i.imgur.com/TvnXZ18.png',
 	},
 	{
 		name: '감정 해방 컨설팅',
@@ -463,6 +510,7 @@ export const COMPANY = [
 		accumulInvest: 2000000000,
 		revenue: 9000000000,
 		employees: 12,
+		logo: 'https://i.imgur.com/uQ3rMx6.png',
 	},
 	{
 		name: '아이디어 팩토리',
@@ -472,6 +520,7 @@ export const COMPANY = [
 		accumulInvest: 7500000000,
 		revenue: 30000000000,
 		employees: 18,
+		logo: 'https://i.imgur.com/1piAcki.png',
 	},
 	{
 		name: '꿈꾸는 식물원',
@@ -481,6 +530,7 @@ export const COMPANY = [
 		accumulInvest: 2800000000,
 		revenue: 11200000000,
 		employees: 14,
+		logo: 'https://i.imgur.com/u2jghuC.png',
 	},
 	{
 		name: '어드벤처 게임즈',
@@ -490,6 +540,7 @@ export const COMPANY = [
 		accumulInvest: 9000000000,
 		revenue: 35000000000,
 		employees: 50,
+		logo: 'https://i.imgur.com/ggpaOE5.png',
 	},
 	{
 		name: '바다를 품은 카페',
@@ -499,6 +550,7 @@ export const COMPANY = [
 		accumulInvest: 3300000000,
 		revenue: 13500000000,
 		employees: 22,
+		logo: 'https://i.imgur.com/wML3TCG.png',
 	},
 ];
 

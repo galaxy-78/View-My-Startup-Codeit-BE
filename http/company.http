@@ -1,0 +1,6 @@
+GET http://localhost:3100/companies
+
+###
+
+GET https://view-my-startup-codeit-be.onrender.com/companies
+
