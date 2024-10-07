@@ -12,7 +12,9 @@ function getRandomInteger(min, max) {
 }
 
 async function main() {
-	await prisma.$transaction([prisma.user.deleteMany(), prisma.company.deleteMany(), prisma.investment.deleteMany()]);
+	await prisma.investment.deleteMany();
+	await prisma.company.deleteMany();
+	await prisma.user.deleteMany();
 
 	await Promise.all(
 		USER.map(async user => {
