@@ -35,7 +35,13 @@ export class UserSessionController {
 		assert(req.body, ssnBody);
 		const { userId, createdAt } = req.body;
 		const iterNSalt = await this.service.getSessionIter({ userId, createdAt });
-
 		res.json(iterNSalt);
+	};
+
+	postSsns = async (req, res) => {
+		assert(req.body, ssnBodyWithPwdEncrypted);
+		const { userId, createdAt, sessionEncrypted } = req.body;
+		const sessions = await this.service.getSessions({ userId, createdAt, sessionEncrypted });
+		res.json(sessions);
 	};
 }
