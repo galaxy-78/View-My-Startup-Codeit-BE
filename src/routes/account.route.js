@@ -11,7 +11,7 @@ export const accountRouter = express.Router(); // export 해주어야 합니다.
 // app.get이 아닙니다. router.get입니다.
 accountRouter.post('/log-in', authController.postLogin);
 // accountRouter.post('/log-out', userSessionController.postLogout);
-// accountRouter.post('/check', userController.postCheck);
+accountRouter.post('/check', userController.postCheck);
 // accountRouter.post('/sign-up', userController.postSignup);
 accountRouter.post('/iter', userController.postPwdIter);
 // accountRouter.post('/session-iter', userSessionController.postSsnIter);
@@ -22,7 +22,7 @@ accountRouter.get('/users', userController.getUsers);
 // accountRouter.post('/log-in', accountController.postLogin);
 accountRouter.post('/log-out', accountController.postLogout);
 accountRouter.post('/log-out-from-all', accountController.postLogoutFromAll);
-accountRouter.post('/check', accountController.postCheck);
+// accountRouter.post('/check', accountController.postCheck);
 accountRouter.post('/sign-up', accountController.postSignup);
 // accountRouter.post('/iter', accountController.postPwdIter);
 accountRouter.post('/session-iter', accountController.postSsnIter);
