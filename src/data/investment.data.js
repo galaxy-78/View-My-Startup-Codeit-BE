@@ -5,13 +5,17 @@ export class InvestmentData {
 
 	// 이 아래로 직접 DB와 통신하는 코드를 작성합니다.
 	// 여기서 DB와 통신해 받아온 데이터를 위로(service로) 올려줍니다.
-	count = async () => {
-		const count = await this.data.count();
+	count = async companyId => {
+		const query = companyId ? { where: { companyId } } : {};
+
+		const count = await this.data.count(query);
 
 		return count;
 	};
 
-	findMany = async (orderBy, page, pageSize) => {
+	findMany = async (orderBy, page, pageSize, companyId) => {
+		const where = companyId ? { where: { companyId } } : {};
+
 		let sortOption;
 		switch (orderBy) {
 			case 'smaller':
@@ -22,13 +26,13 @@ export class InvestmentData {
 				sortOption = { orderBy: { amount: 'desc' } };
 		}
 
-		const investments = await this.data.findMany({ ...sortOption, take: pageSize, skip: (page - 1) * pageSize });
+		const investments = await this.data.findMany({ ...where, ...sortOption, take: pageSize, skip: (page - 1) * pageSize });
 
 		return investments;
 	};
 
-	findAmounts = async () => {
-		const amounts = await this.data.findMany({ select: { amount: true } });
+	findAmounts = async companyId => {
+		const amounts = await this.data.findMany({ where: { companyId }, select: { amount: true } });
 
 		return amounts;
 	};

@@ -19,7 +19,8 @@ investmentRouter.use(validation);
 // 메소드의 리턴값이 아니라 메소드 자체를 넘겨주어야 합니다.
 // app.get이 아닙니다. router.get입니다.
 investmentRouter.get('/', investmentController.getInvestments);
-investmentRouter.get('/total', investmentController.getTotalAmount);
+investmentRouter.get('/:companyId', investmentController.getInvestments);
+investmentRouter.get('/:companyId/total', investmentController.getTotalAmount);
 
 investmentRouter.patch('/:id', investmentController.patchInvestment);
 
