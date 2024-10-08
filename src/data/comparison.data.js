@@ -3,26 +3,30 @@ export class ComparisonData {
 		this.data = client.Comparison; // Comparison 모델을 연결합니다.
 	}
 
-	// // 비교할 기업 선택
-	// selectCompareCompanies = async (selectedCompanyIds, userId) => {
-	// 	const selectedCompanies = [];
-	// 	for (const companyId of selectedCompanyIds) {
-	// 		const existingComparison = await this.data.findFirst({
-	// 			where: { userId, companyId },
-	// 		});
+	// 회사 ID로 회사 정보 가져오기
+	findCompanyById = async companyId => {
+		return await this.data.findUnique({
+			where: { id: companyId }, // 유니크한 ID로 검색
+		});
+	};
 
-	// 		if (!existingComparison) {
-	// 			await this.data.create({ data: { userId, companyId } });
-	// 			selectedCompanies.push(companyId);
-	// 		}
-	// 	}
-	// 	return selectedCompanies;
-	// };
+	// 사용자 ID와 회사 ID로 비교 기업 존재 여부 확인
+	findComparisonByUserIdAndCompanyId = async (userId, companyId) => {
+		return await this.data.findFirst({
+			where: {
+				userId,
+				companyId,
+			},
+		});
+	};
 
-	// 특정 기업 선택 해제
-	removeCompareCompany = async (companyId, userId) => {
-		return await this.data.deleteMany({
-			where: { userId, companyId },
+	// 사용자 ID와 회사 ID로 비교 기업 추가
+	createComparison = async (userId, companyId) => {
+		return await this.data.create({
+			data: {
+				userId,
+				companyId,
+			},
 		});
 	};
 
@@ -31,13 +35,6 @@ export class ComparisonData {
 		return await this.data.findMany({
 			where: { userId },
 			include: { company: true }, // company 정보 포함
-		});
-	};
-
-	// 회사 ID로 회사 정보 가져오기
-	findCompanyById = async companyId => {
-		return await this.data.findUnique({
-			where: { id: companyId }, // 유니크한 ID로 검색
 		});
 	};
 }

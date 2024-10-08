@@ -16,7 +16,7 @@ export class WatchController {
 
 	// '나의 기업' 조회
 	getMyCompany = async (req, res) => {
-		const userId = req.user.id;
+		const { userId } = req.params;
 		try {
 			const watch = await this.service.getMyCompany(userId);
 			res.status(200).json(watch);

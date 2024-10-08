@@ -14,5 +14,5 @@ function validation(req, res, next) {
 watchRouter.use(validation);
 
 // API 엔드포인트 설정
-watchRouter.post('/', watchController.selectMyCompany);
-watchRouter.get('/', watchController.getMyCompany);
+watchRouter.post('/select', watchController.selectMyCompany);
+watchRouter.get('/select/:userId', watchController.getMyCompany);
