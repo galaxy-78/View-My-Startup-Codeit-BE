@@ -1,9 +1,48 @@
 export class UserService {
-  constructor(userData) {
-    this.data = userData; // 이 부분에 data.js를 연결합니다.
-  }
+	constructor(userData) {
+		this.data = userData; // 이 부분에 data.js를 연결합니다.
+	}
 
-  // 이 아래로 데이터를 가공하는 코드를 작성합니다.
-  // 비즈니스 로직, DB에서 가져온 데이터를 가공하는 코드가 주로 작성됩니다.
-  // 여기서 가공된 데이터를 controller로 올려줍니다.
+	// 이 아래로 데이터를 가공하는 코드를 작성합니다.
+	// 비즈니스 로직, DB에서 가져온 데이터를 가공하는 코드가 주로 작성됩니다.
+	// 여기서 가공된 데이터를 controller로 올려줍니다.
+	checkAvailability = async ({ email, nickname }) => {
+		const userByEmail = await this.data.findByEmail(email);
+		const userByNickname = await this.data.findByNickname(nickname);
+
+		result = { email: !userByEmail, nickname: !userByNickname };
+
+		return result;
+	};
+
+	getUsers = async () => {
+		const users = await this.data.findMany();
+
+		return users;
+	};
+
+	getUser = async email => {
+		const user = await this.data.findByEmailOrThrow(email);
+
+		return user;
+	};
+
+	post = async userData => {
+		const user = await this.data.create(userData);
+
+		return user;
+	};
+
+	// NOTE 기존 service.postPwdIter에 해당하는 부분. 코드를 봐선 get 요청인듯 하여 메소드명을 변경했습니다.
+	getPwdIter = async email => {
+		const iterNSalt = await this.data.getPwdIter(email);
+
+		return iterNSalt;
+	};
+
+	updateUserIter = async email => {
+		const user = await this.data.updateIter(email);
+
+		return user;
+	};
 }
