@@ -1,6 +1,17 @@
-GET http://localhost:3100/companies
+GET http://localhost:3000/companies
 
 ###
 
 GET https://view-my-startup-codeit-be.onrender.com/companies
 
+###
+
+GET http://localhost:3000/companies/5f0e6dbb-9794-496a-a9e6-33bba8776d5d
+
+###
+
+GET http://localhost:3000/companies/count?keyword={keyword}
+Content-Type: application/json
+
+# 이 부분에서 검색할 키워드를 지정
+keyword=빵빵

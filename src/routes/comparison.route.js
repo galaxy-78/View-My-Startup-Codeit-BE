@@ -14,6 +14,5 @@ function validation(req, res, next) {
 comparisonRouter.use(validation);
 
 // API 엔드포인트 설정
-comparisonRouter.get('/', comparisonController.getCompareCompanies);
-comparisonRouter.post('/', comparisonController.selectCompareCompanies);
-comparisonRouter.delete('/:companyId', comparisonController.removeCompareCompany);
+comparisonRouter.post('/select', comparisonController.selectCompareCompanies);
+comparisonRouter.get('/select/:userId', comparisonController.getCompareCompanies);
