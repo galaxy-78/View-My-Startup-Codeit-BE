@@ -21,7 +21,7 @@ export class UserService {
 		return users;
 	};
 
-	getUser = async email => {
+	getUserByEmail = async email => {
 		const user = await this.data.findByEmailOrThrow(email);
 
 		return user;
@@ -34,14 +34,15 @@ export class UserService {
 	};
 
 	// NOTE 기존 service.postPwdIter에 해당하는 부분. 코드를 봐선 get 요청인듯 하여 메소드명을 변경했습니다.
+	// 여기선 get 으로 이름 지어도 괜찮을거 같네요.
 	getPwdIter = async email => {
 		const iterNSalt = await this.data.getPwdIter(email);
 
 		return iterNSalt;
 	};
 
-	updateUserIter = async email => {
-		const user = await this.data.updateIter(email);
+	updateUserIterByEmail = async email => {
+		const user = await this.data.updateIterByEmail(email);
 
 		return user;
 	};
