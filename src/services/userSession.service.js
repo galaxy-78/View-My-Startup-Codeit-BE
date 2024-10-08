@@ -12,22 +12,18 @@ export class UserSessionService {
 	// NOTE 기존 service.postSsnIter에 해당하는 부분. 기능상 get요청으로 보여서 메소드명을 수정했습니다.
 	getSessionIter = async ({ userId, createdAt }) => {
 		const session = await this.data.findByUserIdAndCreatedAt(userId, createdAt);
-
 		const iterNSalt = { iter: session.iter, sessionSalt: session.sessionSalt };
-
 		return iterNSalt;
 	};
 
 	createSession = async sessionData => {
 		const session = await this.data.create(sessionData);
-
 		return session;
 	};
 
 	// NOTE 기존 service.postLogoutAndDeleteSession 부분.
 	deleteSession = async ({ userId, createdAt, sessionEncrypted }) => {
 		const session = await this.data.findByUserIdAndCreatedAt(userId, createdAt);
-
 		if (session.sessionEncrypted === encryptSSNRest(session.sessionSalt, sessionEncrypted, session.iter)) {
 			await this.data.delete(userId, createdAt);
 			return { message: 'Session이 안전하게 지워졌습니다.' };
