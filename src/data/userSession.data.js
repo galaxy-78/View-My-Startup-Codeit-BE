@@ -25,4 +25,10 @@ export class UserSessionData {
 			where: { userId_createdAt: { userId, createdAt } },
 		});
 	};
+
+	deleteManyByUserId = async userId => {
+		return await this.data.deleteMany({
+			where: { userId },
+		})
+	}
 }
