@@ -23,12 +23,12 @@ export class AccountController {
 	// 	}
 	// };
 
-	postLogout = async (req, res) => {
-		assert(req.body, ssnBodyWithPwdEncrypted);
-		const { userId, createdAt, sessionEncrypted } = req.body;
-		const result = await this.service.postLogoutAndDeleteSession({ userId, createdAt, sessionEncrypted });
-		res.json(result);
-	}
+	// postLogout = async (req, res) => {
+	// 	assert(req.body, ssnBodyWithPwdEncrypted);
+	// 	const { userId, createdAt, sessionEncrypted } = req.body;
+	// 	const result = await this.service.postLogoutAndDeleteSession({ userId, createdAt, sessionEncrypted });
+	// 	res.json(result);
+	// }
 
 	postLogoutFromAll = async (req, res) => {
 		assert(req.body, ssnBodyWithPwdEncrypted);

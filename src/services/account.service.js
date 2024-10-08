@@ -42,48 +42,48 @@ export class AccountService {
 	// 	return { userUuid: id, nickname, sessionPwd, createdAt: userSession.createdAt };
 	// };
 
-	postLogoutAndDeleteSession = async ({ userId, createdAt, sessionEncrypted }) => {
-		const session = await this.data.findUniqueOrThrow({
-			where: {
-				userId_createdAt: {
-					userId,
-					createdAt,
-				},
-			},
-		});
-		if (session.sessionEncrypted === encryptSSNRest(session.sessionSalt, sessionEncrypted, session.iter)) {
-			await this.data.delete({
-				where: {
-					userId_createdAt: {
-						userId,
-						createdAt,
-					},
-				},
-			});
-			return { message: 'Session 이 안전하게 지워졌습니다.' };
-		}
-		return { message: 'Session 이 유효하지 않아 server 상의 session 은 지워지지 않았습니다.' };
-	};
+	// postLogoutAndDeleteSession = async ({ userId, createdAt, sessionEncrypted }) => {
+	// 	const session = await this.data.findUniqueOrThrow({
+	// 		where: {
+	// 			userId_createdAt: {
+	// 				userId,
+	// 				createdAt,
+	// 			},
+	// 		},
+	// 	});
+	// 	if (session.sessionEncrypted === encryptSSNRest(session.sessionSalt, sessionEncrypted, session.iter)) {
+	// 		await this.data.delete({
+	// 			where: {
+	// 				userId_createdAt: {
+	// 					userId,
+	// 					createdAt,
+	// 				},
+	// 			},
+	// 		});
+	// 		return { message: 'Session 이 안전하게 지워졌습니다.' };
+	// 	}
+	// 	return { message: 'Session 이 유효하지 않아 server 상의 session 은 지워지지 않았습니다.' };
+	// };
 
-	postLogoutAndDeleteAllSession = async ({ userId, createdAt, sessionEncrypted }) => {
-		const session = await this.data.findUniqueOrThrow({
-			where: {
-				userId_createdAt: {
-					userId,
-					createdAt,
-				},
-			},
-		});
-		if (session.sessionEncrypted === encryptSSNRest(session.sessionSalt, sessionEncrypted, session.iter)) {
-			await this.data.deleteMany({
-				where: {
-					userId,
-				},
-			});
-			return { message: '모든 Session 들이 안전하게 지워졌습니다.' };
-		}
-		return { message: 'Session 이 유효하지 않아 server 상의 session 은 지워지지 않았습니다.' };
-	};
+	// postLogoutAndDeleteAllSession = async ({ userId, createdAt, sessionEncrypted }) => {
+	// 	const session = await this.data.findUniqueOrThrow({
+	// 		where: {
+	// 			userId_createdAt: {
+	// 				userId,
+	// 				createdAt,
+	// 			},
+	// 		},
+	// 	});
+	// 	if (session.sessionEncrypted === encryptSSNRest(session.sessionSalt, sessionEncrypted, session.iter)) {
+	// 		await this.data.deleteMany({
+	// 			where: {
+	// 				userId,
+	// 			},
+	// 		});
+	// 		return { message: '모든 Session 들이 안전하게 지워졌습니다.' };
+	// 	}
+	// 	return { message: 'Session 이 유효하지 않아 server 상의 session 은 지워지지 않았습니다.' };
+	// };
 
 	postSsns = async ({ userId, createdAt, sessionEncrypted }) => {
 		const session = await this.data.findUniqueOrThrow({
