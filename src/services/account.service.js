@@ -10,13 +10,13 @@ export class AccountService {
 	// 이 아래로 데이터를 가공하는 코드를 작성합니다.
 	// 비즈니스 로직, DB에서 가져온 데이터를 가공하는 코드가 주로 작성됩니다.
 	// 여기서 가공된 데이터를 controller로 올려줍니다.
-	getUser = async ({ email }) => {
-		const user = await this.data.findUniqueOrThrow0({
-			where: { email },
-		});
+	// getUser = async ({ email }) => {
+	// 	const user = await this.data.findUniqueOrThrow0({
+	// 		where: { email },
+	// 	});
 
-		return user;
-	};
+	// 	return user;
+	// };
 
 	// updateUserIterAndCreateSession = async ({ email, id, nickname }, ip) => {
 	// 	const salt = generateRandomHexString();
@@ -126,22 +126,22 @@ export class AccountService {
 		throw new ValidationError({ message: 'Session 이 유효하지 않아 데이터를 불러오지 못했습니다.' });
 	};
 
-	checkAvailability = async ({ email, nickname }) => {
-		const result = { email: false, nickname: false };
-		const user0 = await this.data.findUnique0({
-			where: { email },
-		});
-		if (!user0) {
-			result.email = true;
-		}
-		const user1 = await this.data.findUnique0({
-			where: { nickname },
-		});
-		if (!user1) {
-			result.nickname = true;
-		}
-		return result;
-	};
+	// checkAvailability = async ({ email, nickname }) => {
+	// 	const result = { email: false, nickname: false };
+	// 	const user0 = await this.data.findUnique0({
+	// 		where: { email },
+	// 	});
+	// 	if (!user0) {
+	// 		result.email = true;
+	// 	}
+	// 	const user1 = await this.data.findUnique0({
+	// 		where: { nickname },
+	// 	});
+	// 	if (!user1) {
+	// 		result.nickname = true;
+	// 	}
+	// 	return result;
+	// };
 
 	createUserAndCreateSession = async (data, ip) => {
 		const user = await this.data.create0({
@@ -181,22 +181,22 @@ export class AccountService {
 	// 	return account;
 	// };
 
-	postSsnIter = async ({ userId, createdAt }) => {
-		const session = await this.data.findUniqueOrThrow({
-			where: {
-				userId_createdAt: {
-					userId,
-					createdAt,
-				},
-			},
-			select: {
-				iter: true,
-				sessionSalt: true,
-			},
-		});
+	// postSsnIter = async ({ userId, createdAt }) => {
+	// 	const session = await this.data.findUniqueOrThrow({
+	// 		where: {
+	// 			userId_createdAt: {
+	// 				userId,
+	// 				createdAt,
+	// 			},
+	// 		},
+	// 		select: {
+	// 			iter: true,
+	// 			sessionSalt: true,
+	// 		},
+	// 	});
 
-		return session;
-	}
+	// 	return session;
+	// }
 
 	postAccount = async ({ parameter }) => {
 		const account = await this.data.create();
