@@ -16,6 +16,16 @@ export class UserSessionService {
 		return iterNSalt;
 	};
 
+	getSessions = async ({ userId, createdAt, sessionEncrypted }) => {
+		const session = await this.data.findByUserIdAndCreatedAt(userId, createdAt);
+		if (session.sessionEncrypted === encryptSSNRest(session.sessionSalt, sessionEncrypted, session.iter)) {
+			await this.data.updateSsnIterByUserIdAndCreatedAt(userId, createdAt);
+			sessions = await this.data.findManyByUserIdCreatedAtDesc(userId);
+			return sessions;
+		}
+		return { message: 'Session 이 유효하지 않아 session 들을 불러올 수 없습니다.' };
+	};
+
 	createSession = async sessionData => {
 		const session = await this.data.create(sessionData);
 		return session;
