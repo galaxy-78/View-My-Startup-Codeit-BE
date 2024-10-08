@@ -29,7 +29,7 @@ export class UserController {
 	postPwdIter = async (req, res) => {
 		const { email } = req.body;
 		assert(email, Email);
-		const iterNSalt = await this.service.getPwdIter({ email });
+		const iterNSalt = await this.service.getPwdIterByEmail(email);
 		res.json(iterNSalt);
 	};
 }

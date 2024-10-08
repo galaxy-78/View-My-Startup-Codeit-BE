@@ -9,41 +9,28 @@ export class UserService {
 	checkAvailability = async ({ email, nickname }) => {
 		const userByEmail = await this.data.findByEmail(email);
 		const userByNickname = await this.data.findByNickname(nickname);
-
-		result = { email: !userByEmail, nickname: !userByNickname };
-
-		return result;
+		return { email: !userByEmail, nickname: !userByNickname };
 	};
 
 	getUsers = async () => {
-		const users = await this.data.findMany();
-
-		return users;
+		return this.data.findMany();
 	};
 
 	getUserByEmail = async email => {
-		const user = await this.data.findByEmailOrThrow(email);
-
-		return user;
+		return this.data.findByEmailOrThrow(email);
 	};
 
 	create = async userData => {
-		const user = await this.data.create(userData);
-
-		return user;
+		return this.data.create(userData);
 	};
 
 	// NOTE 기존 service.postPwdIter에 해당하는 부분. 코드를 봐선 get 요청인듯 하여 메소드명을 변경했습니다.
 	// 여기선 get 으로 이름 지어도 괜찮을거 같네요.
-	getPwdIter = async email => {
-		const iterNSalt = await this.data.getPwdIter(email);
-
-		return iterNSalt;
+	getPwdIterByEmail = async email => {
+		return this.data.getPwdIterByEmail(email);
 	};
 
 	updateUserIterByEmail = async email => {
-		const user = await this.data.updateIterByEmail(email);
-
-		return user;
+		return this.data.updateIterByEmail(email);
 	};
 }
