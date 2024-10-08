@@ -43,7 +43,7 @@ export class CompanyController {
 		const { id } = req.params;
 		try {
 			const company = await this.service.getCompanyById(id);
-			res.json(company);
+			res.status(200).json(company);
 		} catch (error) {
 			res.status(404).json({ error: error.message });
 		}

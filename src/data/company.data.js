@@ -41,9 +41,9 @@ export class CompanyData {
 						select: {
 							watcherList: true,
 							comparisons: true,
-						}
-					}
-				}
+						},
+					},
+				};
 				break;
 			case 'investments':
 				includes = { [include]: true };
@@ -52,9 +52,11 @@ export class CompanyData {
 				includes = undefined;
 		}
 
-		const where = keyword ? {
-			name: { contains: keyword, mode: 'insensitive' },
-		} : undefined;
+		const where = keyword
+			? {
+					name: { contains: keyword, mode: 'insensitive' },
+				}
+			: undefined;
 
 		const totalCount = await this.data.count({
 			where,
@@ -65,7 +67,7 @@ export class CompanyData {
 			orderBy,
 			skip,
 			take,
-			include: includes
+			include: includes,
 		});
 
 		return { list: companies, totalCount };
@@ -81,9 +83,9 @@ export class CompanyData {
 	};
 
 	// 기업 ID로 기업 정보 가져오기
-	getCompanyById = async id => {
+	getCompanyById = async companyId => {
 		return await this.data.findUnique({
-			where: { id },
+			where: { id: companyId },
 		});
 	};
 }
