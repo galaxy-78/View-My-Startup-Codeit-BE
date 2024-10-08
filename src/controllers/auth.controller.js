@@ -1,4 +1,4 @@
-import { encryptRest, encrypt, generateRandomHexString, ITER_SSN_FULL } from '../utils/encrypt.js';
+import encrypt, { encryptRest, generateRandomHexString, ITER_SSN_FULL } from '../utils/encrypt.js';
 
 export class AuthController {
 	constructor(userService, userSessionService) {
