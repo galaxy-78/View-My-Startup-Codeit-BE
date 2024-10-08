@@ -15,5 +15,5 @@ comparisonRouter.use(validation);
 
 // API 엔드포인트 설정
 comparisonRouter.get('/', comparisonController.getCompareCompanies);
-comparisonRouter.post('/', comparisonController.selectCompareCompanies);
+comparisonRouter.post('/select', comparisonController.selectCompareCompanies);
 comparisonRouter.delete('/:companyId', comparisonController.removeCompareCompany);

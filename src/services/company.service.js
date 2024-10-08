@@ -15,7 +15,7 @@ export class CompanyService {
 
 	// 기업 수 가져오기
 	getCompanyCount = async ({ keyword }) => {
-		return await this.data.count({ keyword });
+		return await this.data.getCompanyCount({ keyword });
 	};
 
 	// 기업 ID로 기업 정보 가져오기

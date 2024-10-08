@@ -3,18 +3,17 @@ export class ComparisonService {
 		this.data = comparisonData;
 	}
 
-	// 비교할 기업 선택
+	// 비교 기업 선택 및 총 수 가져오기
 	selectCompareCompanies = async (selectedCompanyIds, userId) => {
-		// 이미 선택된 비교 기업 수 가져오기
-		const existingComparisons = await this.data.getCompaniesByUser(userId);
+		const selectedCompanies = await Promise.all(
+			selectedCompanyIds.map(
+				companyId => this.data.findCompanyById(companyId), // 회사 ID로 회사 정보 가져오기
+			),
+		);
 
-		// 총 선택한 기업의 수가 5개를 넘는지 확인
-		if (existingComparisons.length + selectedCompanyIds.length > 5) {
-			throw new Error('비교할 기업은 최대 5개까지 선택 가능합니다.');
-		}
+		const totalCount = selectedCompanies.length;
 
-		// 선택한 기업들을 추가
-		return await this.data.selectCompareCompanies(selectedCompanyIds, userId);
+		return { list: selectedCompanies, totalCount }; // list와 totalCount로 반환
 	};
 
 	// 비교할 기업 선택 해제

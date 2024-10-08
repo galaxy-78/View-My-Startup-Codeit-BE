@@ -1,6 +1,7 @@
 export class CompanyData {
 	constructor(client) {
 		this.data = client.Company; // 이 부분에 각 모델(스키마)를 연결합니다.
+		console.log('CompanyData initialized:', this.data);
 	}
 
 	// 이 아래로 직접 DB와 통신하는 코드를 작성합니다.
@@ -41,9 +42,9 @@ export class CompanyData {
 						select: {
 							watcherList: true,
 							comparisons: true,
-						}
-					}
-				}
+						},
+					},
+				};
 				break;
 			case 'investments':
 				includes = { [include]: true };
@@ -52,9 +53,11 @@ export class CompanyData {
 				includes = undefined;
 		}
 
-		const where = keyword ? {
-			name: { contains: keyword, mode: 'insensitive' },
-		} : undefined;
+		const where = keyword
+			? {
+					name: { contains: keyword, mode: 'insensitive' },
+				}
+			: undefined;
 
 		const totalCount = await this.data.count({
 			where,
@@ -65,7 +68,7 @@ export class CompanyData {
 			orderBy,
 			skip,
 			take,
-			include: includes
+			include: includes,
 		});
 
 		return { list: companies, totalCount };
@@ -81,9 +84,9 @@ export class CompanyData {
 	};
 
 	// 기업 ID로 기업 정보 가져오기
-	getCompanyById = async id => {
+	getCompanyById = async companyId => {
 		return await this.data.findUnique({
-			where: { id },
+			where: { id: companyId },
 		});
 	};
 }
