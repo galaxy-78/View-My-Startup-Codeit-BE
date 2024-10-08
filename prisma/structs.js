@@ -8,14 +8,14 @@ export const Uuid = s.define('Uuid', value => isUuid.v4(value));
 export const Email = s.define('Email', value => isEmail(value));
 export const DateTime = s.define('DateTime', value => /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/.test(value));
 
-export const createUser = s.object({
+export const signupBody = s.object({
 	email: Email,
 	nickname: s.min(s.string(), 1),
 	salt: s.size(s.string(), 32),
 	pwdEncrypted: s.size(s.string(), 104),
 });
 
-export const patchUser = s.partial(createUser);
+export const patchUser = s.partial(signupBody);
 
 export const postCheckBody = s.object({
 	email: Email,
@@ -31,6 +31,11 @@ export const ssnBodyWithPwdEncrypted = s.object({
 	userId: Uuid,
 	createdAt: DateTime,
 	sessionEncrypted: s.size(s.string(), 104),
+});
+
+export const loginBody = s.object({
+	email: Email,
+	pwdEncrypted: s.size(s.string(), 104),
 })
 
 export const createCompany = s.object({
