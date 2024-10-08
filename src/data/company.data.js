@@ -1,7 +1,6 @@
 export class CompanyData {
 	constructor(client) {
 		this.data = client.Company; // 이 부분에 각 모델(스키마)를 연결합니다.
-		console.log('CompanyData initialized:', this.data);
 	}
 
 	// 이 아래로 직접 DB와 통신하는 코드를 작성합니다.
