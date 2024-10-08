@@ -1,5 +1,6 @@
 import encrypt, { encryptSSNRest, generateRandomHexString, ITER_SSN_FULL } from "../utils/encrypt.js";
 import { prismaClient as prisma } from '../connection/postgres.connection.js';
+import { ValidationError } from "../utils/error.js";
 
 export class AccountService {
 	constructor(accountData) {
@@ -17,7 +18,7 @@ export class AccountService {
 		return user;
 	};
 
-	updateUserIterAndCreateSession = async ({ email, id, nickname }) => {
+	updateUserIterAndCreateSession = async ({ email, id, nickname }, ip) => {
 		const salt = generateRandomHexString();
 		const sessionPwd = generateRandomHexString();
 		const user = await this.data.update0({
@@ -31,6 +32,7 @@ export class AccountService {
 		const userSession = await this.data.create({
 				data: {
 					userId: id,
+					ip,
 					sessionSalt: salt,
 					iter: ITER_SSN_FULL - 1,
 					sessionEncrypted: encrypt(salt, sessionPwd, ITER_SSN_FULL),
@@ -61,7 +63,68 @@ export class AccountService {
 			return { message: 'Session 이 안전하게 지워졌습니다.' };
 		}
 		return { message: 'Session 이 유효하지 않아 server 상의 session 은 지워지지 않았습니다.' };
-	}
+	};
+
+	postLogoutAndDeleteAllSession = async ({ userId, createdAt, sessionEncrypted }) => {
+		const session = await this.data.findUniqueOrThrow({
+			where: {
+				userId_createdAt: {
+					userId,
+					createdAt,
+				},
+			},
+		});
+		if (session.sessionEncrypted === encryptSSNRest(session.sessionSalt, sessionEncrypted, session.iter)) {
+			await this.data.deleteMany({
+				where: {
+					userId,
+				},
+			});
+			return { message: '모든 Session 들이 안전하게 지워졌습니다.' };
+		}
+		return { message: 'Session 이 유효하지 않아 server 상의 session 은 지워지지 않았습니다.' };
+	};
+
+	getSsns = async ({ userId, createdAt, sessionEncrypted }) => {
+		const session = await this.data.findUniqueOrThrow({
+			where: {
+				userId_createdAt: {
+					userId,
+					createdAt,
+				},
+			},
+		});
+		if (session.sessionEncrypted === encryptSSNRest(session.sessionSalt, sessionEncrypted, session.iter)) {
+			await this.data.update({
+				where: {
+					userId_createdAt: {
+						userId,
+						createdAt,
+					},
+				},
+				data: {
+					iter: {
+						decrement: 1,
+					},
+				},
+			});
+			const sessions = this.data.findMany0({
+				where: {
+					userId,
+				},
+				orderBy: {
+					createdAt: 'desc',
+				},
+				select: {
+					iter: true,
+					ip: true,
+					createdAt: true,
+				},
+			});
+			return sessions;
+		}
+		throw new ValidationError({ message: 'Session 이 유효하지 않아 데이터를 불러오지 못했습니다.' });
+	};
 
 	checkAvailability = async ({ email, nickname }) => {
 		const result = { email: false, nickname: false };
@@ -80,7 +143,7 @@ export class AccountService {
 		return result;
 	};
 
-	createUserAndCreateSession = async (data) => {
+	createUserAndCreateSession = async (data, ip) => {
 		const user = await this.data.create0({
 				data,
 			});
@@ -89,6 +152,7 @@ export class AccountService {
 		const userSession = await this.data.create({
 				data: {
 					userId: user.id,
+					ip,
 					sessionSalt: salt,
 					iter: ITER_SSN_FULL - 1,
 					sessionEncrypted: encrypt(salt, sessionPwd, ITER_SSN_FULL),
@@ -98,6 +162,7 @@ export class AccountService {
 		return { userUuid: user.id, nickname: user.nickname, sessionPwd, createdAt: userSession.createdAt };
 	};
 
+	// TODO del this for security in production mode.
 	getUsers = async () => {
 		const users = await this.data.findMany0();
 
