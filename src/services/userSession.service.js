@@ -15,6 +15,15 @@ export class UserSessionService {
 		return { iter: session.iter, sessionSalt: session.sessionSalt };
 	};
 
+	getSessions = async ({ userId, createdAt, sessionEncrypted }) => {
+		const session = await this.data.findByUserIdAndCreatedAt(userId, createdAt);
+		if (session.sessionEncrypted === encryptSSNRest(session.sessionSalt, sessionEncrypted, session.iter)) {
+			await this.data.updateSsnIterByUserIdAndCreatedAt(userId, createdAt);
+			return this.data.findManyByUserIdCreatedAtDesc(userId);
+		}
+		return { message: 'Session 이 유효하지 않아 session 들을 불러올 수 없습니다.' };
+	};
+
 	createSession = async sessionData => {
 		return this.data.create(sessionData);
 	};
@@ -22,11 +31,19 @@ export class UserSessionService {
 	// NOTE 기존 service.postLogoutAndDeleteSession 부분.
 	deleteSession = async ({ userId, createdAt, sessionEncrypted }) => {
 		const session = await this.data.findByUserIdAndCreatedAt(userId, createdAt);
-
 		if (session.sessionEncrypted === encryptSSNRest(session.sessionSalt, sessionEncrypted, session.iter)) {
 			await this.data.delete(userId, createdAt);
-			return { message: 'Session이 안전하게 지워졌습니다.' };
+			return { message: 'Session 이 안전하게 지워졌습니다.' };
 		}
-		return { message: 'Session이 유효하지 않아 server 상의 session은 지워지지 않았습니다.' };
+		return { message: 'Session 이 유효하지 않아 server 상의 session 은 지워지지 않았습니다.' };
+	};
+
+	deleteAllSession = async ({ userId, createdAt, sessionEncrypted }) => {
+		const session = await this.data.findByUserIdAndCreatedAt(userId, createdAt);
+		if (session.sessionEncrypted === encryptSSNRest(session.sessionSalt, sessionEncrypted, session.iter)) {
+			await this.data.deleteManyByUserId(userId);
+			return { message: '모든 Session 들이 안전하게 지워졌습니다.' };
+		}
+		return { message: 'Session 이 유효하지 않아 server 상의 session 은 지워지지 않았습니다.' };
 	};
 }
