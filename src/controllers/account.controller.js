@@ -16,9 +16,9 @@ export class AccountController {
 	postLogin = async (req, res) => {
 		const { email, pwdEncrypted } = req.body;
 		const user = await this.service.getUser({ email });
-
+		const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
 		if (encryptRest(user.salt, pwdEncrypted, user.iter) === user.pwdEncrypted) {
-			const session = await this.service.updateUserIterAndCreateSession(user, req.ip);
+			const session = await this.service.updateUserIterAndCreateSession(user, ip);
 			res.json(session);
 		}
 	};
@@ -46,7 +46,8 @@ export class AccountController {
 
 	postSignup = async (req, res) => {
 		const { email, name, nickname, salt, pwdEncrypted } = req.body;
-		const session = await this.service.createUserAndCreateSession({ email, name, nickname, salt, pwdEncrypted }, req.ip);
+		const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+		const session = await this.service.createUserAndCreateSession({ email, name, nickname, salt, pwdEncrypted }, ip);
 		res.json(session);
 	};
 
