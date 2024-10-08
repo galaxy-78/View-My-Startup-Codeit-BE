@@ -37,12 +37,12 @@ export class AccountController {
 		res.json(result);
 	}
 
-	postCheck = async (req, res) => {
-		assert(req.body, postCheckBody);
-		const { email, nickname } = req.body;
-		const available = await this.service.checkAvailability({ email, nickname });
-		res.json(available);
-	};
+	// postCheck = async (req, res) => {
+	// 	assert(req.body, postCheckBody);
+	// 	const { email, nickname } = req.body;
+	// 	const available = await this.service.checkAvailability({ email, nickname });
+	// 	res.json(available);
+	// };
 
 	postSignup = async (req, res) => {
 		const { email, name, nickname, salt, pwdEncrypted } = req.body;
@@ -62,12 +62,12 @@ export class AccountController {
 	// 	res.json(account);
 	// };
 
-	postSsnIter = async (req, res) => {
-		assert(req.body, ssnBody);
-		const { userId, createdAt } = req.body;
-		const account = await this.service.postSsnIter({ userId, createdAt });
-		res.json(account);
-	};
+	// postSsnIter = async (req, res) => {
+	// 	assert(req.body, ssnBody);
+	// 	const { userId, createdAt } = req.body;
+	// 	const account = await this.service.postSsnIter({ userId, createdAt });
+	// 	res.json(account);
+	// };
 
 	postSsns = async (req, res) => {
 		assert(req.body, ssnBodyWithPwdEncrypted);
