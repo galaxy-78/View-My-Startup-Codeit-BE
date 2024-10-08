@@ -19,7 +19,13 @@ export class UserSessionController {
 		assert(req.body, ssnBodyWithPwdEncrypted);
 		const { userId, createdAt, sessionEncrypted } = req.body;
 		const result = await this.service.deleteSession({ userId, createdAt, sessionEncrypted });
+		res.json(result);
+	};
 
+	postLogoutFromAll = async (req, res) => {
+		assert(req.body, ssnBodyWithPwdEncrypted);
+		const { userId, createdAt, sessionEncrypted } = req.body;
+		const result = await this.service.deleteAllSession({ userId, createdAt, sessionEncrypted });
 		res.json(result);
 	};
 
