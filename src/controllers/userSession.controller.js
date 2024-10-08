@@ -1,5 +1,5 @@
 import { assert } from 'superstruct';
-import { postSsnIterBody } from '../../prisma/structs.js';
+import { ssnCookies } from '../../prisma/structs.js';
 
 export class UserSessionController {
 	constructor(userSessionService) {
@@ -24,8 +24,8 @@ export class UserSessionController {
 	// NOTE 기능상 get 요청으로 보이지만, router endpoint 작동에 영향을 줄 수 있어보여 메소드명은 고치지 않았습니다.
 	// TODO 확인 후 메소드 명이 잘못되어있다면 고쳐주세요.
 	postSsnIter = async (req, res) => {
-		assert(req.body, postSsnIterBody);
-		const { userId, createdAt } = req.body;
+		assert(req.cookies, ssnCookies);
+		const { userId, createdAt } = req.cookies;
 		const session = await this.service.getSessionIter({ userId, createdAt });
 
 		res.json(session);
