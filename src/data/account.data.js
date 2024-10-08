@@ -56,8 +56,8 @@ export class AccountData {
 	// 	return account;
 	// };
 
-	findUniqueOrThrow = async (...args) => {
-		const session = await this.data.findUniqueOrThrow(...args);
-		return session;
-	};
+	// findUniqueOrThrow = async (...args) => {
+	// 	const session = await this.data.findUniqueOrThrow(...args);
+	// 	return session;
+	// };
 }
