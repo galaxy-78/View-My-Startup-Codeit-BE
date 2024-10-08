@@ -30,12 +30,12 @@ export class AccountController {
 	// 	res.json(result);
 	// }
 
-	postLogoutFromAll = async (req, res) => {
-		assert(req.body, ssnBodyWithPwdEncrypted);
-		const { userId, createdAt, sessionEncrypted } = req.body;
-		const result = await this.service.postLogoutAndDeleteAllSession({ userId, createdAt, sessionEncrypted });
-		res.json(result);
-	}
+	// postLogoutFromAll = async (req, res) => {
+	// 	assert(req.body, ssnBodyWithPwdEncrypted);
+	// 	const { userId, createdAt, sessionEncrypted } = req.body;
+	// 	const result = await this.service.postLogoutAndDeleteAllSession({ userId, createdAt, sessionEncrypted });
+	// 	res.json(result);
+	// }
 
 	// postCheck = async (req, res) => {
 	// 	assert(req.body, postCheckBody);
@@ -44,12 +44,12 @@ export class AccountController {
 	// 	res.json(available);
 	// };
 
-	postSignup = async (req, res) => {
-		const { email, name, nickname, salt, pwdEncrypted } = req.body;
-		const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-		const session = await this.service.createUserAndCreateSession({ email, name, nickname, salt, pwdEncrypted }, ip);
-		res.json(session);
-	};
+	// postSignup = async (req, res) => {
+	// 	const { email, name, nickname, salt, pwdEncrypted } = req.body;
+	// 	const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+	// 	const session = await this.service.createUserAndCreateSession({ email, name, nickname, salt, pwdEncrypted }, ip);
+	// 	res.json(session);
+	// };
 
 	// getUsers = async (req, res) => {
 	// 	const users = await this.service.getUsers();
