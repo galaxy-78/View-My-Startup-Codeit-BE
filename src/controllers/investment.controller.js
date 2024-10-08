@@ -17,15 +17,20 @@ export class InvestmentController {
 		const orderBy = req.query.orderBy || 'bigger';
 		const page = Number(req.query.page) || 1;
 		const pageSize = Number(req.query.pageSize) || 5;
+		const companyId = req.params.companyId;
+		if (companyId) assert(companyId, Uuid, c.MESSAGES.IDFORMAT);
 
-		const resBody = await this.service.getInvestments({ orderBy, page, pageSize });
+		const resBody = await this.service.getInvestments({ orderBy, page, pageSize, companyId });
 
 		res.json(resBody);
 	};
 
 	// NOTE 전체 투자 금액 총계
 	getTotalAmount = async (req, res) => {
-		const total = await this.service.getTotalAmount();
+		const companyId = req.params.companyId;
+		assert(companyId, Uuid, c.MESSAGES.IDFORMAT);
+
+		const total = await this.service.getTotalAmount(companyId);
 
 		res.json(total);
 	};

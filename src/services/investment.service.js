@@ -6,17 +6,17 @@ export class InvestmentService {
 	// 이 아래로 데이터를 가공하는 코드를 작성합니다.
 	// 비즈니스 로직, DB에서 가져온 데이터를 가공하는 코드가 주로 작성됩니다.
 	// 여기서 가공된 데이터를 controller로 올려줍니다.
-	getInvestments = async ({ orderBy, page, pageSize }) => {
-		const totalCount = await this.data.count();
+	getInvestments = async ({ orderBy, page, pageSize, companyId }) => {
+		const totalCount = await this.data.count(companyId);
 
-		const list = await this.data.findMany(orderBy, page, pageSize);
+		const list = await this.data.findMany(orderBy, page, pageSize, companyId);
 
 		return { list, totalCount };
 	};
 
 	// NOTE 전체 투자 금액 총계
-	getTotalAmount = async () => {
-		const amounts = await this.data.findAmounts();
+	getTotalAmount = async companyId => {
+		const amounts = await this.data.findAmounts(companyId);
 
 		const total = amounts.reduce((acc, cur) => {
 			return BigInt(cur.amount) + BigInt(acc);

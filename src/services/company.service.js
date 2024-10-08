@@ -20,6 +20,6 @@ export class CompanyService {
 
 	// 기업 ID로 기업 정보 가져오기
 	getCompanyById = async id => {
-		return await this.data.findById(id);
+		return await this.data.getCompanyById(id);
 	};
 }
