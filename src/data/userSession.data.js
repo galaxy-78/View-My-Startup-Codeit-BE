@@ -8,7 +8,6 @@ export class UserSessionData {
 	// NOTE UserSession의 DB 작업 코드만을 다룹니다.
 	create = async data => {
 		const session = await this.data.create({ data });
-
 		return session;
 	};
 
@@ -16,8 +15,31 @@ export class UserSessionData {
 		const session = await this.data.findUniqueOrThrow({
 			where: { userId_createdAt: { userId, createdAt } },
 		});
-
 		return session;
+	};
+
+	updateSsnIterByUserIdAndCreatedAt = async (userId, createdAt) => {
+		const session = await this.data.update({
+			where: { userId_createdAt: { userId, createdAt } },
+			data: {
+				iter: { decrement: 1 },
+			},
+		});
+		return session;
+	};
+
+	findManyByUserIdCreatedAtDesc = async userId => {
+		const sessions = await this.data.findMany({
+			where: { userId },
+			orderBy: {
+				createdAt: 'desc',
+			},
+			select: {
+				iter: true,
+				ip: true,
+				createdAt: true,
+			}
+		})
 	};
 
 	delete = async (userId, createdAt) => {
@@ -30,5 +52,5 @@ export class UserSessionData {
 		return await this.data.deleteMany({
 			where: { userId },
 		})
-	}
+	};
 }
