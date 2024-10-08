@@ -31,10 +31,10 @@ export class AccountData {
 		return session;
 	}
 
-	update0 = async (...args) => {
-		const user = await this.data0.update(...args);
-		return user;
-	};
+	// update0 = async (...args) => {
+	// 	const user = await this.data0.update(...args);
+	// 	return user;
+	// };
 
 	update = async (...args) => {
 		const user = await this.data.update(...args);
@@ -46,15 +46,15 @@ export class AccountData {
 		return user;
 	}
 
-	create = async (...args) => {
-		const session = await this.data.create(...args);
-		return session;
-	};
+	// create = async (...args) => {
+	// 	const session = await this.data.create(...args);
+	// 	return session;
+	// };
 
-	findUniqueOrThrow0 = async (...args) => {
-		const account = await this.data0.findUniqueOrThrow(...args);
-		return account;
-	};
+	// findUniqueOrThrow0 = async (...args) => {
+	// 	const account = await this.data0.findUniqueOrThrow(...args);
+	// 	return account;
+	// };
 
 	findUniqueOrThrow = async (...args) => {
 		const session = await this.data.findUniqueOrThrow(...args);

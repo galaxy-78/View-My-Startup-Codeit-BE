@@ -18,29 +18,29 @@ export class AccountService {
 		return user;
 	};
 
-	updateUserIterAndCreateSession = async ({ email, id, nickname }, ip) => {
-		const salt = generateRandomHexString();
-		const sessionPwd = generateRandomHexString();
-		const user = await this.data.update0({
-				where: { email },
-				data: {
-					iter: {
-						decrement: 1,
-					},
-				},
-			});
-		const userSession = await this.data.create({
-				data: {
-					userId: id,
-					ip,
-					sessionSalt: salt,
-					iter: ITER_SSN_FULL - 1,
-					sessionEncrypted: encrypt(salt, sessionPwd, ITER_SSN_FULL),
-				},
-			});
+	// updateUserIterAndCreateSession = async ({ email, id, nickname }, ip) => {
+	// 	const salt = generateRandomHexString();
+	// 	const sessionPwd = generateRandomHexString();
+	// 	const user = await this.data.update0({
+	// 			where: { email },
+	// 			data: {
+	// 				iter: {
+	// 					decrement: 1,
+	// 				},
+	// 			},
+	// 		});
+	// 	const userSession = await this.data.create({
+	// 			data: {
+	// 				userId: id,
+	// 				ip,
+	// 				sessionSalt: salt,
+	// 				iter: ITER_SSN_FULL - 1,
+	// 				sessionEncrypted: encrypt(salt, sessionPwd, ITER_SSN_FULL),
+	// 			},
+	// 		});
 
-		return { userUuid: id, nickname, sessionPwd, createdAt: userSession.createdAt };
-	};
+	// 	return { userUuid: id, nickname, sessionPwd, createdAt: userSession.createdAt };
+	// };
 
 	postLogoutAndDeleteSession = async ({ userId, createdAt, sessionEncrypted }) => {
 		const session = await this.data.findUniqueOrThrow({
@@ -162,24 +162,24 @@ export class AccountService {
 		return { userUuid: user.id, nickname: user.nickname, sessionPwd, createdAt: userSession.createdAt };
 	};
 
-	// TODO del this for security in production mode.
-	getUsers = async () => {
-		const users = await this.data.findMany0();
+	// // TODO del this for security in production mode.
+	// getUsers = async () => {
+	// 	const users = await this.data.findMany0();
 
-		return users;
-	};
+	// 	return users;
+	// };
 
-	postPwdIter = async ({ email }) => {
-		const account = await this.data.findUniqueOrThrow0({
-			where: { email },
-			select: {
-				iter: true,
-				salt: true,
-			},
-		});
+	// postPwdIter = async ({ email }) => {
+	// 	const account = await this.data.findUniqueOrThrow0({
+	// 		where: { email },
+	// 		select: {
+	// 			iter: true,
+	// 			salt: true,
+	// 		},
+	// 	});
 
-		return account;
-	};
+	// 	return account;
+	// };
 
 	postSsnIter = async ({ userId, createdAt }) => {
 		const session = await this.data.findUniqueOrThrow({
