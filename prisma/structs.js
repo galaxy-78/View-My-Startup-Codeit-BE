@@ -22,10 +22,16 @@ export const postCheckBody = s.object({
 	nickname: s.size(s.string(), 1, 20),
 });
 
-export const postSsnIterBody = s.object({
+export const ssnCookies = s.object({
 	userId: Uuid,
 	createdAt: DateTime,
 });
+
+export const ssnCookiesWithPwdEncrypted = s.object({
+	userId: Uuid,
+	createdAt: DateTime,
+	sessionEncrypted: s.size(s.string(), 104),
+})
 
 export const createCompany = s.object({
 	name: s.size(s.string(), 1, 20),

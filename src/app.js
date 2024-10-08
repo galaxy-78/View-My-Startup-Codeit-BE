@@ -10,10 +10,12 @@ import { investmentRouter } from './routes/investment.route.js';
 import { comparisonRouter } from './routes/comparison.route.js';
 import { watchRouter } from './routes/watch.route.js';
 import { accountRouter } from './routes/account.route.js';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 // BigInt를 처리하는 커스텀 JSON 파서
 BigInt.prototype['toJSON'] = function () {
