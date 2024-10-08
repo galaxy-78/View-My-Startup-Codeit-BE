@@ -85,46 +85,46 @@ export class AccountService {
 	// 	return { message: 'Session 이 유효하지 않아 server 상의 session 은 지워지지 않았습니다.' };
 	// };
 
-	postSsns = async ({ userId, createdAt, sessionEncrypted }) => {
-		const session = await this.data.findUniqueOrThrow({
-			where: {
-				userId_createdAt: {
-					userId,
-					createdAt,
-				},
-			},
-		});
-		if (session.sessionEncrypted === encryptSSNRest(session.sessionSalt, sessionEncrypted, session.iter)) {
-			await this.data.update({
-				where: {
-					userId_createdAt: {
-						userId,
-						createdAt,
-					},
-				},
-				data: {
-					iter: {
-						decrement: 1,
-					},
-				},
-			});
-			const sessions = this.data.findMany({
-				where: {
-					userId,
-				},
-				orderBy: {
-					createdAt: 'desc',
-				},
-				select: {
-					iter: true,
-					ip: true,
-					createdAt: true,
-				},
-			});
-			return sessions;
-		}
-		throw new ValidationError({ message: 'Session 이 유효하지 않아 데이터를 불러오지 못했습니다.' });
-	};
+	// postSsns = async ({ userId, createdAt, sessionEncrypted }) => {
+	// 	const session = await this.data.findUniqueOrThrow({
+	// 		where: {
+	// 			userId_createdAt: {
+	// 				userId,
+	// 				createdAt,
+	// 			},
+	// 		},
+	// 	});
+	// 	if (session.sessionEncrypted === encryptSSNRest(session.sessionSalt, sessionEncrypted, session.iter)) {
+	// 		await this.data.update({
+	// 			where: {
+	// 				userId_createdAt: {
+	// 					userId,
+	// 					createdAt,
+	// 				},
+	// 			},
+	// 			data: {
+	// 				iter: {
+	// 					decrement: 1,
+	// 				},
+	// 			},
+	// 		});
+	// 		const sessions = this.data.findMany({
+	// 			where: {
+	// 				userId,
+	// 			},
+	// 			orderBy: {
+	// 				createdAt: 'desc',
+	// 			},
+	// 			select: {
+	// 				iter: true,
+	// 				ip: true,
+	// 				createdAt: true,
+	// 			},
+	// 		});
+	// 		return sessions;
+	// 	}
+	// 	throw new ValidationError({ message: 'Session 이 유효하지 않아 데이터를 불러오지 못했습니다.' });
+	// };
 
 	// checkAvailability = async ({ email, nickname }) => {
 	// 	const result = { email: false, nickname: false };
@@ -143,24 +143,24 @@ export class AccountService {
 	// 	return result;
 	// };
 
-	createUserAndCreateSession = async (data, ip) => {
-		const user = await this.data.create0({
-				data,
-			});
-		const salt = generateRandomHexString();
-		const sessionPwd = generateRandomHexString();
-		const userSession = await this.data.create({
-				data: {
-					userId: user.id,
-					ip,
-					sessionSalt: salt,
-					iter: ITER_SSN_FULL - 1,
-					sessionEncrypted: encrypt(salt, sessionPwd, ITER_SSN_FULL),
-				}
-			});
+	// createUserAndCreateSession = async (data, ip) => {
+	// 	const user = await this.data.create0({
+	// 			data,
+	// 		});
+	// 	const salt = generateRandomHexString();
+	// 	const sessionPwd = generateRandomHexString();
+	// 	const userSession = await this.data.create({
+	// 			data: {
+	// 				userId: user.id,
+	// 				ip,
+	// 				sessionSalt: salt,
+	// 				iter: ITER_SSN_FULL - 1,
+	// 				sessionEncrypted: encrypt(salt, sessionPwd, ITER_SSN_FULL),
+	// 			}
+	// 		});
 
-		return { userUuid: user.id, nickname: user.nickname, sessionPwd, createdAt: userSession.createdAt };
-	};
+	// 	return { userUuid: user.id, nickname: user.nickname, sessionPwd, createdAt: userSession.createdAt };
+	// };
 
 	// // TODO del this for security in production mode.
 	// getUsers = async () => {
@@ -198,21 +198,21 @@ export class AccountService {
 	// 	return session;
 	// }
 
-	postAccount = async ({ parameter }) => {
-		const account = await this.data.create();
+	// postAccount = async ({ parameter }) => {
+	// 	const account = await this.data.create();
 
-		return account;
-	};
+	// 	return account;
+	// };
 
-	updateAccount = async ({ parameter }) => {
-		const account = await this.data.update();
+	// updateAccount = async ({ parameter }) => {
+	// 	const account = await this.data.update();
 
-		return account;
-	};
+	// 	return account;
+	// };
 
-	deleteAccount = async ({ parameter }) => {
-		const account = await this.data.delete();
+	// deleteAccount = async ({ parameter }) => {
+	// 	const account = await this.data.delete();
 
-		return account;
-	};
+	// 	return account;
+	// };
 }

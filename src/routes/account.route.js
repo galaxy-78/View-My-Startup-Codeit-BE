@@ -1,5 +1,4 @@
 import express from 'express';
-import { accountController } from '../containers/account.container.js';
 import { authController } from '../containers/auth.container.js';
 import { userSessionController } from '../containers/userSession.container.js';
 import { userController } from '../containers/user.container.js';
@@ -13,19 +12,20 @@ accountRouter.post('/log-in', authController.postLogin);
 accountRouter.post('/sign-up', authController.postSignup);
 accountRouter.post('/check', userController.postCheck);
 accountRouter.post('/iter', userController.postPwdIter);
+accountRouter.get('/users', userController.getUsers);
 accountRouter.post('/session-iter', userSessionController.postSsnIter);
+accountRouter.post('/sessions', userSessionController.postSsns);
 accountRouter.post('/log-out', userSessionController.postLogout);
 accountRouter.post('/log-out-from-all', userSessionController.postLogoutFromAll);
-accountRouter.get('/users', userController.getUsers);
 
 
 
-accountRouter.post('/log-out-from-all', accountController.postLogoutFromAll);
-accountRouter.post('/sessions', accountController.postSsns);
+// accountRouter.post('/sessions', accountController.postSsns);
 // accountRouter.post('/log-in', accountController.postLogin);
 // accountRouter.post('/sign-up', accountController.postSignup);
 // accountRouter.post('/check', accountController.postCheck);
 // accountRouter.post('/iter', accountController.postPwdIter);
 // accountRouter.post('/session-iter', accountController.postSsnIter);
 // accountRouter.post('/log-out', accountController.postLogout);
+// accountRouter.post('/log-out-from-all', accountController.postLogoutFromAll);
 // accountRouter.get('/users', accountController.getUsers);

@@ -69,10 +69,10 @@ export class AccountController {
 	// 	res.json(account);
 	// };
 
-	postSsns = async (req, res) => {
-		assert(req.body, ssnBodyWithPwdEncrypted);
-		const { userId, createdAt, sessionEncrypted } = req.body;
-		const result = await this.service.postSsns({ userId, createdAt, sessionEncrypted });
-		res.json(result);
-	}
+	// postSsns = async (req, res) => {
+	// 	assert(req.body, ssnBodyWithPwdEncrypted);
+	// 	const { userId, createdAt, sessionEncrypted } = req.body;
+	// 	const result = await this.service.postSsns({ userId, createdAt, sessionEncrypted });
+	// 	res.json(result);
+	// }
 }
