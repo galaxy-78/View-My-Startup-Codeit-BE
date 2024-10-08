@@ -20,7 +20,6 @@ export class UserController {
 	postCheck = async (req, res) => {
 		assert(req.body, postCheckBody);
 		const { email, nickname } = req.body;
-		assert(email, Email);
 		const available = await this.service.checkAvailability({ email, nickname });
 
 		res.json(available);
