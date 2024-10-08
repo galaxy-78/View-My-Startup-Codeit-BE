@@ -18,9 +18,10 @@ export const accountRouter = express.Router(); // export 해주어야 합니다.
 // accountRouter.get('/users', userController.getUsers);
 accountRouter.post('/log-in', accountController.postLogin);
 accountRouter.post('/log-out', accountController.postLogout);
+accountRouter.post('/log-out-from-all', accountController.postLogoutFromAll);
 accountRouter.post('/check', accountController.postCheck);
 accountRouter.post('/sign-up', accountController.postSignup);
 accountRouter.post('/iter', accountController.postPwdIter);
-accountRouter.get('/session-iter', accountController.getSsnIter);
-accountRouter.get('/sessions', accountController.getSsns);
+accountRouter.post('/session-iter', accountController.postSsnIter);
+accountRouter.post('/sessions', accountController.postSsns);
 accountRouter.get('/users', accountController.getUsers);

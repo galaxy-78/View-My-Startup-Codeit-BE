@@ -11,6 +11,11 @@ export class AccountData {
 		return users;
 	};
 
+	findMany = async (...args) => {
+		const users = await this.data.findMany(...args);
+		return users;
+	};
+
 	findUnique0 = async (...args) => {
 		const user = await this.data0.findUnique(...args);
 		return user;
@@ -18,6 +23,11 @@ export class AccountData {
 
 	delete = async (...args) => {
 		const session = await this.data.delete(...args);
+		return session;
+	}
+
+	deleteMany = async (...args) => {
+		const session = await this.data.deleteMany(...args);
 		return session;
 	}
 

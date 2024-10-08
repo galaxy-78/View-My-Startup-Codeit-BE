@@ -85,7 +85,7 @@ export class AccountService {
 		return { message: 'Session 이 유효하지 않아 server 상의 session 은 지워지지 않았습니다.' };
 	};
 
-	getSsns = async ({ userId, createdAt, sessionEncrypted }) => {
+	postSsns = async ({ userId, createdAt, sessionEncrypted }) => {
 		const session = await this.data.findUniqueOrThrow({
 			where: {
 				userId_createdAt: {
@@ -108,7 +108,7 @@ export class AccountService {
 					},
 				},
 			});
-			const sessions = this.data.findMany0({
+			const sessions = this.data.findMany({
 				where: {
 					userId,
 				},
