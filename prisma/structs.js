@@ -22,12 +22,12 @@ export const postCheckBody = s.object({
 	nickname: s.size(s.string(), 1, 20),
 });
 
-export const ssnCookies = s.object({
+export const ssnBody = s.object({
 	userId: Uuid,
 	createdAt: DateTime,
 });
 
-export const ssnCookiesWithPwdEncrypted = s.object({
+export const ssnBodyWithPwdEncrypted = s.object({
 	userId: Uuid,
 	createdAt: DateTime,
 	sessionEncrypted: s.size(s.string(), 104),
