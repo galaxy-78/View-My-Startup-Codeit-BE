@@ -1,4 +1,6 @@
+import { assert } from 'superstruct';
 import encrypt, { encryptRest, generateRandomHexString, ITER_SSN_FULL } from '../utils/encrypt.js';
+import { loginBody } from '../../prisma/structs.js';
 
 export class AuthController {
 	constructor(userService, userSessionService) {
@@ -6,24 +8,39 @@ export class AuthController {
 		this.userSessionService = userSessionService;
 	}
 
-	postLogin = async ({ email, pwdEncrypted }) => {
-		const user = await this.userService.getUser(email);
+	postSignup = async (req, res) => {
+		assert(req.body, signupBody);
+		const { email, name, nickname, salt, pwdEncrypted } = req.body;
+		const user = await this.userService.create({ email, name, nickname, salt, pwdEncrypted });
+		const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+		const ssnResponse = await this.createSession(user, ip);
+		res.json(ssnResponse);
+	};
+
+	// (req, res) 로 받아야 하는거 같아서 바꿨습니다.
+	postLogin = async (req, res) => {
+		assert(req.body, loginBody);
+		const { email, pwdEncrypted } = req.body;
+		const user = await this.userService.getUserByEmail(email);
 
 		if (encryptRest(user.salt, pwdEncrypted, user.iter) === user.pwdEncrypted) {
-			const user = await this.userService.updateUserIter(email);
-			const session = await this.createSession(user);
-
-			res.json(session);
+			const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+			const user = await this.userService.updateUserIterByEmail(email);
+			const ssnResponse = await this.createSession(user, ip);
+			res.json(ssnResponse);
 		}
 	};
 
-	createSession = async ({ id, nickname }) => {
+	// sessionSalt 와 sessionPwd 에 random hex string (length: 32) 를 넣어줍니다.
+	// Client 는 sessionPwd 만 안전하게 보관하면 됩니다. (자신의 id 와 createdAt 과 함께.)
+	createSession = async ({ id, nickname }, ip) => {
 		const salt = generateRandomHexString();
 		const sessionPwd = generateRandomHexString();
 		const userSession = await this.userSessionService.createSession({
 			userId: id,
-			sessionSalt: salt,
 			iter: ITER_SSN_FULL - 1,
+			ip: ip.substring(0, 45),
+			sessionSalt: salt,
 			sessionEncrypted: encrypt(salt, sessionPwd, ITER_SSN_FULL),
 		});
 

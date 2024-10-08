@@ -37,7 +37,8 @@ export class UserData {
 	};
 
 	// NOTE 기존 service.postPwdIter에 해당하는 부분. 코드를 봐선 get 요청인듯 하여 메소드명을 변경했습니다.
-	getPwdIter = async email => {
+	// get 으로 쓰겠습니다.
+	getPwdIterByEmail = async email => {
 		const iterNSalt = await this.data.findUniqueOrThrow({
 			where: { email },
 			select: { iter: true, salt: true },
@@ -47,7 +48,7 @@ export class UserData {
 	};
 
 	// NOTE 기존 service.updateUserIterAndCreateSession에서 user의 iter 변경하는 부분
-	updateIter = async email => {
+	updateIterByEmail = async email => {
 		const user = await this.data.update({
 			where: { email },
 			data: { iter: { decrement: 1 } },
