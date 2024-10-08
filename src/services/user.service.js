@@ -27,7 +27,7 @@ export class UserService {
 		return user;
 	};
 
-	post = async userData => {
+	create = async userData => {
 		const user = await this.data.create(userData);
 
 		return user;
