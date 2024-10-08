@@ -17,15 +17,3 @@ accountRouter.post('/session-iter', userSessionController.postSsnIter);
 accountRouter.post('/sessions', userSessionController.postSsns);
 accountRouter.post('/log-out', userSessionController.postLogout);
 accountRouter.post('/log-out-from-all', userSessionController.postLogoutFromAll);
-
-
-
-// accountRouter.post('/sessions', accountController.postSsns);
-// accountRouter.post('/log-in', accountController.postLogin);
-// accountRouter.post('/sign-up', accountController.postSignup);
-// accountRouter.post('/check', accountController.postCheck);
-// accountRouter.post('/iter', accountController.postPwdIter);
-// accountRouter.post('/session-iter', accountController.postSsnIter);
-// accountRouter.post('/log-out', accountController.postLogout);
-// accountRouter.post('/log-out-from-all', accountController.postLogoutFromAll);
-// accountRouter.get('/users', accountController.getUsers);
