@@ -1,3 +1,5 @@
+import HttpStatus from "../utils/HttpStatus";
+
 export class ExampleController {
   constructor(exampleService) {
     this.service = exampleService; // 이 부분에서 service에 연결합니다.
@@ -23,6 +25,6 @@ export class ExampleController {
       keyword,
     });
 
-    res.status(200).json(resBody);
+    res.status(HttpStatus.SUCCESS).json(resBody);
   };
 }

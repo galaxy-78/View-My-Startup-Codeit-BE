@@ -1,3 +1,5 @@
+import HttpStatus from "../utils/HttpStatus";
+
 export class ComparisonController {
 	constructor(comparisonService) {
 		this.service = comparisonService;
@@ -8,9 +10,9 @@ export class ComparisonController {
 		const { selectedCompanyIds, userId } = req.body;
 		try {
 			const compareCompanies = await this.service.selectCompareCompanies(selectedCompanyIds, userId);
-			res.status(200).json(compareCompanies);
+			res.status(HttpStatus.SUCCESS).json(compareCompanies);
 		} catch (error) {
-			res.status(500).json({ error: error.message });
+			res.status(HttpStatus.SERVER_ERROR).json({ error: error.message });
 		}
 	};
 
@@ -19,9 +21,9 @@ export class ComparisonController {
 		const { userId } = req.params;
 		try {
 			const result = await this.service.getCompareCompanies(userId);
-			res.status(200).json(result);
+			res.status(HttpStatus.SUCCESS).json(result);
 		} catch (error) {
-			res.status(500).json({ error: error.message });
+			res.status(HttpStatus.SERVER_ERROR).json({ error: error.message });
 		}
 	};
 }
