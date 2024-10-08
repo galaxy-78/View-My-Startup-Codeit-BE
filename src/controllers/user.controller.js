@@ -21,15 +21,7 @@ export class UserController {
 		assert(req.body, postCheckBody);
 		const { email, nickname } = req.body;
 		const available = await this.service.checkAvailability({ email, nickname });
-
 		res.json(available);
-	};
-
-	postSignup = async (req, res) => {
-		const { email, name, nickname, salt, pwdEncrypted } = req.body;
-		const user = await this.service.post({ email, name, nickname, salt, pwdEncrypted });
-
-		res.json(user);
 	};
 
 	// NOTE 기능상 get 요청으로 보이지만, router endpoint 작동에 영향을 줄 수 있어보여 메소드명은 고치지 않았습니다.
@@ -38,7 +30,6 @@ export class UserController {
 		const { email } = req.body;
 		assert(email, Email);
 		const iterNSalt = await this.service.getPwdIter({ email });
-
 		res.json(iterNSalt);
 	};
 }

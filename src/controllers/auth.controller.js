@@ -8,6 +8,15 @@ export class AuthController {
 		this.userSessionService = userSessionService;
 	}
 
+	postSignup = async (req, res) => {
+		assert(req.body, signupBody);
+		const { email, name, nickname, salt, pwdEncrypted } = req.body;
+		const user = await this.userService.create({ email, name, nickname, salt, pwdEncrypted });
+		const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+		const ssnResponse = await this.createSession(user, ip);
+		res.json(ssnResponse);
+	};
+
 	// (req, res) 로 받아야 하는거 같아서 바꿨습니다.
 	postLogin = async (req, res) => {
 		assert(req.body, loginBody);
