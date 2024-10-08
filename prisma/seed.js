@@ -12,6 +12,7 @@ function getRandomInteger(min, max) {
 }
 
 async function main() {
+	await prisma.userSession.deleteMany();
 	await prisma.investment.deleteMany();
 	await prisma.company.deleteMany();
 	await prisma.user.deleteMany();
