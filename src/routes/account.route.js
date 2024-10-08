@@ -21,5 +21,6 @@ accountRouter.post('/log-out', accountController.postLogout);
 accountRouter.post('/check', accountController.postCheck);
 accountRouter.post('/sign-up', accountController.postSignup);
 accountRouter.post('/iter', accountController.postPwdIter);
-accountRouter.post('/session-iter', accountController.postSsnIter);
+accountRouter.get('/session-iter', accountController.getSsnIter);
+accountRouter.get('/sessions', accountController.getSsns);
 accountRouter.get('/users', accountController.getUsers);

@@ -26,6 +26,11 @@ export class AccountData {
 		return user;
 	};
 
+	update = async (...args) => {
+		const user = await this.data.update(...args);
+		return user;
+	};
+
 	create0 = async (...args) => {
 		const user = await this.data0.create(...args);
 		return user;

@@ -1,5 +1,5 @@
 import { assert } from "superstruct";
-import { postCheckBody, postSsnIterBody } from "../../prisma/structs.js";
+import { postCheckBody, ssnCookies, ssnCookiesWithPwdEncrypted } from "../../prisma/structs.js";
 import { encryptRest } from "../utils/encrypt.js";
 
 export class AccountController {
@@ -18,7 +18,7 @@ export class AccountController {
 		const user = await this.service.getUser({ email });
 
 		if (encryptRest(user.salt, pwdEncrypted, user.iter) === user.pwdEncrypted) {
-			const session = await this.service.updateUserIterAndCreateSession(user);
+			const session = await this.service.updateUserIterAndCreateSession(user, req.ip);
 			res.json(session);
 		}
 	};
@@ -38,10 +38,11 @@ export class AccountController {
 
 	postSignup = async (req, res) => {
 		const { email, name, nickname, salt, pwdEncrypted } = req.body;
-		const session = await this.service.createUserAndCreateSession({ email, name, nickname, salt, pwdEncrypted });
+		const session = await this.service.createUserAndCreateSession({ email, name, nickname, salt, pwdEncrypted }, req.ip);
 		res.json(session);
 	};
 
+	// TODO del this for security in production mode.
 	getUsers = async (req, res) => {
 		const users = await this.service.getUsers();
 
@@ -55,10 +56,17 @@ export class AccountController {
 		res.json(account);
 	};
 
-	postSsnIter = async (req, res) => {
-		assert(req.body, postSsnIterBody);
-		const { userId, createdAt } = req.body;
-		const account = await this.service.postSsnIter({ userId, createdAt });
+	getSsnIter = async (req, res) => {
+		assert(req.cookies, ssnCookies);
+		const { userId, createdAt } = req.cookies;
+		const account = await this.service.getSsnIter({ userId, createdAt });
 		res.json(account);
 	};
+
+	getSsns = async (req, res) => {
+		assert(req.cookies, ssnCookiesWithPwdEncrypted);
+		const { userId, createdAt, sessionEncrypted } = req.cookies;
+		const result = await this.service.getSsns({ userId, createdAt, sessionEncrypted });
+		res.json(result);
+	}
 }
