@@ -7,13 +7,7 @@ export class ComparisonService {
 	selectCompareCompanies = async (selectedCompanyIds, userId) => {
 		const selectedCompanies = await Promise.all(
 			selectedCompanyIds.map(async companyId => {
-				// 회사 정보가 이미 저장되어 있는지 확인
-				const existingComparison = await this.data.findComparisonByUserIdAndCompanyId(userId, companyId);
-
-				if (!existingComparison) {
-					// 회사 정보가 없으면 새로 추가 (create)
-					await this.data.createComparison(userId, companyId);
-				}
+				await this.data.createComparison(userId, companyId);
 
 				return this.data.findCompanyById(companyId); // 회사 정보 반환
 			}),

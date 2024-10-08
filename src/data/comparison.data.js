@@ -10,16 +10,6 @@ export class ComparisonData {
 		});
 	};
 
-	// 사용자 ID와 회사 ID로 비교 기업 존재 여부 확인
-	findComparisonByUserIdAndCompanyId = async (userId, companyId) => {
-		return await this.data.findFirst({
-			where: {
-				userId,
-				companyId,
-			},
-		});
-	};
-
 	// 사용자 ID와 회사 ID로 비교 기업 추가
 	createComparison = async (userId, companyId) => {
 		return await this.data.create({
