@@ -26,8 +26,17 @@ export class UserSessionService {
 		const session = await this.data.findByUserIdAndCreatedAt(userId, createdAt);
 		if (session.sessionEncrypted === encryptSSNRest(session.sessionSalt, sessionEncrypted, session.iter)) {
 			await this.data.delete(userId, createdAt);
-			return { message: 'Session이 안전하게 지워졌습니다.' };
+			return { message: 'Session 이 안전하게 지워졌습니다.' };
 		}
-		return { message: 'Session이 유효하지 않아 server 상의 session은 지워지지 않았습니다.' };
+		return { message: 'Session 이 유효하지 않아 server 상의 session 은 지워지지 않았습니다.' };
+	};
+
+	deleteAllSession = async ({ userId, createdAt, sessionEncrypted }) => {
+		const session = await this.data.findByUserIdAndCreatedAt(userId, createdAt);
+		if (session.sessionEncrypted === encryptSSNRest(session.sessionSalt, sessionEncrypted, session.iter)) {
+			await this.data.deleteManyByUserId(userId);
+			return { message: '모든 Session 들이 안전하게 지워졌습니다.' };
+		}
+		return { message: 'Session 이 유효하지 않아 server 상의 session 은 지워지지 않았습니다.' };
 	};
 }
