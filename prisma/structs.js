@@ -10,8 +10,8 @@ export const DateTime = s.define('DateTime', value => /^\d{4}-\d{2}-\d{2}T\d{2}:
 
 export const signupBody = s.object({
 	email: Email,
-	name: s.min(s.string(), 1),
-	nickname: s.min(s.string(), 1, 20),
+	name: s.string(),
+	nickname: s.size(s.string(), 1, 20),
 	salt: s.size(s.string(), 32),
 	pwdEncrypted: s.size(s.string(), 104),
 });
