@@ -1,0 +1,77 @@
+├── .env
+├── .eslintrc
+├── .gitignore
+├── .nvmrc
+├── .prettierrc
+├── ERD.svg
+├── file-structs.js
+├── file-structure.txt
+├── http
+│   ├── account.http
+│   ├── company.http
+│   ├── example.http
+│   ├── investment.http
+│   └── user.http
+├── mock
+│   └── mock.js
+├── package-lock.json
+├── package.json
+├── prisma
+│   ├── migrations
+│   │   ├── 20241008115611_init
+│   │   │   └── migration.sql
+│   │   └── migration_lock.toml
+│   ├── schema.prisma
+│   ├── seed.js
+│   └── structs.js
+├── README.md
+└── src
+    ├── app.js
+    ├── connection
+    │   └── postgres.connection.js
+    ├── containers
+    │   ├── auth.container.js
+    │   ├── company.container.js
+    │   ├── comparison.container.js
+    │   ├── example.container.js
+    │   ├── investment.container.js
+    │   ├── user.container.js
+    │   ├── userSession.container.js
+    │   └── watch.container.js
+    ├── controllers
+    │   ├── auth.controller.js
+    │   ├── company.controller.js
+    │   ├── comparison.controller.js
+    │   ├── example.controller.js
+    │   ├── investment.controller.js
+    │   ├── user.controller.js
+    │   ├── userSession.controller.js
+    │   └── watch.controller.js
+    ├── data
+    │   ├── company.data.js
+    │   ├── comparison.data.js
+    │   ├── example.data.js
+    │   ├── investment.data.js
+    │   ├── user.data.js
+    │   ├── userSession.data.js
+    │   └── watch.data.js
+    ├── routes
+    │   ├── account.route.js
+    │   ├── company.route.js
+    │   ├── comparison.route.js
+    │   ├── example.route.js
+    │   ├── investment.route.js
+    │   └── watch.route.js
+    ├── services
+    │   ├── company.service.js
+    │   ├── comparison.service.js
+    │   ├── example.service.js
+    │   ├── investment.service.js
+    │   ├── user.service.js
+    │   ├── userSession.service.js
+    │   └── watch.service.js
+    └── utils
+        ├── constants.js
+        ├── encrypt.js
+        ├── error.js
+        └── HttpStatus.js
