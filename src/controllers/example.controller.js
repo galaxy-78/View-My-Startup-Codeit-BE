@@ -1,4 +1,4 @@
-import HttpStatus from "../utils/HttpStatus";
+import HttpStatus from "../utils/HttpStatus.js";
 
 export class ExampleController {
   constructor(exampleService) {
