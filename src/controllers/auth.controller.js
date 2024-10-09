@@ -1,6 +1,6 @@
 import { assert } from 'superstruct';
 import encrypt, { encryptRest, generateRandomHexString, ITER_SSN_FULL } from '../utils/encrypt.js';
-import { loginBody } from '../../prisma/structs.js';
+import { loginBody, signupBody } from '../../prisma/structs.js';
 
 export class AuthController {
 	constructor(userService, userSessionService) {
