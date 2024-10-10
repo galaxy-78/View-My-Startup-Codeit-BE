@@ -7,15 +7,11 @@ export class ComparisonService {
 	selectCompareCompanies = async (selectedCompanyIds, userId) => {
 		const selectedCompanies = await Promise.all(
 			selectedCompanyIds.map(async companyId => {
-				await this.data.createComparison(userId, companyId);
-
-				return this.data.findCompanyById(companyId); // 회사 정보 반환
+				return await this.data.createComparison(companyId, userId);
 			}),
 		);
 
-		const totalCount = selectedCompanies.length;
-
-		return { list: selectedCompanies, totalCount }; // list와 totalCount로 반환
+		return selectedCompanies;
 	};
 
 	getCompareCompanies = async userId => {

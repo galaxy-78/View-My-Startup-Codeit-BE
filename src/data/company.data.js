@@ -8,31 +8,32 @@ export class CompanyData {
 
 	// 모든 기업 리스트 검색
 	getCompanies = async ({ keyword, skip, take, sort, include }) => {
-		let orderBy;
+		let orderBy = [];
 		switch (sort) {
 			case 'accumulInvestDesc':
-				orderBy = { accumulInvest: 'desc' };
+				orderBy.push({ accumulInvest: 'desc' });
 				break;
 			case 'accumulInvestAsc':
-				orderBy = { accumulInvest: 'asc' };
+				orderBy.push({ accumulInvest: 'asc' });
 				break;
 			case 'earningDesc':
-				orderBy = { revenue: 'desc' };
+				orderBy.push({ revenue: 'desc' });
 				break;
 			case 'earningAsc':
-				orderBy = { revenue: 'asc' };
+				orderBy.push({ revenue: 'asc' });
 				break;
 			case 'employeeDesc':
-				orderBy = { employees: 'desc' };
+				orderBy.push({ employees: 'desc' });
 				break;
 			case 'employeeAsc':
-				orderBy = { employees: 'asc' };
+				orderBy.push({ employees: 'asc' });
 				break;
 			case 'recent':
 			default:
-				orderBy = { createdAt: 'desc' };
+				orderBy.push({ createdAt: 'desc' });
 				break;
 		}
+		orderBy.push({ name: 'asc' });
 		let includes;
 		switch (include) {
 			case 'watcherAndComparison':
@@ -56,7 +57,7 @@ export class CompanyData {
 			? {
 					OR: [
 						{ name: { contains: keyword, mode: 'insensitive' } },
-						{ category: { containes: keyword, mode: 'insensitive' }},
+						{ category: { contains: keyword, mode: 'insensitive' } }
 					]
 				}
 			: undefined;
@@ -73,7 +74,23 @@ export class CompanyData {
 			include: includes,
 		});
 
-		return { list: companies, totalCount };
+		let sortKey = Object.keys(orderBy[0])[0];
+		let rank = skip + 1;
+		let prevCompany = null;
+		let offset = 1;
+		const rankedCompanies = companies.map(company => {
+			if (prevCompany && prevCompany[sortKey] !== company[sortKey]) {
+				rank += offset;
+				offset = 1;
+			} else if (prevCompany) {
+				offset++;
+			}
+
+			prevCompany = company;
+			return { ...company, rank };
+		})
+
+		return { list: rankedCompanies, totalCount };
 	};
 
 	// 기업 수 계산
@@ -82,7 +99,7 @@ export class CompanyData {
 			where: {
 				OR: [
 					{ name: { contains: keyword, mode: 'insensitive' } },
-					{ category: { contains: keyword, mode: 'insensitive' } },
+					{ category: { contains: keyword, mode: 'insensitive' } }
 				]
 			},
 		});
