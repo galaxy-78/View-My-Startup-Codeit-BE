@@ -1,3 +1,5 @@
+import HttpStatus from "../utils/HttpStatus";
+
 export class WatchController {
 	constructor(watchService) {
 		this.service = watchService;
@@ -8,9 +10,9 @@ export class WatchController {
 		const { companyId, userId } = req.body;
 		try {
 			const watch = await this.service.selectMyCompany(companyId, userId);
-			res.status(200).json(watch);
+			res.status(HttpStatus.SUCCESS).json(watch);
 		} catch (error) {
-			res.status(500).json({ error: error.message });
+			res.status(HttpStatus.SERVER_ERROR).json({ error: error.message });
 		}
 	};
 
@@ -19,9 +21,9 @@ export class WatchController {
 		const { userId } = req.params;
 		try {
 			const watch = await this.service.getMyCompany(userId);
-			res.status(200).json(watch);
+			res.status(HttpStatus.SUCCESS).json(watch);
 		} catch (error) {
-			res.status(500).json({ error: error.message });
+			res.status(HttpStatus.SERVER_ERROR).json({ error: error.message });
 		}
 	};
 }
