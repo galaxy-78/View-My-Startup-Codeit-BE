@@ -61,7 +61,7 @@ async function main() {
 	for (let i = 0; i < 1000; i += 1) {
 		let newWatch = {
 			userId: userIds[getRandomInteger(0, userIds.length - 1)],
-			companyId: companyIds[getRandomInteger(0, companyIds.length - 1)]
+			companyId: companyIds[getRandomInteger(0, companyIds.length - 1)],
 		};
 		await prisma.watch.create({
 			data: newWatch,
@@ -70,8 +70,8 @@ async function main() {
 	for (let i = 0; i < 5000; i += 1) {
 		let newComparison = {
 			userId: userIds[getRandomInteger(0, userIds.length - 1)],
-			companyId: companyIds[getRandomInteger(0, companyIds.length - 1)]
-		}
+			companyId: companyIds[getRandomInteger(0, companyIds.length - 1)],
+		};
 		await prisma.comparison.create({
 			data: newComparison,
 		});
