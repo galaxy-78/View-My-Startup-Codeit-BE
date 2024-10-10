@@ -7,8 +7,8 @@ export class ComparisonController {
 	selectCompareCompanies = async (req, res) => {
 		const { selectedCompanyIds, userId } = req.body;
 		try {
-			const compareCompanies = await this.service.selectCompareCompanies(selectedCompanyIds, userId);
-			res.status(200).json(compareCompanies);
+			const results = await this.service.selectCompareCompanies(selectedCompanyIds, userId);
+			res.status(200).json({ list: results, totalCount: results.length });
 		} catch (error) {
 			res.status(500).json({ error: error.message });
 		}

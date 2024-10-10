@@ -11,11 +11,11 @@ export class ComparisonData {
 	};
 
 	// 사용자 ID와 회사 ID로 비교 기업 추가
-	createComparison = async (userId, companyId) => {
+	createComparison = async (companyId, userId) => {
 		return await this.data.create({
 			data: {
-				userId,
 				companyId,
+				userId,
 			},
 		});
 	};
