@@ -1,5 +1,5 @@
 import { assert } from 'superstruct';
-import { postCheckBody } from '../../prisma/structs.js';
+import { Email, postCheckBody } from '../../prisma/structs.js';
 
 export class UserController {
 	constructor(userService) {
@@ -21,23 +21,15 @@ export class UserController {
 		assert(req.body, postCheckBody);
 		const { email, nickname } = req.body;
 		const available = await this.service.checkAvailability({ email, nickname });
-
 		res.json(available);
 	};
 
-	postSignup = async (req, res) => {
-		const { email, name, nickname, salt, pwdEncrypted } = req.body;
-		const user = await this.service.post({ email, name, nickname, salt, pwdEncrypted });
-
-		res.json(user);
-	};
-
 	// NOTE 기능상 get 요청으로 보이지만, router endpoint 작동에 영향을 줄 수 있어보여 메소드명은 고치지 않았습니다.
-	// TODO 확인 후 메소드 명이 잘못되어있다면 고쳐주세요.
+	// data 를 query 형태로 보내면 get 으로 가능한데, post 가 보안상 더 좋은거 같아서 post 로 구현했습니다.
 	postPwdIter = async (req, res) => {
 		const { email } = req.body;
-		const account = await this.service.getPwdIter({ email });
-
-		res.json(account);
+		assert(email, Email);
+		const iterNSalt = await this.service.getPwdIterByEmail(email);
+		res.json(iterNSalt);
 	};
 }

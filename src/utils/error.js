@@ -1,8 +1,10 @@
+import HttpStatus from "./HttpStatus.js";
+
 class TypeError extends Error {
   constructor(message) {
     super(message);
     this.name = 'TypeError';
-    this.statusCode = 400;
+    this.statusCode = HttpStatus.BAD_REQUEST;
   }
 }
 
@@ -10,7 +12,7 @@ class ValidationError extends Error {
   constructor(message) {
     super(message);
     this.name = 'ValidationError';
-    this.statusCode = 400;
+    this.statusCode = HttpStatus.BAD_REQUEST;
   }
 }
 
@@ -18,7 +20,7 @@ class CastError extends Error {
   constructor(message) {
     super(message);
     this.name = 'CastError';
-    this.statusCode = 404;
+    this.statusCode = HttpStatus.NOT_FOUND;
   }
 }
 

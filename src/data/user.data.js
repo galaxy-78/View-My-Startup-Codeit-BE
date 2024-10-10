@@ -7,52 +7,39 @@ export class UserData {
 	// 여기서 DB와 통신해 받아온 데이터를 위로(service로) 올려줍니다.
 	// NOTE User의 DB 작업 코드만을 다룹니다.
 	findMany = async () => {
-		const users = await this.data.findMany();
-
-		return users;
+		return this.data.findMany();
 	};
 
 	findByEmail = async email => {
-		const user = await this.data.findUnique({ where: { email } });
-
-		return user;
+		return this.data.findUnique({ where: { email } });
 	};
 
 	findByNickname = async nickname => {
-		const user = await this.data.findUnique({ where: { nickname } });
-
-		return user;
+		return this.data.findUnique({ where: { nickname } });
 	};
 
 	findByEmailOrThrow = async email => {
-		const user = await this.data.findUniqueOrThrow({ where: { email } });
-
-		return user;
+		return this.data.findUniqueOrThrow({ where: { email } });
 	};
 
 	create = async data => {
-		const user = await this.data.create({ data });
-
-		return user;
+		return this.data.create({ data });
 	};
 
 	// NOTE 기존 service.postPwdIter에 해당하는 부분. 코드를 봐선 get 요청인듯 하여 메소드명을 변경했습니다.
-	getPwdIter = async email => {
-		const iterNSalt = await this.data.findUniqueOrThrow({
+	// get 으로 쓰겠습니다.
+	getPwdIterByEmail = async email => {
+		return this.data.findUniqueOrThrow({
 			where: { email },
 			select: { iter: true, salt: true },
 		});
-
-		return iterNSalt;
 	};
 
 	// NOTE 기존 service.updateUserIterAndCreateSession에서 user의 iter 변경하는 부분
-	updateIter = async email => {
-		const user = await this.data.update({
+	updateIterByEmail = async email => {
+		return this.data.update({
 			where: { email },
 			data: { iter: { decrement: 1 } },
 		});
-
-		return user;
 	};
 }

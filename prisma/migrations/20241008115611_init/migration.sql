@@ -17,6 +17,7 @@ CREATE TABLE "User" (
 CREATE TABLE "UserSession" (
     "userId" TEXT NOT NULL,
     "iter" INTEGER NOT NULL DEFAULT 1000,
+    "ip" CHAR(45) NOT NULL,
     "sessionSalt" CHAR(32) NOT NULL,
     "sessionEncrypted" CHAR(104) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

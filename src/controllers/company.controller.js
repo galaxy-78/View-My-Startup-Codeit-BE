@@ -1,3 +1,5 @@
+import HttpStatus from "../utils/HttpStatus.js";
+
 export class CompanyController {
 	constructor(companyService) {
 		this.service = companyService; // 이 부분에서 service에 연결합니다.
@@ -21,9 +23,9 @@ export class CompanyController {
 				sort,
 				include,
 			});
-			res.status(200).json(companiesData);
+			res.status(HttpStatus.SUCCESS).json(companiesData);
 		} catch (error) {
-			res.status(500).json({ error: error.message });
+			res.status(HttpStatus.SERVER_ERROR).json({ error: error.message });
 		}
 	};
 
@@ -32,9 +34,9 @@ export class CompanyController {
 		const keyword = req.query.keyword || '';
 		try {
 			const count = await this.service.getCompanyCount({ keyword });
-			res.status(200).json({ count });
+			res.status(HttpStatus.SUCCESS).json({ count });
 		} catch (error) {
-			res.status(500).json({ error: error.message });
+			res.status(HttpStatus.SERVER_ERROR).json({ error: error.message });
 		}
 	};
 
@@ -43,9 +45,9 @@ export class CompanyController {
 		const { id } = req.params;
 		try {
 			const company = await this.service.getCompanyById(id);
-			res.status(200).json(company);
+			res.status(HttpStatus.SUCCESS).json(company);
 		} catch (error) {
-			res.status(404).json({ error: error.message });
+			res.status(HttpStatus.NOT_FOUND).json({ error: error.message });
 		}
 	};
 }

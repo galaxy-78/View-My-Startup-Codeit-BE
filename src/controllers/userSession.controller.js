@@ -1,5 +1,5 @@
 import { assert } from 'superstruct';
-import { ssnCookies } from '../../prisma/structs.js';
+import { ssnBody, ssnBodyWithPwdEncrypted } from '../../prisma/structs.js';
 
 export class UserSessionController {
 	constructor(userSessionService) {
@@ -13,21 +13,35 @@ export class UserSessionController {
 	// validation은 위쪽 router에서도 사용되고는 하는데, 이에 대해서는 그쪽에 주석 남기겠습니다.
 	// 응답의 status를 지정하고, body를 전달합니다.
 	// NOTE 기능상 delete 요청으로 보이지만, router endpoint 작동에 영향을 줄 수 있어보여 메소드명은 고치지 않았습니다.
-	// TODO 확인 후 메소드 명이 잘못되어있다면 고쳐주세요.
+
+	// 이것도 아무나 남의 id 를 로그아웃 시킬 수 없게 session 을 확인하고 session 을 지워야해서 post 로 처리했습니다.
 	postLogout = async (req, res) => {
+		assert(req.body, ssnBodyWithPwdEncrypted);
 		const { userId, createdAt, sessionEncrypted } = req.body;
 		const result = await this.service.deleteSession({ userId, createdAt, sessionEncrypted });
+		res.json(result);
+	};
 
+	postLogoutFromAll = async (req, res) => {
+		assert(req.body, ssnBodyWithPwdEncrypted);
+		const { userId, createdAt, sessionEncrypted } = req.body;
+		const result = await this.service.deleteAllSession({ userId, createdAt, sessionEncrypted });
 		res.json(result);
 	};
 
 	// NOTE 기능상 get 요청으로 보이지만, router endpoint 작동에 영향을 줄 수 있어보여 메소드명은 고치지 않았습니다.
-	// TODO 확인 후 메소드 명이 잘못되어있다면 고쳐주세요.
+	// 이것도 보안상 이유로 post 로 보냈습니다. get query 로도 동작하게 할 순 있습니다.
 	postSsnIter = async (req, res) => {
-		assert(req.cookies, ssnCookies);
-		const { userId, createdAt } = req.cookies;
-		const session = await this.service.getSessionIter({ userId, createdAt });
+		assert(req.body, ssnBody);
+		const { userId, createdAt } = req.body;
+		const iterNSalt = await this.service.getSessionIter({ userId, createdAt });
+		res.json(iterNSalt);
+	};
 
-		res.json(session);
+	postSsns = async (req, res) => {
+		assert(req.body, ssnBodyWithPwdEncrypted);
+		const { userId, createdAt, sessionEncrypted } = req.body;
+		const sessions = await this.service.getSessions({ userId, createdAt, sessionEncrypted });
+		res.json(sessions);
 	};
 }
