@@ -54,7 +54,10 @@ export class CompanyData {
 
 		const where = keyword
 			? {
-					name: { contains: keyword, mode: 'insensitive' },
+					OR: [
+						{ name: { contains: keyword, mode: 'insensitive' } },
+						{ category: { containes: keyword, mode: 'insensitive' }},
+					]
 				}
 			: undefined;
 
@@ -77,7 +80,10 @@ export class CompanyData {
 	getCompanyCount = async ({ keyword }) => {
 		return await this.data.count({
 			where: {
-				name: { contains: keyword, mode: 'insensitive' },
+				OR: [
+					{ name: { contains: keyword, mode: 'insensitive' } },
+					{ category: { contains: keyword, mode: 'insensitive' } },
+				]
 			},
 		});
 	};
