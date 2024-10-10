@@ -1,6 +1,7 @@
 import { assert } from 'superstruct';
 import { patchInvestment, Uuid } from '../../prisma/structs.js';
 import c from '../utils/constants.js';
+import HttpStatus from '../utils/HttpStatus.js';
 
 export class InvestmentController {
 	constructor(investmentService) {
@@ -44,14 +45,14 @@ export class InvestmentController {
 		// NOTE password 인증 실패시 401 에러
 		const isCertified = await this.service.certify(id, req.body.password);
 		if (!isCertified) {
-			res.status(401).json({ message: c.MESSAGES.UNAUTHORIZED });
+			res.status(HttpStatus.UNAUTHORIZED).json({ message: c.MESSAGES.UNAUTHORIZED });
 			return null;
 		}
 
 		const investment = await this.service.patch(id, req.body);
 
 		if (!investment) {
-			res.status(404).json({ message: c.MESSAGES.NOID });
+			res.status(HttpStatus.NOT_FOUND).json({ message: c.MESSAGES.NOID });
 			return null;
 		}
 
@@ -67,17 +68,17 @@ export class InvestmentController {
 		// NOTE password 인증 실패시 401 에러
 		const isCertified = await this.service.certify(id, req.body.password);
 		if (!isCertified) {
-			res.status(401).json({ message: c.MESSAGES.UNAUTHORIZED });
+			res.status(HttpStatus.UNAUTHORIZED).json({ message: c.MESSAGES.UNAUTHORIZED });
 			return null;
 		}
 
 		const investment = await this.service.delete(id);
 
 		if (!investment) {
-			res.status(404).json({ message: c.MESSAGES.NOID });
+			res.status(HttpStatus.NOT_FOUND).json({ message: c.MESSAGES.NOID });
 			return null;
 		}
 
-		res.json(investment);
+		res.status(HttpStatus.NO_CONTENT).json(investment);
 	};
 }
