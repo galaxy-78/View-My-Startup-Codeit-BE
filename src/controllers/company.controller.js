@@ -17,7 +17,7 @@ export class CompanyController {
 		const { keyword = '', skip = 0, take = 10, sort = 'recent', include = '' } = req.query;
 		try {
 			const companiesData = await this.service.getCompanies({
-				keyword,
+				keyword: decodeURIComponent(keyword).trim(),
 				skip: Number(skip),
 				take: Number(take),
 				sort,
@@ -31,9 +31,9 @@ export class CompanyController {
 
 	// 기업 수 가져오기
 	getCompanyCount = async (req, res) => {
-		const keyword = req.query.keyword || '';
+		const { keyword = '' } = req.query;
 		try {
-			const count = await this.service.getCompanyCount({ keyword });
+			const count = await this.service.getCompanyCount({ keyword: decodeURIComponent(keyword).trim() });
 			res.status(HttpStatus.SUCCESS).json({ count });
 		} catch (error) {
 			res.status(HttpStatus.SERVER_ERROR).json({ error: error.message });
