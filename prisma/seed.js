@@ -28,10 +28,20 @@ async function main() {
 			await prisma.user.create({ data: user });
 		}),
 	);
-	await prisma.company.createMany({
-		data: COMPANY,
-		skipDuplicates: true,
-	});
+	const now = new Date();
+	await Promise.all(
+		COMPANY.map(async (company, i) => {
+			company.createdAt = new Date(now.getTime() + i);
+			company.updatedAt = new Date(now.getTime() + i);
+			await prisma.company.create({
+				data: company,
+			})
+		})
+	)
+	// await prisma.company.createMany({
+	// 	data: COMPANY,
+	// 	skipDuplicates: true,
+	// });
 
 	// 관계형 데이터 처리
 	// investments
