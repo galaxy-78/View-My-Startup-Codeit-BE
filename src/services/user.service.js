@@ -27,7 +27,11 @@ export class UserService {
 	// NOTE 기존 service.postPwdIter에 해당하는 부분. 코드를 봐선 get 요청인듯 하여 메소드명을 변경했습니다.
 	// 여기선 get 으로 이름 지어도 괜찮을거 같네요.
 	getPwdIterByEmail = async email => {
-		return this.data.getPwdIterByEmail(email);
+		try {
+			return this.data.getPwdIterByEmail(email);
+		} catch (err) {
+			return { message: '해당 계정을 찾을 수 없습니다.' };
+		}
 	};
 
 	updateUserIterByEmail = async email => {
