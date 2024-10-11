@@ -43,8 +43,8 @@ export class InvestmentData {
 		return investment;
 	};
 
-	create = async () => {
-		const investment = await this.data.create();
+	create = async data => {
+		const investment = await this.data.create({ data });
 
 		return investment;
 	};
