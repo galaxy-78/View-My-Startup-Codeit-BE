@@ -31,8 +31,8 @@ export class InvestmentService {
 		return investment;
 	};
 
-	postInvestment = async ({ parameter }) => {
-		const investment = await this.data.create();
+	post = async body => {
+		const investment = await this.data.create(body);
 
 		return investment;
 	};

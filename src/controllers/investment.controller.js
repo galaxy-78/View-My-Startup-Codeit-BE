@@ -1,5 +1,5 @@
 import { assert } from 'superstruct';
-import { patchInvestment, Uuid } from '../../prisma/structs.js';
+import { createInvestment, patchInvestment, Uuid } from '../../prisma/structs.js';
 import c from '../utils/constants.js';
 import HttpStatus from '../utils/HttpStatus.js';
 
@@ -34,6 +34,15 @@ export class InvestmentController {
 		const total = await this.service.getTotalAmount(companyId);
 
 		res.json(total);
+	};
+
+	postInvestment = async (req, res) => {
+		// NOTE 인자 형식 유효성 검사
+		assert(req.body, createInvestment);
+
+		const investment = await this.service.post(req.body);
+
+		res.status(HttpStatus.CREATED).json(investment);
 	};
 
 	patchInvestment = async (req, res) => {
