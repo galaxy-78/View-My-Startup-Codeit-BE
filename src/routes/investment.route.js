@@ -22,6 +22,8 @@ investmentRouter.get('/', investmentController.getInvestments);
 investmentRouter.get('/:companyId', investmentController.getInvestments);
 investmentRouter.get('/:companyId/total', investmentController.getTotalAmount);
 
+investmentRouter.post('/', investmentController.postInvestment);
+
 investmentRouter.patch('/:id', investmentController.patchInvestment);
 
 investmentRouter.delete('/:id', investmentController.deleteInvestment);
