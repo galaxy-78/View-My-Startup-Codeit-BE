@@ -3,9 +3,45 @@ import encrypt, { encryptRest, generateRandomHexString, ITER_SSN_FULL } from '..
 import { loginBody, signupBody } from '../../prisma/structs.js';
 
 export class AuthController {
-	constructor(userService, userSessionService) {
+	constructor(userService, userSessionService, socialLoginService) {
 		this.userService = userService;
 		this.userSessionService = userSessionService;
+		this.socialLoginService = socialLoginService; // 이 부분에서 service에 연결합니다.
+	}
+
+	// 여기서 api로써 통신합니다.
+	// 요청을 받아오는 부분이자, 응답을 전달하는 부분입니다.
+	// 주로 받아온 요청의 유효성을 검사합니다.
+	// 따라서 superstruct나 validation 관련 코드는 여기에 많이 작성됩니다.
+	// validation은 위쪽 router에서도 사용되고는 하는데, 이에 대해서는 그쪽에 주석 남기겠습니다.
+	// 응답의 status를 지정하고, body를 전달합니다.
+
+	postPreGoogle = async (req, res) => {
+		assert(req.body, preGoogleBody);
+		console.log('ip', req.headers['x-forwarded-for'], req.socket.remoteAddress);
+		const ip = req.headers['x-forwarded-for'].split(/,\s/)[0] || req.socket.remoteAddress.split(/,\s/)[0];
+		const { sW, sH, state } = req.body;
+		const socialLogin = await this.socialLoginService.postPreGoogle({
+			sW: Number(sW),
+			sH: Number(sH),
+			state,
+		}, ip);
+		return !!socialLogin;
+	}
+
+	postLoginWithGoogle = async (req, res) => {
+		const { sW, sH, state, email } = req.body;
+		const ip = req.headers['x-forwarded-for'].split(/,\s/)[0] || req.socket.remoteAddress.split(/,\s/)[0];
+		if (await this.socialLoginService.checkAccountGoogle({
+			sW: Number(sW),
+			sH: Number(sH),
+			state,
+			ip,
+		})) {
+			const user = await this.userService.getUserByEmail(email);
+			const ssnResponse = await this.createSession(user, ip);
+			res.json(ssnResponse);
+		}
 	}
 
 	postSignup = async (req, res) => {
