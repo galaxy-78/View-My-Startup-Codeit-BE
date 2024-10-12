@@ -8,3 +8,17 @@ Content-Type: application/json
     "name": "test",
     "password": "e9a75486736a550af4fea861e2378305c4a555a05094dee1dca2f68afea49cc3a50e8de6ea131ea521311f4d6fb054a146e8282f8e35ff2e6368c1a62e909716"
 }
+
+###
+
+get https://view-my-startup-codeit-be.onrender.com/investments/
+
+###
+patch https://view-my-startup-codeit-be.onrender.com/investments/c52fe0bc-8349-457d-bf7d-15c5b4b71657
+Content-Type: application/json
+
+{
+    "name": "테스트닉네임",
+    "amount": 100000000,
+    "password": "e9a75486736a550af4fea861e2378305c4a555a05094dee1dca2f68afea49cc3a50e8de6ea131ea521311f4d6fb054a146e8282f8e35ff2e6368c1a62e909716"
+}

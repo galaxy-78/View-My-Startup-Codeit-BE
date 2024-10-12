@@ -28,3 +28,36 @@ Content-Type: application/json
 	"email": "test1@naver.com",
 	"nickname": "닉네임"
 }
+
+###
+
+GET https://view-my-startup-codeit-be.onrender.com/account/users
+
+###
+
+POST https://view-my-startup-codeit-be.onrender.com/account/iter
+Content-Type: application/json
+
+{
+	"email": "test1@naver.com"
+}
+
+###
+
+POST https://view-my-startup-codeit-be.onrender.com/account/session-iter
+Content-Type: application/json
+
+{
+	"id": "cb341d41-7b37-40be-98ac-9c5530430313",
+	"createdAt": 0
+}
+
+###
+
+POST https://view-my-startup-codeit-be.onrender.com/account/check
+Content-Type: application/json
+
+{
+	"email": "test1@naver.com",
+	"nickname": "닉네임"
+}

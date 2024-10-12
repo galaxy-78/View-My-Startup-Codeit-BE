@@ -51,6 +51,16 @@ model UserSession {
   @@index([userId, createdAt(sort: Desc)])
 }
 
+model SocialLogin {
+  state     String   @db.Char(32)
+  ip        String   @db.Char(45)
+  sW        Int
+  sH        Int
+  createdAt DateTime @default(now())
+
+  @@id([state, ip])
+}
+
 model Company {
   // TODO 가상 투자 금액 총계를 직접 저장할 것인가, 매번 계산할 것인가?
   // 당장은 FE 단에서 계산하고 있음.

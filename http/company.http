@@ -15,3 +15,24 @@ Content-Type: application/json
 
 # 이 부분에서 검색할 키워드를 지정
 keyword=빵빵
+
+###
+
+GET https://view-my-startup-codeit-be.onrender.com/companies
+
+###
+
+GET https://view-my-startup-codeit-be.onrender.com/companies?keyword=IT
+
+###
+
+GET https://view-my-startup-codeit-be.onrender.com/companies?include=investments
+
+###
+
+GET https://view-my-startup-codeit-be.onrender.com/companies/2c1af571-b2eb-479a-b8c0-87ad911421f4
+
+###
+
+GET https://view-my-startup-codeit-be.onrender.com/companies/count?keyword=빵빵
+
