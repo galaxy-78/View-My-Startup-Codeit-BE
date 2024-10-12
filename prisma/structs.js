@@ -9,9 +9,9 @@ export const Email = s.define('Email', value => isEmail(value));
 export const DateTime = s.define('DateTime', value => /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/.test(value));
 
 export const preGoogleBody = s.object({
-	state: s.size(s.string(), 32),
 	sW: s.integer(),
 	sH: s.integer(),
+	state: s.size(s.string(), 32),
 });
 
 export const loginWithGoogleBody = s.object({
