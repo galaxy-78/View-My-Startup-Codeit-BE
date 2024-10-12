@@ -61,3 +61,14 @@ Content-Type: application/json
 	"email": "test1@naver.com",
 	"nickname": "닉네임"
 }
+
+###
+
+POST https://view-my-startup-codeit-be.onrender.com/account/log-in-with-google
+Content-Type: application/json
+
+{
+	"sW": 640,
+	"sH": 480,
+	"state": "01234567890123456789012345678901"
+}
