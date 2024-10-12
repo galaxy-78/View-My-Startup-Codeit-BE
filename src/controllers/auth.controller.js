@@ -1,6 +1,6 @@
 import { assert } from 'superstruct';
 import encrypt, { encryptRest, generateRandomHexString, ITER_SSN_FULL } from '../utils/encrypt.js';
-import { loginBody, signupBody } from '../../prisma/structs.js';
+import { loginBody, loginWithGoogleBody, preGoogleBody, signupBody } from '../../prisma/structs.js';
 
 export class AuthController {
 	constructor(userService, userSessionService, socialLoginService) {
@@ -30,6 +30,7 @@ export class AuthController {
 	}
 
 	postLoginWithGoogle = async (req, res) => {
+		assert(req.body, loginWithGoogleBody);
 		const { sW, sH, state, email } = req.body;
 		const ip = req.headers['x-forwarded-for'].split(/,\s/)[0] || req.socket.remoteAddress.split(/,\s/)[0];
 		if (await this.socialLoginService.checkAccountGoogle({
