@@ -73,7 +73,7 @@ export class AuthController {
 
 	// sessionSalt 와 sessionPwd 에 random hex string (length: 32) 를 넣어줍니다.
 	// Client 는 sessionPwd 만 안전하게 보관하면 됩니다. (자신의 id 와 createdAt 과 함께.)
-	createSession = async ({ id, nickname }, ip) => {
+	#createSession = async ({ id, nickname }, ip) => {
 		const salt = generateRandomHexString();
 		const sessionPwd = generateRandomHexString();
 		const userSession = await this.userSessionService.createSession({
