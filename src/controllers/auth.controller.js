@@ -19,20 +19,20 @@ export class AuthController {
 	postPreGoogle = async (req, res) => {
 		assert(req.body, preGoogleBody);
 		console.log('ip', req.headers['x-forwarded-for'], req.socket.remoteAddress);
-		const ip = req.headers['x-forwarded-for'].split(/,\s/)[0] || req.socket.remoteAddress.split(/,\s/)[0];
+		const ip = req.headers['x-forwarded-for']?.split(/,\s/)[0] || req.socket.remoteAddress?.split(/,\s/)[0];
 		const { sW, sH, state } = req.body;
 		const socialLogin = await this.socialLoginService.postPreGoogle({
 			sW: Number(sW),
 			sH: Number(sH),
 			state,
 		}, ip);
-		return !!socialLogin;
+		return res.json({ result: !!socialLogin });
 	}
 
 	postLoginWithGoogle = async (req, res) => {
 		assert(req.body, loginWithGoogleBody);
 		const { sW, sH, state, email } = req.body;
-		const ip = req.headers['x-forwarded-for'].split(/,\s/)[0] || req.socket.remoteAddress.split(/,\s/)[0];
+		const ip = req.headers['x-forwarded-for']?.split(/,\s/)[0] || req.socket.remoteAddress?.split(/,\s/)[0];
 		if (await this.socialLoginService.checkAccountGoogle({
 			sW: Number(sW),
 			sH: Number(sH),
