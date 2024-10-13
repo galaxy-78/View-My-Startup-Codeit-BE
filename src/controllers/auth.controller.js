@@ -33,15 +33,18 @@ export class AuthController {
 		assert(req.body, loginWithGoogleBody);
 		const { sW, sH, state, email } = req.body;
 		const ip = req.headers['x-forwarded-for']?.split(/,\s/)[0] || req.socket.remoteAddress?.split(/,\s/)[0];
-		if (await this.socialLoginService.checkAccountGoogle({
+		const checkPassed = await this.socialLoginService.checkAccountGoogle({
 			sW: Number(sW),
 			sH: Number(sH),
 			state,
 			ip,
-		})) {
+		});
+		if (checkPassed) {
 			const user = await this.userService.getUserByEmail(email);
 			const ssnResponse = await this.createSession(user, ip);
 			res.json(ssnResponse);
+		} else {
+			res.json({ message: 'Google 을 통한 로그인에 실패했습니다.' })
 		}
 	}
 
