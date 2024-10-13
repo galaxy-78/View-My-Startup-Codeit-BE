@@ -15,10 +15,10 @@ export const preGoogleBody = s.object({
 });
 
 export const loginWithGoogleBody = s.object({
-	state: s.size(s.string(), 32),
+	email: Email,
 	sW: s.integer(),
 	sH: s.integer(),
-	email: Email,
+	state: s.size(s.string(), 32),
 });
 
 export const signupBody = s.object({

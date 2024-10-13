@@ -33,15 +33,18 @@ export class AuthController {
 		assert(req.body, loginWithGoogleBody);
 		const { sW, sH, state, email } = req.body;
 		const ip = req.headers['x-forwarded-for']?.split(/,\s/)[0] || req.socket.remoteAddress?.split(/,\s/)[0];
-		if (await this.socialLoginService.checkAccountGoogle({
+		const checkPassed = await this.socialLoginService.checkAccountGoogle({
 			sW: Number(sW),
 			sH: Number(sH),
 			state,
 			ip,
-		})) {
+		});
+		if (checkPassed) {
 			const user = await this.userService.getUserByEmail(email);
 			const ssnResponse = await this.createSession(user, ip);
 			res.json(ssnResponse);
+		} else {
+			res.json({ message: 'Google 을 통한 로그인에 실패했습니다.' })
 		}
 	}
 
@@ -70,7 +73,7 @@ export class AuthController {
 
 	// sessionSalt 와 sessionPwd 에 random hex string (length: 32) 를 넣어줍니다.
 	// Client 는 sessionPwd 만 안전하게 보관하면 됩니다. (자신의 id 와 createdAt 과 함께.)
-	createSession = async ({ id, nickname }, ip) => {
+	#createSession = async ({ id, nickname }, ip) => {
 		const salt = generateRandomHexString();
 		const sessionPwd = generateRandomHexString();
 		const userSession = await this.userSessionService.createSession({

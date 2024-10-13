@@ -12,7 +12,7 @@ export class SocialLoginService {
 	}
 
 	checkAccountGoogle = async data => {
-		const socialLoginData = await getSocialLogin(data);
-		return (new Date().getTime() - new Date(socialLoginData.createdAt).getTime()) < 100_000 && socialLoginData.sW === data.sW && socialLoginData.sH === data.sH;
+		const socialLoginData = await getSocialLogin(data.state, data.ip);
+		return (new Date().getTime() - new Date(socialLoginData.createdAt).getTime()) < 100000 && socialLoginData.sW === data.sW && socialLoginData.sH === data.sH;
 	}
 }
