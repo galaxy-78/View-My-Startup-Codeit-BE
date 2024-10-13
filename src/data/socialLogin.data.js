@@ -10,7 +10,7 @@ export class SocialLoginData {
 		return this.socialLogin.create({ data });
 	};
 
-	getSocialLogin = async (state, ip) => {
+	findSocialLogin = async ({ state, ip }) => {
 		return this.socialLogin.findUnique({
 			where: {
 				state_ip: { state, ip }

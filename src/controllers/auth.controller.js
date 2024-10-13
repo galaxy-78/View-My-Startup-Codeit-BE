@@ -22,10 +22,11 @@ export class AuthController {
 		const ip = req.headers['x-forwarded-for']?.split(/,\s/)[0] || req.socket.remoteAddress?.split(/,\s/)[0];
 		const { sW, sH, state } = req.body;
 		const socialLogin = await this.socialLoginService.postPreGoogle({
-			sW: Number(sW),
-			sH: Number(sH),
+			sW,
+			sH,
 			state,
-		}, ip);
+			ip,
+		});
 		return res.json({ result: !!socialLogin });
 	}
 
@@ -34,8 +35,8 @@ export class AuthController {
 		const { sW, sH, state, email } = req.body;
 		const ip = req.headers['x-forwarded-for']?.split(/,\s/)[0] || req.socket.remoteAddress?.split(/,\s/)[0];
 		const checkPassed = await this.socialLoginService.checkAccountGoogle({
-			sW: Number(sW),
-			sH: Number(sH),
+			sW,
+			sH,
 			state,
 			ip,
 		});
