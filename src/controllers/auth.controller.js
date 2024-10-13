@@ -2,6 +2,10 @@ import { assert } from 'superstruct';
 import encrypt, { encryptRest, generateRandomHexString, ITER_SSN_FULL } from '../utils/encrypt.js';
 import { loginBody, loginWithGoogleBody, preGoogleBody, signupBody } from '../../prisma/structs.js';
 
+const getClientIp = (req) => {
+	return req.headers['x-forwarded-for']?.split(/,\s/)[0] || req.socket.remoteAddress?.split(/,\s/)[0];
+}
+
 export class AuthController {
 	constructor(userService, userSessionService, socialLoginService) {
 		this.userService = userService;
@@ -18,8 +22,7 @@ export class AuthController {
 
 	postPreGoogle = async (req, res) => {
 		assert(req.body, preGoogleBody);
-		console.log('ip', req.headers['x-forwarded-for'], req.socket.remoteAddress);
-		const ip = req.headers['x-forwarded-for']?.split(/,\s/)[0] || req.socket.remoteAddress?.split(/,\s/)[0];
+		const ip = getClientIp(req);
 		const { sW, sH, state } = req.body;
 		const socialLogin = await this.socialLoginService.postPreGoogle({
 			sW,
@@ -33,7 +36,7 @@ export class AuthController {
 	postLoginWithGoogle = async (req, res) => {
 		assert(req.body, loginWithGoogleBody);
 		const { sW, sH, state, email } = req.body;
-		const ip = req.headers['x-forwarded-for']?.split(/,\s/)[0] || req.socket.remoteAddress?.split(/,\s/)[0];
+		const ip = getClientIp(req);
 		const checkPassed = await this.socialLoginService.checkAccountGoogle({
 			sW,
 			sH,
@@ -42,7 +45,7 @@ export class AuthController {
 		});
 		if (checkPassed) {
 			const user = await this.userService.getUserByEmail(email);
-			const ssnResponse = await this.createSession(user, ip);
+			const ssnResponse = await this.#createSession(user, ip);
 			res.json(ssnResponse);
 		} else {
 			res.json({ message: 'Google 을 통한 로그인에 실패했습니다.' })
@@ -54,7 +57,7 @@ export class AuthController {
 		const { email, name, nickname, salt, pwdEncrypted } = req.body;
 		const user = await this.userService.create({ email, name, nickname, salt, pwdEncrypted });
 		const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-		const ssnResponse = await this.createSession(user, ip);
+		const ssnResponse = await this.#createSession(user, ip);
 		res.json(ssnResponse);
 	};
 
@@ -67,7 +70,7 @@ export class AuthController {
 		if (encryptRest(user.salt, pwdEncrypted, user.iter) === user.pwdEncrypted) {
 			const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
 			const user = await this.userService.updateUserIterByEmail(email);
-			const ssnResponse = await this.createSession(user, ip);
+			const ssnResponse = await this.#createSession(user, ip);
 			res.json(ssnResponse);
 		}
 	};
