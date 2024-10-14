@@ -17,7 +17,7 @@ model User {
   id           String @id @default(uuid())
   email        String @unique // 이메일
   nickname     String @unique // 서비스 내 표시할 별명
-  name         String // 유저 성명
+  name         String @db.VarChar(100) // 유저 성명
   iter         Int    @default(10000) // Hash iteration, 매 인증성공시마다 1씩 감소
   salt         String @db.Char(32) // Random string, length: 32
   pwdEncrypted String @db.Char(104) // Encrypted password, length: 104
@@ -40,7 +40,7 @@ model UserSession {
   // Hash 는 정방향으로는 순쉽간에 결과가 나오지만, 이 Hash 의 역함수를 구하는건 굉장히 어렵습니다. Rainbow table 로 모든 암호에 대해 마지막 sessionEncrypted 가 뭐가 나오는지 저장해놓고 역산할수는 있지만, 이 마저도 각 유저별로 랜덤한 다른 salt 를 첨가하는 것으로 막을 수 있습니다.
   // 이 암호는 양자컴퓨터로도 못 푸는 것으로 알고 있습니다.
   // 정확히 어떻게 동작하는건지 궁금하신 분은 이강수님 (kipacti@gmail.com) 에게 문의해 주세요.
-  ip               String @db.Char(45) // IPv6 port 포함 max 값
+  ip               String @db.VarChar(45) // IPv6 port 포함 max 값
   sessionSalt      String @db.Char(32)
   sessionEncrypted String @db.Char(104)
 
@@ -52,10 +52,10 @@ model UserSession {
 }
 
 model SocialLogin {
-  nickname   String?  @db.Char(20)
-  authorizor String?  @db.Char(10)
+  nickname   String?  @db.VarChar(20)
+  authorizor String?  @db.VarChar(10)
   state      String   @db.Char(32)
-  ip         String   @db.Char(45)
+  ip         String   @db.VarChar(45)
   sW         Int
   sH         Int
   createdAt  DateTime @default(now())
