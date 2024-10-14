@@ -7,12 +7,12 @@ export class SocialLoginService {
 	// 비즈니스 로직, DB에서 가져온 데이터를 가공하는 코드가 주로 작성됩니다.
 	// 여기서 가공된 데이터를 controller로 올려줍니다.
 
-	postPreGoogle = data => {
+	postPreSocial = data => {
 		return this.socialLogin.create({ ...data });
 	}
 
-	checkAccountGoogle = async data => {
+	checkAccountSocial = async data => {
 		const socialLoginData = await this.socialLogin.findSocialLogin({ ...data });
-		return (new Date().getTime() - new Date(socialLoginData.createdAt).getTime()) < 100000 && socialLoginData.sW === data.sW && socialLoginData.sH === data.sH;
+		return (new Date().getTime() - new Date(socialLoginData.createdAt).getTime()) < 100000 && socialLoginData.authorizor === data.authorizor && socialLoginData.sW === data.sW && socialLoginData.sH === data.sH;
 	}
 }
