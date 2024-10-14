@@ -52,7 +52,7 @@ model UserSession {
 }
 
 model SocialLogin {
-  authorizor String   @db.Char(10)
+  authorizor String?  @db.Char(10)
   state      String   @db.Char(32)
   ip         String   @db.Char(45)
   sW         Int
