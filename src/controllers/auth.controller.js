@@ -53,7 +53,7 @@ export class AuthController {
 			if (email) {
 				const user = await this.userService.getUserByEmail(email);
 				if (!user?.id) {
-					if (!socialLoginData.nickname) {
+					if (!socialLoginData.nickname.trim()) {
 						return res.json({ message: `해당 계정 (Email: ${email}) 이 존재하지 않습니다.` });
 					}
 					const user = await this.userService.create({ email, name: 'Unknown', nickname: socialLoginData.nickname, salt: generateRandomHexString(), pwdEncrypted: generateRandomHexString(104) });
@@ -86,18 +86,18 @@ export class AuthController {
 						headers: {
 							'Authorization': `Bearer ${access_token}`,
 						}});
-					const email = resp1.data.kakao_account.email;
-					const user = this.userService.getUserByEmail(email);
+					const email1 = resp1.data.kakao_account.email;
+					const user = this.userService.getUserByEmail(email1);
 					if (!user?.id) {
-						if (!socialLoginData.nickname) {
-							return res.json({ message: `해당 계정 (Email: ${email}) 이 존재하지 않습니다.` });
+						if (!socialLoginData.nickname.trim()) {
+							return res.json({ message: `해당 계정 (Email: ${email1}) 이 존재하지 않습니다.` });
 						}
-						const user = await this.userService.create({ email, name: 'Unknown', nickname: socialLoginData.nickname, salt: generateRandomHexString(), pwdEncrypted: generateRandomHexString(104) });
+						const user = await this.userService.create({ email: email1, name: 'Unknown', nickname: socialLoginData.nickname, salt: generateRandomHexString(), pwdEncrypted: generateRandomHexString(104) });
 						const ssnResponse = await this.#createSession(user, ip);
 						return res.json(ssnResponse);
 					}
 					const ssnResponse = await this.#createSession(user, ip);
-					return res.json(resp1.data);
+					return res.json(ssnResponse);
 				})
 				.catch(err => {
 					console.error('Error: ', err.response ? err.response.data : err.message);
@@ -146,7 +146,9 @@ export class AuthController {
 			sessionSalt: salt,
 			sessionEncrypted: encrypt(salt, sessionPwd, ITER_SSN_FULL),
 		});
-
-		return { userUuid: id, nickname, sessionPwd, createdAt: userSession.createdAt };
+		if (userSession?.userId) {
+			return { userUuid: id, nickname, sessionPwd, createdAt: userSession.createdAt };
+		}
+		return { message: 'Session 이 제대로 생성되지 못했습니다.' };
 	};
 }
