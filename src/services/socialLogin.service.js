@@ -12,7 +12,7 @@ export class SocialLoginService {
 	}
 
 	findSocialLogin = (state, ip) => {
-		return this.socialLogin.findUnique({ state, ip });
+		return this.socialLogin.findSocialLogin({ state, ip });
 	}
 
 	checkAccountSocial = async data => {
