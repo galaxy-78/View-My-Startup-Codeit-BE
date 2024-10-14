@@ -15,13 +15,14 @@ export const preSocialLoginBody = s.object({
 	state: s.size(s.string(), 32),
 });
 
-export const loginWithSocialBody = s.object({
+export const loginWithSocialBody = s.partial(s.object({
+	code: s.string(),
 	authorizor: s.string(),
 	email: Email,
 	sW: s.integer(),
 	sH: s.integer(),
 	state: s.size(s.string(), 32),
-});
+}));
 
 export const signupBody = s.object({
 	email: Email,
