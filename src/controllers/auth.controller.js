@@ -25,13 +25,14 @@ export class AuthController {
 	postPreSocial = async (req, res) => {
 		assert(req.body, preSocialLoginBody);
 		const ip = getClientIp(req);
-		const { sW, sH, state, authorizor } = req.body;
+		const { sW, sH, state, authorizor, nickname } = req.body;
 		const socialLogin = await this.socialLoginService.postPreSocial({
 			sW,
 			sH,
 			state,
 			ip,
 			authorizor,
+			nickname,
 		});
 		return res.json({ result: !!socialLogin });
 	}
@@ -48,10 +49,16 @@ export class AuthController {
 			authorizor,
 		});
 		if (checkPassed) {
+			const socialLoginData = await this.socialLoginService.findSocialLogin(state, ip);
 			if (email) {
 				const user = await this.userService.getUserByEmail(email);
-				if (!user) {
-					return res.json({ message: `해당 계정 (Email: ${email}) 이 존재하지 않습니다.` });
+				if (!user?.id) {
+					if (!socialLoginData.nickname) {
+						return res.json({ message: `해당 계정 (Email: ${email}) 이 존재하지 않습니다.` });
+					}
+					const user = await this.userService.create({ email, name: 'Unknown', nickname: socialLoginData.nickname, salt: generateRandomHexString(), pwdEncrypted: generateRandomHexString(104) });
+					const ssnResponse = await this.#createSession(user, ip);
+					return res.json(ssnResponse);
 				}
 				const ssnResponse = await this.#createSession(user, ip);
 				return res.json(ssnResponse);
@@ -81,8 +88,13 @@ export class AuthController {
 						}});
 					const email = resp1.data.kakao_account.email;
 					const user = this.userService.getUserByEmail(email);
-					if (!user) {
-						return res.json({ message: `해당 계정 (Email: ${email}) 이 존재하지 않습니다.` });
+					if (!user?.id) {
+						if (!socialLoginData.nickname) {
+							return res.json({ message: `해당 계정 (Email: ${email}) 이 존재하지 않습니다.` });
+						}
+						const user = await this.userService.create({ email, name: 'Unknown', nickname: socialLoginData.nickname, salt: generateRandomHexString(), pwdEncrypted: generateRandomHexString(104) });
+						const ssnResponse = await this.#createSession(user, ip);
+						return res.json(ssnResponse);
 					}
 					const ssnResponse = await this.#createSession(user, ip);
 					return res.json(resp1.data);
@@ -111,7 +123,7 @@ export class AuthController {
 		assert(req.body, loginBody);
 		const { email, pwdEncrypted } = req.body;
 		const user = await this.userService.getUserByEmail(email);
-		if (!user) {
+		if (!user?.id) {
 			return res.json({ message: `해당 계정 (Email: ${email}) 이 존재하지 않습니다.` });
 		}
 		if (encryptRest(user.salt, pwdEncrypted, user.iter) === user.pwdEncrypted) {

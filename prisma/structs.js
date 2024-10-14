@@ -13,6 +13,7 @@ export const preSocialLoginBody = s.object({
 	sW: s.integer(),
 	sH: s.integer(),
 	state: s.size(s.string(), 32),
+	nickname: s.string(),
 });
 
 export const loginWithSocialBody = s.partial(s.object({
