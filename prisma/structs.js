@@ -8,13 +8,15 @@ export const Uuid = s.define('Uuid', value => isUuid.v4(value));
 export const Email = s.define('Email', value => isEmail(value));
 export const DateTime = s.define('DateTime', value => /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/.test(value));
 
-export const preGoogleBody = s.object({
+export const preSocialLoginBody = s.object({
+	authorizor: s.string(),
 	sW: s.integer(),
 	sH: s.integer(),
 	state: s.size(s.string(), 32),
 });
 
-export const loginWithGoogleBody = s.object({
+export const loginWithSocialBody = s.object({
+	authorizor: s.string(),
 	email: Email,
 	sW: s.integer(),
 	sH: s.integer(),

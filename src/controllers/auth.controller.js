@@ -1,6 +1,6 @@
 import { assert } from 'superstruct';
 import encrypt, { encryptRest, generateRandomHexString, ITER_SSN_FULL } from '../utils/encrypt.js';
-import { loginBody, loginWithGoogleBody, preGoogleBody, signupBody } from '../../prisma/structs.js';
+import { loginBody, loginWithSocialBody, preSocialLoginBody, signupBody } from '../../prisma/structs.js';
 
 const getClientIp = (req) => {
 	return req.headers['x-forwarded-for']?.split(/,\s/)[0] || req.socket.remoteAddress?.split(/,\s/)[0];
@@ -20,28 +20,30 @@ export class AuthController {
 	// validation은 위쪽 router에서도 사용되고는 하는데, 이에 대해서는 그쪽에 주석 남기겠습니다.
 	// 응답의 status를 지정하고, body를 전달합니다.
 
-	postPreGoogle = async (req, res) => {
-		assert(req.body, preGoogleBody);
+	postPreSocial = async (req, res) => {
+		assert(req.body, preSocialLoginBody);
 		const ip = getClientIp(req);
-		const { sW, sH, state } = req.body;
-		const socialLogin = await this.socialLoginService.postPreGoogle({
+		const { sW, sH, state, authorizor } = req.body;
+		const socialLogin = await this.socialLoginService.postPreSocial({
 			sW,
 			sH,
 			state,
 			ip,
+			authorizor,
 		});
 		return res.json({ result: !!socialLogin });
 	}
 
-	postLoginWithGoogle = async (req, res) => {
-		assert(req.body, loginWithGoogleBody);
-		const { sW, sH, state, email } = req.body;
+	postLoginWithSocial = async (req, res) => {
+		assert(req.body, loginWithSocialBody);
+		const { sW, sH, state, email, authorizor } = req.body;
 		const ip = getClientIp(req);
-		const checkPassed = await this.socialLoginService.checkAccountGoogle({
+		const checkPassed = await this.socialLoginService.checkAccountSocial({
 			sW,
 			sH,
 			state,
 			ip,
+			authorizor,
 		});
 		if (checkPassed) {
 			const user = await this.userService.getUserByEmail(email);
