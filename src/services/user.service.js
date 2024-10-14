@@ -17,7 +17,7 @@ export class UserService {
 	};
 
 	getUserByEmail = async email => {
-		return this.data.findByEmailOrThrow(email);
+		return this.data.findByEmail(email);
 	};
 
 	create = async userData => {
