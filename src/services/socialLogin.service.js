@@ -11,6 +11,10 @@ export class SocialLoginService {
 		return this.socialLogin.create({ ...data });
 	}
 
+	findSocialLogin = (state, ip) => {
+		return this.socialLogin.findUnique({ state, ip });
+	}
+
 	checkAccountSocial = async data => {
 		const socialLoginData = await this.socialLogin.findSocialLogin({ ...data });
 		return (new Date().getTime() - new Date(socialLoginData.createdAt).getTime()) < 100000 && socialLoginData.authorizor.trim() === data.authorizor.trim() && socialLoginData.sW === data.sW && socialLoginData.sH === data.sH;
