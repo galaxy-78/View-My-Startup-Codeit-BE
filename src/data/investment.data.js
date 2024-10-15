@@ -92,7 +92,7 @@ export class InvestmentData {
 				sortOption = { orderBy: { createdAt: 'desc' } };
 		}
 
-		const myInvestments = await this.data.findMany({ ...where, ...sortOption, take: pageSize, skip: (page - 1) * pageSize });
+		const myInvestments = await this.data.findMany({ ...where, ...sortOption, take: pageSize, skip: (page - 1) * pageSize, include: { company: true } });
 
 		return myInvestments;
 	};
