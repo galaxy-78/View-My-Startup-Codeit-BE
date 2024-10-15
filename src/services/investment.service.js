@@ -60,8 +60,10 @@ export class InvestmentService {
 	};
 
 	getMyInvestments = async ({ orderBy, page, pageSize, userId }) => {
+		const totalCount = await this.data.countByUser(userId);
+
 		const list = await this.data.findManyByUser(orderBy, page, pageSize, userId);
 
-		return list;
+		return { list, totalCount };
 	};
 }
