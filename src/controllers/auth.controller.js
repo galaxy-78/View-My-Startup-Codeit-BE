@@ -143,6 +143,7 @@ export class AuthController {
 			const ssnResponse = await this.#createSession(user, ip);
 			return res.json(ssnResponse);
 		}
+		return res.json({ message: '비밀번호가 틀렸습니다.' });
 	};
 
 	// sessionSalt 와 sessionPwd 에 random hex string (length: 32) 를 넣어줍니다.
