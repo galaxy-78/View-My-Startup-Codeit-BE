@@ -28,8 +28,8 @@ CREATE TABLE "UserSession" (
 
 -- CreateTable
 CREATE TABLE "SocialLogin" (
-    "nickname" VARCHAR(20),
-    "authorizor" VARCHAR(10),
+    "nickname" VARCHAR(20) NOT NULL,
+    "authorizor" VARCHAR(10) NOT NULL,
     "state" CHAR(32) NOT NULL,
     "ip" VARCHAR(45) NOT NULL,
     "sW" INTEGER NOT NULL,
