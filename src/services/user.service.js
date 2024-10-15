@@ -21,7 +21,11 @@ export class UserService {
 	};
 
 	create = async userData => {
-		Object.keys(userData).forEach(key => userData[key] = userData[key].trim());
+		Object.keys(userData).forEach(key => {
+			if (typeof userData[key] === 'string') {
+				userData[key] = userData[key].trim();
+			}
+		});
 		return this.data.create(userData);
 	};
 
