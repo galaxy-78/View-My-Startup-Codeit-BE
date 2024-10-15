@@ -1,4 +1,4 @@
-get http://localhost:3000/investments/
+get http://localhost:3100/investments/user/9d5d2fd2-7fe9-466f-bb22-31bccbeec694
 
 ###
 patch http://localhost:3000/investments/5e16fcce-eddd-474c-842f-d0e13dda7190

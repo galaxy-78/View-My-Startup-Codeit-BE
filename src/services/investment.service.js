@@ -58,4 +58,10 @@ export class InvestmentService {
 
 		return input === password;
 	};
+
+	getMyInvestments = async ({ orderBy, page, pageSize, userId }) => {
+		const list = await this.data.findManyByUser(orderBy, page, pageSize, userId);
+
+		return list;
+	};
 }
