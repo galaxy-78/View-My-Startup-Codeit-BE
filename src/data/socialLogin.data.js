@@ -7,13 +7,14 @@ export class SocialLoginData {
 	// 여기서 DB와 통신해 받아온 데이터를 위로(service로) 올려줍니다.
 	// NOTE UserSession의 DB 작업 코드만을 다룹니다.
 	create = async data => {
+		Object.keys(data).forEach(key => data[key] = data[key].trim());
 		return this.socialLogin.create({ data });
 	};
 
 	findSocialLogin = async ({ state, ip }) => {
 		return this.socialLogin.findUnique({
 			where: {
-				state_ip: { state, ip }
+				state_ip: { state, ip: ip.trim() }
 			}
 		});
 	}

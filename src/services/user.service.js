@@ -17,17 +17,18 @@ export class UserService {
 	};
 
 	getUserByEmail = async email => {
-		return this.data.findByEmail(email);
+		return this.data.findByEmail(email.trim());
 	};
 
 	create = async userData => {
+		Object.keys(userData).forEach(key => userData[key] = userData[key].trim());
 		return this.data.create(userData);
 	};
 
 	// NOTE 기존 service.postPwdIter에 해당하는 부분. 코드를 봐선 get 요청인듯 하여 메소드명을 변경했습니다.
 	// 여기선 get 으로 이름 지어도 괜찮을거 같네요.
 	getPwdIterByEmail = async email => {
-		const iterNSalt = await this.data.getPwdIterByEmail(email);
+		const iterNSalt = await this.data.getPwdIterByEmail(email.trim());
 		if (iterNSalt) {
 			return iterNSalt;
 		} else {
@@ -36,6 +37,6 @@ export class UserService {
 	};
 
 	updateUserIterByEmail = async email => {
-		return this.data.updateIterByEmail(email);
+		return this.data.updateIterByEmail(email.trim());
 	};
 }
