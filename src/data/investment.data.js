@@ -71,6 +71,14 @@ export class InvestmentData {
 		return investment;
 	};
 
+	countByUser = async userId => {
+		const query = userId ? { where: { userId } } : {};
+
+		const count = await this.data.count(query);
+
+		return count;
+	};
+
 	findManyByUser = async (orderBy, page, pageSize, userId) => {
 		const where = userId ? { where: { userId } } : {};
 
