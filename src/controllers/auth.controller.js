@@ -86,7 +86,7 @@ export class AuthController {
 						headers: {
 							'Authorization': `Bearer ${access_token}`,
 						}});
-					const email1 = resp1.data.kakao_account.email;
+					const email1 = resp1.data.kakao_account.email.trim();
 					const user = this.userService.getUserByEmail(email1);
 					if (!user?.id) {
 						if (!socialLoginData.nickname.trim()) {
