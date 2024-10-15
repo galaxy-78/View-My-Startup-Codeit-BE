@@ -56,6 +56,10 @@ export class AuthController {
 					if (!socialLoginData.nickname.trim()) {
 						return res.json({ message: `해당 계정 (Email: ${email}) 이 존재하지 않습니다.` });
 					}
+					const checkAvailability = await this.userService.checkAvailability({ email, nickname: socialLoginData.nickname });
+					if (!(checkAvailability.email && checkAvailability.nickname)) {
+						return res.json({ message: `Email (${email}) 사용 가능: ${checkAvailability.email}\n닉네임 사용 가능: ${checkAvailability.nickname}` });
+					}
 					const user = await this.userService.create({ email, name: 'Unknown', nickname: socialLoginData.nickname, salt: generateRandomHexString(), pwdEncrypted: generateRandomHexString(104) });
 					const ssnResponse = await this.#createSession(user, ip);
 					return res.json(ssnResponse);
@@ -81,17 +85,21 @@ export class AuthController {
 					const resp1 = await axios.get(`https://kapi.kakao.com/v2/user/me`, {
 						params: {
 							secure_resource: false,
-							property_keys: ['kakao_account.email'],
+							// property_keys: ['kakao_account.email'],
 						},
 						headers: {
 							'Authorization': `Bearer ${access_token}`,
 						}});
 					const email1 = resp1.data.kakao_account.email.trim();
 					if (email1) {
-						const user = this.userService.getUserByEmail(email1);
+						const user = await this.userService.getUserByEmail(email1);
 						if (!user?.id) {
 							if (!socialLoginData.nickname.trim()) {
 								return res.json({ message: `해당 계정 (Email: ${email1}) 이 존재하지 않습니다.` });
+							}
+							const checkAvailability = await this.userService.checkAvailability({ email: email1, nickname: socialLoginData.nickname });
+							if (!(checkAvailability.email && checkAvailability.nickname)) {
+								return res.json({ message: `Email (${email1}) 사용 가능: ${checkAvailability.email}\n닉네임 사용 가능: ${checkAvailability.nickname}` });
 							}
 							const user = await this.userService.create({ email: email1.trim(), name: 'Unknown', nickname: socialLoginData.nickname.trim(), salt: generateRandomHexString(), pwdEncrypted: generateRandomHexString(104) });
 							const ssnResponse = await this.#createSession(user, ip);

@@ -19,7 +19,7 @@ export const preSocialLoginBody = s.object({
 export const loginWithSocialBody = s.partial(s.object({
 	code: s.string(),
 	authorizor: s.string(),
-	email: Email,
+	email: s.string(),
 	sW: s.integer(),
 	sH: s.integer(),
 	state: s.size(s.string(), 32),
