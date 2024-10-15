@@ -70,4 +70,22 @@ export class InvestmentData {
 
 		return investment;
 	};
+
+	findManyByUser = async (orderBy, page, pageSize, userId) => {
+		const where = userId ? { where: { userId } } : {};
+
+		let sortOption;
+		switch (orderBy) {
+			case 'old':
+				sortOption = { orderBy: { createdAt: 'asc' } };
+				break;
+			case 'recent':
+			default:
+				sortOption = { orderBy: { createdAt: 'desc' } };
+		}
+
+		const myInvestments = await this.data.findMany({ ...where, ...sortOption, take: pageSize, skip: (page - 1) * pageSize });
+
+		return myInvestments;
+	};
 }
