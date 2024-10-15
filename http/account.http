@@ -1,0 +1,74 @@
+GET http://localhost:3100/account/users
+
+###
+
+POST http://localhost:3100/account/iter
+Content-Type: application/json
+
+{
+	"email": "test1@naver.com"
+}
+
+###
+
+POST http://localhost:3100/account/session-iter
+Content-Type: application/json
+
+{
+	"id": "53a10ad5-5c7a-4415-9683-a151b861b26d",
+	"createdAt": 0
+}
+
+###
+
+POST http://localhost:3100/account/check
+Content-Type: application/json
+
+{
+	"email": "test1@naver.com",
+	"nickname": "닉네임"
+}
+
+###
+
+GET https://view-my-startup-codeit-be.onrender.com/account/users
+
+###
+
+POST https://view-my-startup-codeit-be.onrender.com/account/iter
+Content-Type: application/json
+
+{
+	"email": "test1@naver.com"
+}
+
+###
+
+POST https://view-my-startup-codeit-be.onrender.com/account/session-iter
+Content-Type: application/json
+
+{
+	"id": "cb341d41-7b37-40be-98ac-9c5530430313",
+	"createdAt": 0
+}
+
+###
+
+POST https://view-my-startup-codeit-be.onrender.com/account/check
+Content-Type: application/json
+
+{
+	"email": "test1@naver.com",
+	"nickname": "닉네임"
+}
+
+###
+
+POST https://view-my-startup-codeit-be.onrender.com/account/log-in-with-google
+Content-Type: application/json
+
+{
+	"sW": 640,
+	"sH": 480,
+	"state": "01234567890123456789012345678901"
+}
