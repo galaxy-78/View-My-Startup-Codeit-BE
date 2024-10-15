@@ -90,4 +90,16 @@ export class InvestmentController {
 
 		res.status(HttpStatus.NO_CONTENT).json(investment);
 	};
+
+	getMyInvestments = async (req, res) => {
+		const orderBy = req.query.orderBy || 'bigger';
+		const page = Number(req.query.page) || 1;
+		const pageSize = Number(req.query.pageSize) || 5;
+		const userId = req.params.userId;
+		if (userId) assert(userId, Uuid, c.MESSAGES.IDFORMAT);
+
+		const resBody = await this.service.getMyInvestments({ orderBy, page, pageSize, userId });
+
+		res.json(resBody);
+	};
 }

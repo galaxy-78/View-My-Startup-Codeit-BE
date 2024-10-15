@@ -27,3 +27,5 @@ investmentRouter.post('/', investmentController.postInvestment);
 investmentRouter.patch('/:id', investmentController.patchInvestment);
 
 investmentRouter.delete('/:id', investmentController.deleteInvestment);
+
+investmentRouter.get('/user/:userId', investmentController.getMyInvestments);
