@@ -44,12 +44,22 @@ export class InvestmentData {
 	};
 
 	create = async data => {
+		Object.keys(data).forEach(key => {
+			if (typeof data[key] === 'string') {
+				data[key] = data[key].trim();
+			}
+		});
 		const investment = await this.data.create({ data });
 
 		return investment;
 	};
 
 	update = async (id, data) => {
+		Object.keys(data).forEach(key => {
+			if (typeof data[key] === 'string') {
+				data[key] = data[key].trim();
+			}
+		});
 		const investment = await this.data.update({ where: { id }, data });
 
 		return investment;

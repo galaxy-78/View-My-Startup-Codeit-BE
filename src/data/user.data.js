@@ -11,18 +11,23 @@ export class UserData {
 	};
 
 	findByEmail = async email => {
-		return this.data.findUnique({ where: { email } });
+		return this.data.findUnique({ where: { email: email.trim() } });
 	};
 
 	findByNickname = async nickname => {
-		return this.data.findUnique({ where: { nickname } });
+		return this.data.findUnique({ where: { nickname: nickname.trim() } });
 	};
 
 	findByEmailOrThrow = async email => {
-		return this.data.findUniqueOrThrow({ where: { email } });
+		return this.data.findUniqueOrThrow({ where: { email: email.trim() } });
 	};
 
 	create = async data => {
+		Object.keys(data).forEach(key => {
+			if (typeof data[key] === 'string') {
+				data[key] = data[key].trim();
+			}
+		})
 		return this.data.create({ data });
 	};
 
@@ -30,7 +35,7 @@ export class UserData {
 	// get 으로 쓰겠습니다.
 	getPwdIterByEmail = async email => {
 		return this.data.findUnique({
-			where: { email },
+			where: { email: email.trim() },
 			select: { iter: true, salt: true },
 		});
 	};
@@ -38,7 +43,7 @@ export class UserData {
 	// NOTE 기존 service.updateUserIterAndCreateSession에서 user의 iter 변경하는 부분
 	updateIterByEmail = async email => {
 		return this.data.update({
-			where: { email },
+			where: { email: email.trim() },
 			data: { iter: { decrement: 1 } },
 		});
 	};

@@ -7,6 +7,11 @@ export class UserSessionData {
 	// 여기서 DB와 통신해 받아온 데이터를 위로(service로) 올려줍니다.
 	// NOTE UserSession의 DB 작업 코드만을 다룹니다.
 	create = async data => {
+		Object.keys(data).forEach(key => {
+			if (typeof data[key] === 'string') {
+				data[key] = data[key].trim();
+			}
+		});
 		return this.data.create({ data });
 	};
 
