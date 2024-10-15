@@ -50,7 +50,7 @@ export class AuthController {
 		});
 		if (checkPassed) {
 			const socialLoginData = await this.socialLoginService.findSocialLogin(state, ip);
-			if (email) {
+			if (email.trim()) {
 				const user = await this.userService.getUserByEmail(email);
 				if (!user?.id) {
 					if (!socialLoginData.nickname.trim()) {
@@ -87,17 +87,20 @@ export class AuthController {
 							'Authorization': `Bearer ${access_token}`,
 						}});
 					const email1 = resp1.data.kakao_account.email.trim();
-					const user = this.userService.getUserByEmail(email1);
-					if (!user?.id) {
-						if (!socialLoginData.nickname.trim()) {
-							return res.json({ message: `해당 계정 (Email: ${email1}) 이 존재하지 않습니다.` });
+					if (email1) {
+						const user = this.userService.getUserByEmail(email1);
+						if (!user?.id) {
+							if (!socialLoginData.nickname.trim()) {
+								return res.json({ message: `해당 계정 (Email: ${email1}) 이 존재하지 않습니다.` });
+							}
+							const user = await this.userService.create({ email: email1.trim(), name: 'Unknown', nickname: socialLoginData.nickname.trim(), salt: generateRandomHexString(), pwdEncrypted: generateRandomHexString(104) });
+							const ssnResponse = await this.#createSession(user, ip);
+							return res.json(ssnResponse);
 						}
-						const user = await this.userService.create({ email: email1, name: 'Unknown', nickname: socialLoginData.nickname, salt: generateRandomHexString(), pwdEncrypted: generateRandomHexString(104) });
 						const ssnResponse = await this.#createSession(user, ip);
 						return res.json(ssnResponse);
 					}
-					const ssnResponse = await this.#createSession(user, ip);
-					return res.json(ssnResponse);
+					return res.json({ message: '카카오 계정에서 Email 을 찾을 수 없습니다.' });
 				})
 				.catch(err => {
 					console.error('Error: ', err.response ? err.response.data : err.message);
