@@ -8,8 +8,8 @@ export class CompanyService {
 	// 여기서 가공된 데이터를 controller로 올려줍니다.
 
 	// 기업 리스트 가져오기
-	getCompanies = async ({ keyword, skip, take, sort, include }) => {
-		const companiesData = await this.data.getCompanies({ keyword, skip, take, sort, include });
+	getCompanies = async ({ keyword, skip, take, sort, include, exclude }) => {
+		const companiesData = await this.data.getCompanies({ keyword, skip, take, sort, include, exclude });
 		return companiesData;
 	};
 

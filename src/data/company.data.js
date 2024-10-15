@@ -7,7 +7,7 @@ export class CompanyData {
 	// 여기서 DB와 통신해 받아온 데이터를 위로(service로) 올려줍니다.
 
 	// 모든 기업 리스트 검색
-	getCompanies = async ({ keyword, skip, take, sort, include }) => {
+	getCompanies = async ({ keyword, skip, take, sort, include, exclude }) => {
 		let orderBy = [];
 		switch (sort) {
 			case 'accumulInvestDesc':
@@ -33,6 +33,7 @@ export class CompanyData {
 				orderBy.push({ createdAt: 'desc' });
 				break;
 		}
+
 		orderBy.push({ name: 'asc' });
 		let includes;
 		switch (include) {
@@ -53,14 +54,18 @@ export class CompanyData {
 				includes = undefined;
 		}
 
-		const where = keyword
-			? {
-					OR: [
-						{ name: { contains: keyword, mode: 'insensitive' } },
-						{ category: { contains: keyword, mode: 'insensitive' } }
-					]
-				}
-			: undefined;
+		const where = {
+			...(keyword
+				? {
+						OR: [{ name: { contains: keyword, mode: 'insensitive' } }, { category: { contains: keyword, mode: 'insensitive' } }],
+					}
+				: undefined),
+			...(exclude && {
+				id: {
+					not: exclude,
+				},
+			}),
+		};
 
 		const totalCount = await this.data.count({
 			where,
@@ -88,7 +93,7 @@ export class CompanyData {
 
 			prevCompany = company;
 			return { ...company, rank };
-		})
+		});
 
 		return { list: rankedCompanies, totalCount };
 	};
@@ -97,10 +102,7 @@ export class CompanyData {
 	getCompanyCount = async ({ keyword }) => {
 		return await this.data.count({
 			where: {
-				OR: [
-					{ name: { contains: keyword, mode: 'insensitive' } },
-					{ category: { contains: keyword, mode: 'insensitive' } }
-				]
+				OR: [{ name: { contains: keyword, mode: 'insensitive' } }, { category: { contains: keyword, mode: 'insensitive' } }],
 			},
 		});
 	};
