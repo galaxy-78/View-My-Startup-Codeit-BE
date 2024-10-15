@@ -16,7 +16,7 @@ export class UserSessionData {
 	};
 
 	findByUserIdAndCreatedAt = async (userId, createdAt) => {
-		return this.data.findUniqueOrThrow({
+		return this.data.findUnique({
 			where: { userId_createdAt: { userId, createdAt } },
 		});
 	};

@@ -52,8 +52,8 @@ model UserSession {
 }
 
 model SocialLogin {
-  nickname   String?  @db.VarChar(20)
-  authorizor String?  @db.VarChar(10)
+  nickname   String   @db.VarChar(20)
+  authorizor String   @db.VarChar(10)
   state      String   @db.Char(32)
   ip         String   @db.VarChar(45)
   sW         Int

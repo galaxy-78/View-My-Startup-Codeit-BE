@@ -18,9 +18,9 @@ export class UserData {
 		return this.data.findUnique({ where: { nickname: nickname.trim() } });
 	};
 
-	findByEmailOrThrow = async email => {
-		return this.data.findUniqueOrThrow({ where: { email: email.trim() } });
-	};
+	// findByEmailOrThrow = async email => {
+	// 	return this.data.findUniqueOrThrow({ where: { email: email.trim() } });
+	// };
 
 	create = async data => {
 		Object.keys(data).forEach(key => {
