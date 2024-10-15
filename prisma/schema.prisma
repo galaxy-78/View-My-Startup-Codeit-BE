@@ -15,8 +15,8 @@ datasource db {
 
 model User {
   id           String @id @default(uuid())
-  email        String @unique // 이메일
-  nickname     String @unique // 서비스 내 표시할 별명
+  email        String @unique @db.VarChar(32) // 이메일
+  nickname     String @unique @db.VarChar(20) // 서비스 내 표시할 별명
   name         String @db.VarChar(100) // 유저 성명
   iter         Int    @default(10000) // Hash iteration, 매 인증성공시마다 1씩 감소
   salt         String @db.Char(32) // Random string, length: 32
