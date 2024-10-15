@@ -14,7 +14,7 @@ export class CompanyController {
 
 	// 기업 리스트 가져오기
 	getCompanies = async (req, res) => {
-		const { keyword = '', skip = 0, take = 10, sort = 'recent', include = '' } = req.query;
+		const { keyword = '', skip = 0, take = 10, sort = 'recent', include = '', exclude = '' } = req.query;
 		try {
 			const companiesData = await this.service.getCompanies({
 				keyword: decodeURIComponent(keyword).trim(),
@@ -22,6 +22,7 @@ export class CompanyController {
 				take: Number(take),
 				sort,
 				include,
+				exclude,
 			});
 			res.status(HttpStatus.SUCCESS).json(companiesData);
 		} catch (error) {
